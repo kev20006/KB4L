@@ -1,26 +1,17 @@
+from django.db import models
+
 from rest_framework import serializers
 from .models import Board
 
 
-class BoardSerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
-    name = serializers.CharField(
-        required=False,
-        allow_blank=True,
-        max_length=100
-    )
-    board_picture = serializers.CharField(
-        required=False,
-        allow_blank=True
-    )
-    description = serializers.CharField()
-    color_scheme = serializers.CharField()
-    board_url = serializers.CharField()
-    joining_code = serializers.CharField()
+class BoardSerializer(serializers.ModelSerializer):
+    class Meta:
+       model = Board
+       fields = ['name', 'board_picture', 'description', 'color_scheme','board_url','joining_code']
 
     def create(self, validated_data):
         """
-        Create and return a new `Snippet` instance, given the validated data.
+        Create and return a new board instance, given the validated data.
         """
         return Board.objects.create(**validated_data)
 

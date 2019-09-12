@@ -11,7 +11,7 @@ from .models import Board, Members
 from .serializer import BoardSerializer 
 
 # Create your views here.
-@api_view(['GET'])
+@api_view(['GET','POST'])
 def board_list(request, format=None):
     '''
     test route to get some JSON
@@ -20,6 +20,13 @@ def board_list(request, format=None):
         boards = Board.objects.all()
         serializer = BoardSerializer(boards, many=True)
         return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = BoardSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 
 
 @api_view(['GET'])
