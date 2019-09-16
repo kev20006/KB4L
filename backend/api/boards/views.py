@@ -39,7 +39,6 @@ def board_by_user(request, username):
             boards = Members.objects.filter(user_id=user.id).select_related('board_id')
             for board in boards:
                response_data.append(BoardSerializer(board.board_id).data)
-            boards_json = serializers.serialize('json', boards)
             return Response({"boards": response_data})
         except: 
             return Response({"error":"user does not exist"})
