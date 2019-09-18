@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from './user.service';
 
+interface User{
+  username: String,
+  password: String
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,16 +13,22 @@ import { UserService } from './user.service';
 })
 export class AppComponent implements OnInit {
   
-  public user: any;
-  public US: UserService;
+  public user: User;
   constructor(private userService: UserService){}
 
   ngOnInit(){
-    this.US = this.userService
-    this.user = {
-      username: '',
-      password: ''
-    };
+    if (localStorage.token && this.userService.isLoggedIn()){
+      console.log("i made it here 1")
+      this.userService.tokenLogin()
+    }
+    else{
+      this.user = {
+        username: '',
+        password: ''
+      };
+    }
+    
+    
   }
 
   login(){

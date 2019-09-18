@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ModuleWithComponentFactories, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import * as moment from 'moment';
 @Injectable()
 export class UserService{
 
@@ -25,7 +25,7 @@ export class UserService{
     }
 
     public login(user){
-        this.http.post('/api-token-auth/', JSON.stringify(user), this.httpOptions).subscribe(
+        this.http.post('http://localhost:8000/api-token-auth/', JSON.stringify(user), this.httpOptions).subscribe(
            data => {
                this.updateData(data['token']);
            },
@@ -36,7 +36,7 @@ export class UserService{
     }
 
     public refreshToken(){
-        this.http.post('/api-token-refresh/', JSON.stringify({ token: this.token }), this.httpOptions).subscribe(
+        this.http.post('http://localhost:8000/api-token-refresh/', JSON.stringify({ token: this.token }), this.httpOptions).subscribe(
             data => {
                 this.updateData(data['token']);
             },
@@ -50,6 +50,13 @@ export class UserService{
         this.token = null;
         this.token_expires = null;
         this.username = null;
+        localStorage.removeItem('token_expires');
+        localStorage.removeItem('token');
+    }
+
+    public tokenLogin(){
+        console.log("i made it here 2")
+        this.updateData(localStorage.token)
     }
 
     private updateData(token) {
@@ -60,7 +67,17 @@ export class UserService{
         const token_parts = this.token.split(/\./);
         const token_decoded = JSON.parse(window.atob(token_parts[1]));
         console.log(token_decoded)
-        this.token_expires = new Date(token_decoded.exp * 1000);
+        this.token_expires = new Date((token_decoded.exp * 1000)+100000);
         this.username = token_decoded.username;
+        localStorage.setItem('token_expires', Date.now() + JSON.stringify(this.token_expires));
+        localStorage.setItem('token', this.token);
+    }
+
+    public isLoggedIn(){
+        return moment().isBefore(this.token_expires)
+    }
+
+    public isLoggedOut(){
+        return !this.isLoggedIn()
     }
 }
