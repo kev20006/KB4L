@@ -29,6 +29,7 @@
 <div *ngIf="userService.token">
   <div>You are logged in as {{userService.username }}.<br />
     Token Expires: {{userService.token_expires }}<br />
+    <app-boards-list></app-boards-list>
     <button (click)="refreshToken()">Refresh Token</button>
     <button (click)="logout()">Log Out</button>
   </div>

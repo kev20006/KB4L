@@ -55,7 +55,6 @@ export class UserService{
     }
 
     public tokenLogin(){
-        console.log("i made it here 2")
         this.updateData(localStorage.token)
     }
 
@@ -67,7 +66,7 @@ export class UserService{
         const token_parts = this.token.split(/\./);
         const token_decoded = JSON.parse(window.atob(token_parts[1]));
         console.log(token_decoded)
-        this.token_expires = new Date((token_decoded.exp * 1000)+100000);
+        this.token_expires = new Date((token_decoded.exp * 1000));
         this.username = token_decoded.username;
         localStorage.setItem('token_expires', Date.now() + JSON.stringify(this.token_expires));
         localStorage.setItem('token', this.token);
