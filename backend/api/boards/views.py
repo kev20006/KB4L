@@ -42,3 +42,15 @@ def board_by_user(request, username):
             return Response({"boards": response_data})
         except: 
             return Response({"error":"user does not exist"})
+
+
+@api_view(['GET'])
+def is_member(request):
+    if request.method == "GET":
+        user_id = request.GET.get('user_id', None)
+        board_id = request.GET.get('board_id', None)
+        try: 
+            isMember = Members.objects.get(board_id=board_id, user_id=user_id)
+            return Response({"is_member": True})
+        except:
+            return Response({"is_member": False})

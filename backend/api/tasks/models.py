@@ -25,7 +25,7 @@ class Job(models.Model):
         ("3", "completed"),
     ]
     title = models.CharField(max_length=50)
-    desciption=models.TextField()
+    description=models.TextField()
     points = models.IntegerField(default=0)
     priority = models.CharField(
         max_length=1,
