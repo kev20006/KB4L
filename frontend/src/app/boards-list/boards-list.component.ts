@@ -10,13 +10,17 @@ import { BoardService } from '../board-service.service'
 export class BoardsListComponent implements OnInit {
 
 
-  private boardList
+  private boardList: any
   constructor(private userService: UserService, private boardService: BoardService) { }
 
   ngOnInit() {
-    this.boardService.getBoard(this.userService.username).subscribe(
+    this.boardService.getBoard("admin").subscribe(
       data => this.boardList = data
     )
   }
 
+  setBoard(board){
+    console.log(board)
+    this.boardService.setBoard(board)
+  }
 }

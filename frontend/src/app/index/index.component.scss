@@ -1,0 +1,23 @@
+header{
+    color:white;
+    background: linear-gradient(180deg, #3f51b5 0%, #006cff 100%);
+    width:100%;
+    .container{
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-around;
+        width:1200px;
+        max-width:80%;
+
+        .text-container{
+            width:60%;
+        }
+
+        .image-container{
+            width:40%;
+        }
+        img{
+            width:70%;
+        }
+    }
+}

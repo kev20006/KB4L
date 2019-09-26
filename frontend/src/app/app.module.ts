@@ -9,23 +9,36 @@ import { AppComponent } from './app.component';
 import { UserService } from './user.service';
 import { BoardsListComponent } from './boards-list/boards-list.component';
 
-import { AuthInterceptor } from './auth.interceptor'
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+
+//import { AuthInterceptor } from './auth.interceptor';
+import { IndexComponent } from './index/index.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ViewBoardComponent } from './view-board/view-board.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    BoardsListComponent
+    BoardsListComponent,
+    IndexComponent,
+    ViewBoardComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule, 
-    FormsModule,
+    FormsModule, 
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatCardModule
   ],
   providers: [
     UserService,
     { provide: APP_BASE_HREF, useValue: '/' },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    //{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

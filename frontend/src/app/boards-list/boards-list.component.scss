@@ -1,0 +1,11 @@
+.my-boards-wrapper{
+    display:flex;
+    mat-card{
+        margin:5px;
+
+        mat-card-actions{
+            display: flex;
+            justify-content: space-around;
+        }
+    }
+}

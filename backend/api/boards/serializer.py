@@ -7,7 +7,7 @@ from .models import Board, Members
 class BoardSerializer(serializers.ModelSerializer):
     class Meta:
        model = Board
-       fields = ['name', 'board_picture', 'description', 'color_scheme','board_url','joining_code']
+       fields = ['id', 'name', 'board_picture', 'description', 'board_url','joining_code']
 
     def create(self, validated_data):
         """
@@ -25,9 +25,6 @@ class BoardSerializer(serializers.ModelSerializer):
         )
         instance.description = validated_data.get(
             'description', instance.description
-        )
-        instance.color_scheme = validated_data.get(
-            'color_scheme', instance.color_scheme
         )
         instance.board_url = validated_data.get(
             'board_url', instance.board_url
