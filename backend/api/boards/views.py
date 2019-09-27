@@ -45,6 +45,21 @@ def board_by_user(request, username):
 
 
 @api_view(['GET'])
+def board_by_url(request, url):
+    if request.method == 'GET':
+        url = '/{0}/'.format(url)
+        print(url)
+        try:
+            board = Board.objects.get(board_url=url)
+            return Response(BoardSerializer(board).data)
+        except:
+            return Response({
+                "id": -1,
+                "error": "invalid url"
+                })
+
+
+@api_view(['GET'])
 def is_member(request):
     if request.method == "GET":
         user_id = request.GET.get('user_id', None)

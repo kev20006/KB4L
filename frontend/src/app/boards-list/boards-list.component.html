@@ -2,7 +2,7 @@
 <pre>
     {{ boardList | json }}
 </pre>
-<main class="my-boards-wrapper">
+<main *ngIf="boardList" class="my-boards-wrapper">
     <mat-card *ngFor="let board of boardList.boards">
         <mat-card-header>
             <mat-card-title>{{ board.name }}</mat-card-title>

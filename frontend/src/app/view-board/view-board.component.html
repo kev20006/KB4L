@@ -1,2 +1,4 @@
-<h1>{{ board.name }}</h1>
+<h1 *ngIf="board?.name">{{ board.name }}</h1>
+<h1 *ngIf="!board">I'm looking for your board</h1>
+<h3>{{ route }}</h3>
 <pre> {{ tasks | json}} </pre>
