@@ -12,6 +12,7 @@ import { BoardsListComponent } from './boards-list/boards-list.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 //import { AuthInterceptor } from './auth.interceptor';
 import { IndexComponent } from './index/index.component';
@@ -33,7 +34,8 @@ import { ViewBoardComponent } from './view-board/view-board.component';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    DragDropModule,
   ],
   providers: [
     UserService,

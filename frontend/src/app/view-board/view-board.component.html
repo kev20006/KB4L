@@ -1,4 +1,33 @@
-<h1 *ngIf="board?.name">{{ board.name }}</h1>
-<h1 *ngIf="!board">I'm looking for your board</h1>
-<h3>{{ route }}</h3>
-<pre> {{ tasks | json}} </pre>
+<h1 *ngIf="!board.getValue()">I'm looking for your board</h1>
+
+<mat-card  *ngIf="board.getValue()">
+    <mat-card-header>
+        <mat-card-title>
+            <h1>{{ board.name }}</h1>
+        </mat-card-title>
+    </mat-card-header>
+    <div cdkDropListGroup>
+        <div class="example-container">
+            <h2>To do</h2>
+            <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="taskList.todo"
+                class="example-list" (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let item of taskList.todo | async" cdkDrag>{{item.title}}</div>
+            </div>
+        </div>
+        <div class="example-container">
+            <h2>In Progress</h2>
+            <div cdkDropList #progressList="cdkDropList" [cdkDropListData]="inProgress" 
+                class="example-list" (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let item of inProgress" cdkDrag>{{item}}</div>
+            </div>
+        </div>
+        <div class="example-container">
+            <h2>Done</h2>
+            <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done"
+                class="example-list" (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
+            </div>
+        </div>
+    </div>
+</mat-card>
+<button (click)="testAdd()"> add example </button>

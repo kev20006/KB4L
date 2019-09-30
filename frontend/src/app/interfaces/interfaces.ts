@@ -18,3 +18,9 @@ export interface task {
     assigned_to: number,
     board: number
 }
+
+export interface taskList {
+    todo: task[],
+    inProgress: task[],
+    completed: task[]
+}

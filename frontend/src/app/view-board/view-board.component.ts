@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { BoardService } from '../board-service.service';
 import { Router } from '@angular/router';
 
-import { task, board } from '../interfaces/interfaces'
+import { task, board, taskList } from '../interfaces/interfaces'
+import { Observable, BehaviorSubject } from 'rxjs';
+import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-view-board',
@@ -11,34 +13,26 @@ import { task, board } from '../interfaces/interfaces'
 })
 export class ViewBoardComponent implements OnInit {
   
-  private board: board 
+  private board: Observable<board>
   private title: string
   private route: string;
-  private tasks: task[];
+  private taskList: any;
+  private inProgress: task[];
+
+ 
 
   constructor(private boardService: BoardService, private router: Router) {}
  
   ngOnInit() {
     this.route = this.router.url.split('/')[2]
+    if (!this.boardService.boardSet){
+      this.boardService.setBoardByUrl(this.route)
+    }
     this.board = this.boardService.getCurrentBoard();
-    if (this.board){
-      this.boardService.getTasks(this.board.id).subscribe(
-        data => this.tasks = data
-      )
-    }
-    else{
-      this.boardService.getBoardByUrl(this.route).subscribe(board => {
-        this.board = board
-        if (board.id >= 0){
-          this.boardService.getTasks(this.board.id).subscribe(
-            tasks => this.tasks = tasks
-          )
-        }
-        else{
-          this.board = null;
-        }
-      })
-      this.title = this.board ? this.board.name : "Invalid Board, please check your url"
-    }
-  } 
+    console.log(this.board)
+    this.taskList = this.boardService.getTasks();
+  }
+  testAdd(){
+    this.boardService.addTask();
+  }
 }

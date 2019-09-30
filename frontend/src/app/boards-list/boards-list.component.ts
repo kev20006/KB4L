@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service'
 import { BoardService } from '../board-service.service'
 import { Observable } from 'rxjs';
-
+import { board} from '../interfaces/interfaces'
 @Component({
   selector: 'app-boards-list',
   templateUrl: './boards-list.component.html',
@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 export class BoardsListComponent implements OnInit {
 
 
-  private boardList: Observable<any>
+  private boardList: board[];
   constructor(private userService: UserService, private boardService: BoardService) { }
 
   ngOnInit() {
@@ -21,7 +21,6 @@ export class BoardsListComponent implements OnInit {
   }
 
   setBoard(board){
-    console.log(board)
     this.boardService.setBoard(board)
   }
 }
