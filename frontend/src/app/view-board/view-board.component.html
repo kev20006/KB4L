@@ -1,6 +1,6 @@
-<h1 *ngIf="!board.getValue()">I'm looking for your board</h1>
+<h1 *ngIf="!boardService.currentBoard.getValue()">I'm looking for your board</h1>
 
-<mat-card  *ngIf="board.getValue()">
+<mat-card  *ngIf="boardService.currentBoard.getValue()">
     <mat-card-header>
         <mat-card-title>
             <h1>{{ board.name }}</h1>
@@ -9,23 +9,23 @@
     <div cdkDropListGroup>
         <div class="example-container">
             <h2>To do</h2>
-            <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="taskList.todo"
+            <div id="todo" cdkDropList [cdkDropListData]="boardService.todo$ | async"
                 class="example-list" (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *ngFor="let item of taskList.todo | async" cdkDrag>{{item.title}}</div>
+                <div class="example-box" [cdkDragData]="item" *ngFor="let item of boardService.todo$ | async" cdkDrag>{{item.title}}</div>
             </div>
         </div>
         <div class="example-container">
             <h2>In Progress</h2>
-            <div cdkDropList #progressList="cdkDropList" [cdkDropListData]="inProgress" 
+            <div id="inProgress" cdkDropList [cdkDropListData]="boardService.inProgress$ | async"
                 class="example-list" (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *ngFor="let item of inProgress" cdkDrag>{{item}}</div>
+                <div class="example-box" [cdkDragData]="item" *ngFor="let item of boardService.inProgress$ | async" cdkDrag>{{item.title}}</div>
             </div>
         </div>
         <div class="example-container">
             <h2>Done</h2>
-            <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done"
+            <div id="completed" cdkDropList [cdkDropListData]="boardService.completed$ | async"
                 class="example-list" (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
+                <div class="example-box" [cdkDragData]="item" *ngFor="let item of boardService.completed$ | async" cdkDrag>{{item.title}}</div>
             </div>
         </div>
     </div>

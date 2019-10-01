@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { task, board, taskList } from './interfaces/interfaces'
 import { Observable, BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -11,22 +12,38 @@ import { Observable, BehaviorSubject } from 'rxjs';
 
 export class BoardService {
 
-  public boardSet: boolean = false
-
-  private httpOptions: any;
-  private currentBoard: BehaviorSubject<board> = new BehaviorSubject<board>(null);
-  private todo: BehaviorSubject<task[]> = new BehaviorSubject<task[]>([])
-  private inProgress: BehaviorSubject<task[]> = new BehaviorSubject<task[]>([])
-  private done: BehaviorSubject<task[]> = new BehaviorSubject<task[]>([])
-    
-
   constructor(private http: HttpClient) {
     this.httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
   }
 
-  ngOnInit(){
+  public boardSet: boolean = false
+  private httpOptions: any;
+  private currentBoard: BehaviorSubject<board> = new BehaviorSubject<board>(null);
+  private _tasks: BehaviorSubject<task[]> = new BehaviorSubject<task[]>([]);
+
+  readonly currentBoard$ = this.currentBoard.asObservable();
+  readonly tasks$ = this._tasks.asObservable();
+
+  readonly todo$ = this.tasks$.pipe(
+    map(tasks => tasks.filter(task => task.status === "1"))
+  )
+
+  readonly inProgress$ = this.tasks$.pipe(
+    map(tasks => tasks.filter(task => task.status === "2"))
+  )
+
+  readonly completed$ = this.tasks$.pipe(
+    map(tasks => tasks.filter(task => task.status === "3"))
+  )
+    
+  get tasks(): task[]{
+    return this._tasks.getValue();
+  }
+
+  set tasks(val: task[]) {
+    this._tasks.next(val);
   }
 
   getBoard( username ): Observable<board[]>{
@@ -43,9 +60,9 @@ export class BoardService {
 
   getTasks(): any{
     return {
-      todo: this.todo,
-      inProgress: this.inProgress,
-      completed: this.done
+      todo: this.todo$,
+      inProgress: this.inProgress$,
+      completed: this.completed$
     }
   }
 
@@ -83,10 +100,12 @@ export class BoardService {
 
   getBoardTasks(){
     this.getTasksFromServer(this.currentBoard.getValue().id).subscribe((response) => {
-      this.todo.next(response.filter(element => element.status === "1"));
-      this.inProgress.next(response.filter(element => element.status === "2"));
-      this.done.next(response.filter(element => element.status === "2"));
+      this._tasks.next(response);
     })
+  }
+
+  updateTasksStatus(task: task){
+    this.tasks = this.tasks.map(element => task.id ===  element.id ? task : element);
   }
 
   addTask(){
@@ -96,12 +115,12 @@ export class BoardService {
       description: "string",
       points: 85,
       priority: "string",
-      status: "string",
+      status: "1",
       repeat_task: false,
       assigned_to: 4,
       board: 22
     }
-    this.todo.next([...this.todo.getValue(), newTask]) 
+    this.tasks = [...this.tasks, newTask]
   }
 }
 
