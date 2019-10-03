@@ -1,5 +1,8 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Inject, Input, TemplateRef } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+import { task, board } from '../interfaces/interfaces'
+import { BoardService } from '../board-service.service'
 
 @Component({
   selector: 'app-open-modal-button',
@@ -9,15 +12,44 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 export class OpenModalButtonComponent {
 
   @Input() buttonMessage:string
-  constructor(private dialog: MatDialog) { }
+  @Input() modalTarget: string
+  constructor(private dialog: MatDialog, private boardService: BoardService) { }
 
+  private modalStore={
+    "AddNewTaskDialog":{
+      "component":AddNewTaskDialog,
+      "exitFunction": (result)=>{
+        const newTask: task = {
+          id: `${Math.ceil(Math.random() * 1000 + 1)}`,
+          title: result.title,
+          description: result.description,
+          points: result.points,
+          priority: result.priority,
+          status: "1",
+          repeat_task: false,
+          assigned_to: 0,
+          board: this.boardService.getCurrentBoard().id
+        }
+        this.boardService.addTask(newTask)
+      }
+    },
+    "AddNewBoardDialog":{
+      "component": AddNewBoardDialog,
+      "exitFunction": (result) => {
+        console.log("doing nothing!!")
+      }
+    }
+  }
   openDialog(): void {
-    const dialogRef = this.dialog.open(AddNewTaskDialog, {
-      width: '250px',
-      data: { template: "<h1>Hello!!</h1>" }
+    const dialogRef = this.dialog.open(this.modalStore[this.modalTarget].component, {
+      width: '60%',
+      data: {}
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      if (result){
+        this.modalStore[this.modalTarget].exitFunction(result)
+      }
       console.log('The dialog was closed');
     });
   }
@@ -31,10 +63,27 @@ export class AddNewTaskDialog {
 
   constructor(
     public dialogRef: MatDialogRef<AddNewTaskDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: string) { }
+    @Inject(MAT_DIALOG_DATA) public data: task) { }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
 }
+
+@Component({
+  selector: 'dialog-overview-example-dialog',
+  templateUrl: './templates/add-new-board-template.html',
+})
+export class AddNewBoardDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<AddNewBoardDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: board) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}
+

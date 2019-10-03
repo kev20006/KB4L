@@ -89,8 +89,8 @@ export class BoardService {
     })
   }
   
-  getCurrentBoard(): BehaviorSubject<board>{
-    return this.currentBoard
+  getCurrentBoard(): board{
+    return this.currentBoard.getValue()
   } 
 
 
@@ -108,18 +108,7 @@ export class BoardService {
     this.tasks = this.tasks.map(element => task.id ===  element.id ? task : element);
   }
 
-  addTask(){
-    const newTask: task = {
-      id: "string",
-      title: "string",
-      description: "string",
-      points: 85,
-      priority: "string",
-      status: "1",
-      repeat_task: false,
-      assigned_to: 4,
-      board: 22
-    }
+  addTask(newTask: task){
     this.tasks = [...this.tasks, newTask]
   }
 }

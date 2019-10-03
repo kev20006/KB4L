@@ -9,7 +9,7 @@ import { ViewBoardComponent } from './view-board/view-board.component'
 const routes: Routes = [
   { path: '', component: IndexComponent },
   { path: 'my-boards', component: BoardsListComponent },
-  { path: 'view-board/:boardUrl', component: ViewBoardComponent },
+  { path: 'my-boards/:boardUrl', component: ViewBoardComponent },
 ];
 
 @NgModule({

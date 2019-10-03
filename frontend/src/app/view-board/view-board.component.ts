@@ -29,11 +29,6 @@ export class ViewBoardComponent implements OnInit {
     this.boardService.currentBoard$.subscribe(data => this.board = data ) 
   }
 
-  testAdd(){
-    console.log("add")
-    this.boardService.addTask();
-  }
-
   drop(event: CdkDragDrop<any>){
     let status = ""
     switch (event.container.id){

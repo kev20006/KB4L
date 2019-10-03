@@ -13,9 +13,10 @@
             </p>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button color="primary" routerLink="{{'../view-board' + board.board_url }}" (click)="setBoard(board)">VIEW</button>
+            <button mat-raised-button color="primary" routerLink="{{'../my-boards' + board.board_url }}" (click)="setBoard(board)">VIEW</button>
             <button mat-raised-button color="accent">EDIT</button>
             <button mat-raised-button color="warn">DELETE</button>
         </mat-card-actions>
     </mat-card>
 </main>
+<app-open-modal-button buttonMessage="add new task" modalTarget="AddNewBoardDialog"></app-open-modal-button>

@@ -1,10 +1,33 @@
-<h1 mat-dialog-title>Hi</h1>
+<h1 mat-dialog-title>Add new task</h1>
 <div mat-dialog-content>
-    <p>What's your favorite animal?</p>
-        <mat-form-field>
-            <input matInput placeholder="Input">
-        </mat-form-field>
+    <p>Name the task</p>
+    <mat-form-field>
+        <input matInput placeholder="Input" [(ngModel)]="data.title">
+    </mat-form-field>
+    <p>Provide a short description of the task</p>
+    <mat-form-field>
+        <input matInput placeholder="Input" [(ngModel)]="data.description">
+    </mat-form-field>
+    <p>How high priority is this task</p>
+    <mat-form-field>
+        <input matInput placeholder="Input" [(ngModel)]="data.priority">
+    </mat-form-field>
+    <p>How many points is the task worth</p>
+    <mat-form-field>
+        <input  matInput placeholder="Input" [(ngModel)]="data.points">
+    </mat-form-field>
+    <p>Is this task repeatable</p>
+    <mat-form-field>
+        <input matInput placeholder="Input" [(ngModel)]="data.repeat_task">
+    </mat-form-field>
+    <p>Assign this task to..</p>
+    <mat-form-field>
+        <input  matInput placeholder="Input" [(ngModel)]="data.assigned_to">
+    </mat-form-field>
 </div>
 <div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">No Thanks</button>
+    <div class="example-button-row">
+        <button mat-raised-button color="accent" [mat-dialog-close]="data">Add Task</button>
+        <button mat-raised-button color="warn" (click)="onNoClick()"> Cancel </button>
+    </div>
 </div>

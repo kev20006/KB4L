@@ -21,7 +21,7 @@ import { MatInputModule } from '@angular/material/input'
 import { IndexComponent } from './index/index.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ViewBoardComponent } from './view-board/view-board.component';
-import { OpenModalButtonComponent, AddNewTaskDialog } from './open-modal-button/open-modal-button.component';
+import { OpenModalButtonComponent, AddNewTaskDialog, AddNewBoardDialog } from './open-modal-button/open-modal-button.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,8 @@ import { OpenModalButtonComponent, AddNewTaskDialog } from './open-modal-button/
     IndexComponent,
     ViewBoardComponent,
     OpenModalButtonComponent,
-    AddNewTaskDialog
+    AddNewTaskDialog,
+    AddNewBoardDialog
   ],
   imports: [
     BrowserModule,
@@ -47,7 +48,8 @@ import { OpenModalButtonComponent, AddNewTaskDialog } from './open-modal-button/
     MatInputModule
   ],
   entryComponents: [
-    AddNewTaskDialog
+    AddNewTaskDialog,
+    AddNewBoardDialog
   ],
   providers: [
     UserService,
