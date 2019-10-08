@@ -1,0 +1,30 @@
+<mat-card>
+    <mat-card-header class="my-boards-header">
+        <mat-card-title>My Boards</mat-card-title>
+        <app-open-modal-button buttonMessage="add new board" modalTarget="AddNewBoardDialog"></app-open-modal-button>
+    </mat-card-header>
+    <h3></h3>
+    <main *ngIf="boardList" class="my-boards-wrapper">
+    
+        <mat-card *ngFor="let board of boardList.boards">
+            <mat-card-header>
+                <mat-card-title>{{ board.name }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p>
+                    {{ board.description }}
+                </p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button color="primary" routerLink="{{'../my-boards' + board.board_url }}"
+                    (click)="setBoard(board)">VIEW</button>
+                <button mat-raised-button color="accent">EDIT</button>
+                <button mat-raised-button color="warn">DELETE</button>
+            </mat-card-actions>
+        </mat-card>
+    </main>
+    
+    
+
+</mat-card>
+

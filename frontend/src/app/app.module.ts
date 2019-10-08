@@ -7,7 +7,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserService } from './user.service';
-import { BoardsListComponent } from './boards-list/boards-list.component';
+import { BoardsListComponent } from './dashboard/boards-list/boards-list.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,13 +15,20 @@ import { MatCardModule } from '@angular/material/card';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input'
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatTableModule } from '@angular/material/table';
+import { MatChipsModule } from '@angular/material/chips';
 
 //import { AuthInterceptor } from './auth.interceptor';
 import { IndexComponent } from './index/index.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ViewBoardComponent } from './view-board/view-board.component';
 import { OpenModalButtonComponent, AddNewTaskDialog, AddNewBoardDialog } from './open-modal-button/open-modal-button.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardHeaderComponent } from './dashboard/dashboard-header/dashboard-header.component';
+import { RecentActivityComponent } from './dashboard/recent-activity/recent-activity.component';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +38,10 @@ import { OpenModalButtonComponent, AddNewTaskDialog, AddNewBoardDialog } from '.
     ViewBoardComponent,
     OpenModalButtonComponent,
     AddNewTaskDialog,
-    AddNewBoardDialog
+    AddNewBoardDialog,
+    DashboardComponent,
+    DashboardHeaderComponent,
+    RecentActivityComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,7 +55,10 @@ import { OpenModalButtonComponent, AddNewTaskDialog, AddNewBoardDialog } from '.
     DragDropModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatListModule,
+    MatTableModule,
+    MatChipsModule
   ],
   entryComponents: [
     AddNewTaskDialog,

@@ -1,0 +1,30 @@
+.card-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 2%;
+}
+mat-card {
+    width: 33%;
+}
+
+.warning {
+    color: red;
+}
+
+table {
+    width: 100%;
+}
+
+.score-list-item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 2%;
+}
+
+.mat-chip {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px;
+    border-radius: 50%;
+}

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../user.service'
-import { BoardService } from '../board-service.service'
+import { UserService } from '../../user.service'
+import { BoardService } from '../../board-service.service'
 import { Observable } from 'rxjs';
-import { board} from '../interfaces/interfaces'
+import { board} from '../../interfaces/interfaces'
 @Component({
   selector: 'app-boards-list',
   templateUrl: './boards-list.component.html',
