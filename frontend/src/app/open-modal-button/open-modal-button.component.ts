@@ -15,8 +15,8 @@ export class OpenModalButtonComponent {
   @Input() modalTarget: string
   constructor(private dialog: MatDialog, private boardService: BoardService) { }
 
-  private modalStore={
-    "AddNewTaskDialog":{
+  private modalStore = {
+    "AddNewTaskDialog": {
       "component":AddNewTaskDialog,
       "exitFunction": (result)=>{
         const newTask: task = {
@@ -33,13 +33,14 @@ export class OpenModalButtonComponent {
         this.boardService.addTask(newTask)
       }
     },
-    "AddNewBoardDialog":{
+    "AddNewBoardDialog": {
       "component": AddNewBoardDialog,
       "exitFunction": (result) => {
         console.log("doing nothing!!")
       }
     }
   }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(this.modalStore[this.modalTarget].component, {
       width: '60%',
@@ -55,10 +56,12 @@ export class OpenModalButtonComponent {
   }
 }
 
+/********************* Add New Task **********************/
 @Component({
   selector: 'dialog-overview-example-dialog',
   templateUrl: './templates/add-new-task-template.html',
 })
+
 export class AddNewTaskDialog {
 
   constructor(
@@ -71,10 +74,12 @@ export class AddNewTaskDialog {
 
 }
 
+/********************* Add New Board **********************/
 @Component({
   selector: 'dialog-overview-example-dialog',
   templateUrl: './templates/add-new-board-template.html',
 })
+
 export class AddNewBoardDialog {
 
   constructor(
