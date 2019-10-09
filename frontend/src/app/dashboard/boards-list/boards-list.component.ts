@@ -15,7 +15,8 @@ export class BoardsListComponent implements OnInit {
   constructor(private userService: UserService, private boardService: BoardService) { }
 
   ngOnInit() {
-    this.boardService.getBoard("admin").subscribe(
+    this.boardService.setBoardListByUser('admin')
+    this.boardService.boardList$.subscribe(
       data => this.boardList = data
     )
   }

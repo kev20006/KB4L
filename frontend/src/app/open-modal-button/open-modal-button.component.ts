@@ -29,14 +29,24 @@ export class OpenModalButtonComponent {
           repeat_task: false,
           assigned_to: 0,
           board: this.boardService.getCurrentBoard().id
-        }
+        };
         this.boardService.addTask(newTask)
       }
     },
     "AddNewBoardDialog": {
       "component": AddNewBoardDialog,
       "exitFunction": (result) => {
-        console.log("doing nothing!!")
+        const newBoard: board = {
+          id: Math.ceil(Math.random() * 1000 + 1),
+          name: result.name,
+          board_picture: result.imageUrl,
+          description: result.description,
+          board_url: result.url,
+          joining_code: "placeholder"
+        };
+        this.boardService.postBoard(newBoard).subscribe(
+          result=>this.boardService.addBoard(result)
+        );
       }
     }
   }

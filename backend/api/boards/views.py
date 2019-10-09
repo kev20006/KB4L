@@ -46,8 +46,6 @@ def board_by_user(request, username):
         serializer = BoardSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            print(type(serializer.data))
-            print(serializer.data)
             member_serializer = MemberSerializer(data= {
                 "user_id": user.id,
                 "board_id": serializer.data["id"],

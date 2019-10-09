@@ -1,5 +1,6 @@
 .my-boards-wrapper{
     display:flex;
+    flex-wrap: wrap;
     mat-card{
         margin:5px;
 
@@ -13,4 +14,8 @@
 .my-boards-header {
     display:flex;
     justify-content: space-between;
+}
+
+mat-card{
+    margin-bottom: 2%;
 }

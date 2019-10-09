@@ -11,8 +11,8 @@ class Board(models.Model):
     name = models.CharField(max_length=100)
     board_picture = models.CharField(max_length=100)
     description = models.TextField()
-    board_url = models.CharField(max_length=25, default="/"+new_code+"/", unique=True)
-    joining_code = models.CharField(max_length=10, default=new_code, unique=True)
+    board_url = models.CharField(max_length=25, default="/"+ new_code +"/", unique=True)
+    joining_code = models.CharField(max_length=10, default=new_code, unique=False)
 
 class Member(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
