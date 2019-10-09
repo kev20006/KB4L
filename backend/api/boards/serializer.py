@@ -1,7 +1,7 @@
 from django.db import models
 
 from rest_framework import serializers
-from .models import Board, Members
+from .models import Board, Member
 
 
 class BoardSerializer(serializers.ModelSerializer):
@@ -38,11 +38,11 @@ class BoardSerializer(serializers.ModelSerializer):
 
 class MemberSerializer(serializers.ModelSerializer):
     class Meta:
-       model = Members
+       model = Member
        fields = ['user_id', 'board_id', 'is_admin', 'score']
 
     def create(self, validated_data):
         """
         Create and return a new member instance, given the validated data.
         """
-        return Board.objects.create(**validated_data)
+        return Member.objects.create(**validated_data)
