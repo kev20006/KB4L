@@ -1,17 +1,19 @@
 import { Injectable, ModuleWithComponentFactories, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as moment from 'moment';
+
+
 @Injectable()
-export class UserService{
+export class UserService {
 
     //http options for API calls
     private httpOptions: any;
 
     //the JWT token
     public token: string;
-
+    public tokenDecoded: any;
     //token expiration date
-    public token_expires: Date;
+    public tokenExpires: Date;
 
     // the username of the logged in user
     public username: string;
@@ -22,6 +24,9 @@ export class UserService{
         this.httpOptions = {
             headers: new HttpHeaders({ 'Content-Type': 'application/json' })
         };
+        this.token = localStorage.token ? localStorage.token : null;
+        this.tokenDecoded = localStorage.token ? this.decodeToken(this.token) : null;
+        this.tokenExpires = localStorage.tokenExpires ? new Date(Date.parse(localStorage.tokenExpires)) : null;
     }
 
     public login(user){
@@ -48,7 +53,7 @@ export class UserService{
 
     public logout() {
         this.token = null;
-        this.token_expires = null;
+        this.tokenExpires = null;
         this.username = null;
         localStorage.removeItem('token_expires');
         localStorage.removeItem('token');
@@ -63,20 +68,25 @@ export class UserService{
         this.errors = [];
 
         // decode the token to read the username and expiration timestamp
-        const token_parts = this.token.split(/\./);
-        const token_decoded = JSON.parse(window.atob(token_parts[1]));
-        console.log(token_decoded)
-        this.token_expires = new Date((token_decoded.exp * 1000));
-        this.username = token_decoded.username;
-        localStorage.setItem('token_expires', Date.now() + JSON.stringify(this.token_expires));
+        this.tokenDecoded = this.decodeToken(token)
+ 
+        this.tokenExpires = new Date(this.tokenDecoded.exp * 1000);
+
         localStorage.setItem('token', this.token);
+        localStorage.setItem('tokenExpires', `${this.tokenExpires}`)
     }
 
     public isLoggedIn(){
-        return moment().isBefore(this.token_expires)
+        return moment().isBefore(this.tokenExpires)
     }
 
     public isLoggedOut(){
         return !this.isLoggedIn()
+    }
+
+    private decodeToken(token) {
+        const tokenParts = token.split(/\./);
+        const tokenDecoded = JSON.parse(window.atob(tokenParts[1]));
+        return tokenDecoded;
     }
 }

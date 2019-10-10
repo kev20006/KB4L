@@ -1,0 +1,21 @@
+<div class="example-container">
+    <mat-form-field>
+        <input matInput placeholder="username" [(ngModel)]="username">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <input matInput placeholder="password" type="password" [(ngModel)]="password">
+    </mat-form-field>
+    <br>
+    <button mat-raised-button color="accent" (click)="login()">login</button>
+</div>
+
+<div>
+    <p>debug:</p>
+    <pre> {{ username }} </pre>
+    <pre> {{ password }} </pre>
+    <pre> {{ userService.username }} </pre>
+    <pre> {{ userService.token }} </pre>
+    <pre> {{ userService.tokenExpires }} </pre>
+    <pre> {{ userService.isLoggedIn() }} </pre>
+</div>

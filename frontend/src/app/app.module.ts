@@ -20,7 +20,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
 
-//import { AuthInterceptor } from './auth.interceptor';
+import { AuthInterceptor } from './auth.interceptor';
 import { IndexComponent } from './index/index.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ViewBoardComponent } from './view-board/view-board.component';
@@ -28,6 +28,7 @@ import { OpenModalButtonComponent, AddNewTaskDialog, AddNewBoardDialog } from '.
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashboardHeaderComponent } from './dashboard/dashboard-header/dashboard-header.component';
 import { RecentActivityComponent } from './dashboard/recent-activity/recent-activity.component';
+import { LoginTestComponent } from './login-test/login-test.component';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { RecentActivityComponent } from './dashboard/recent-activity/recent-acti
     DashboardComponent,
     DashboardHeaderComponent,
     RecentActivityComponent,
+    LoginTestComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,7 +68,7 @@ import { RecentActivityComponent } from './dashboard/recent-activity/recent-acti
   ],
   providers: [
     UserService,
-    { provide: APP_BASE_HREF, useValue: '/' },
+    //{ provide: APP_BASE_HREF, useValue: '/' },
     //{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
