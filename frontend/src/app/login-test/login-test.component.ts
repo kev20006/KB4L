@@ -19,4 +19,8 @@ export class LoginTestComponent implements OnInit {
   login(){
     this.userService.login({username: this.username, password: this.password})
   }
+
+  verify(){
+    this.userService.verify();
+  }
 }

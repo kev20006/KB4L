@@ -89,4 +89,15 @@ export class UserService {
         const tokenDecoded = JSON.parse(window.atob(tokenParts[1]));
         return tokenDecoded;
     }
+
+    public verify() {
+        this.http.post('http://localhost:8000/api-token-verify/', JSON.stringify({ token: this.token }), this.httpOptions).subscribe(
+            data => {
+                console.log(data)
+            },
+            err => {
+                this.errors = err['error'];
+            }
+        );
+    }
 }

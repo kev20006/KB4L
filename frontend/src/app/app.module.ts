@@ -68,8 +68,8 @@ import { LoginTestComponent } from './login-test/login-test.component';
   ],
   providers: [
     UserService,
-    //{ provide: APP_BASE_HREF, useValue: '/' },
-    //{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: APP_BASE_HREF, useValue: '/' },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })
