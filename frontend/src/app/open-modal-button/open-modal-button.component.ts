@@ -25,12 +25,14 @@ export class OpenModalButtonComponent {
           description: result.description,
           points: result.points,
           priority: result.priority,
-          status: "1",
-          repeat_task: false,
-          assigned_to: 0,
+          status: result.status,
+          repeat_task: result.repeat_task ? true : false,
+          assigned_to: null,
           board: this.boardService.getCurrentBoard().id
         };
-        this.boardService.addTask(newTask)
+        this.boardService.postTask(newTask).subscribe(
+          result => this.boardService.addTask(result)
+        )
       }
     },
     "AddNewBoardDialog": {

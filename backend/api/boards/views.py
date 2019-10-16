@@ -1,6 +1,7 @@
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from django.shortcuts import render
 from django.db import models
@@ -12,6 +13,7 @@ from .serializer import BoardSerializer, MemberSerializer
 
 # Create your views here.
 @api_view(['GET','POST'])
+@permission_classes([IsAuthenticated])
 def board_list(request, format=None):
     '''
     test route to get some JSON
@@ -30,9 +32,11 @@ def board_list(request, format=None):
 
 
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def board_by_user(request, username):
     user = User.objects.get(username=username)
     print(user.id)
+    print(request.headers["Authorization"])
     if request.method == 'GET':
         try:
             response_data = []
@@ -60,6 +64,7 @@ def board_by_user(request, username):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def board_by_url(request, url):
     if request.method == 'GET':
         url = '/{0}/'.format(url)
@@ -75,6 +80,7 @@ def board_by_url(request, url):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def is_member(request):
     if request.method == "GET":
         user_id = request.GET.get('user_id', None)

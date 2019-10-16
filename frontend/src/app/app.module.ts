@@ -19,6 +19,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AuthInterceptor } from './auth.interceptor';
 import { IndexComponent } from './index/index.component';
@@ -60,7 +62,9 @@ import { LoginTestComponent } from './login-test/login-test.component';
     MatInputModule,
     MatListModule,
     MatTableModule,
-    MatChipsModule
+    MatChipsModule,
+    MatSelectModule,
+    MatCheckboxModule
   ],
   entryComponents: [
     AddNewTaskDialog,

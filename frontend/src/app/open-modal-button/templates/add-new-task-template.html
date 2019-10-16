@@ -1,28 +1,36 @@
 <h1 mat-dialog-title>Add new task</h1>
 <div mat-dialog-content>
-    <p>Name the task</p>
     <mat-form-field>
-        <input matInput placeholder="Input" [(ngModel)]="data.title">
+        <input matInput placeholder="Task Name" [(ngModel)]="data.title">
     </mat-form-field>
-    <p>Provide a short description of the task</p>
     <mat-form-field>
-        <input matInput placeholder="Input" [(ngModel)]="data.description">
+        <textarea matInput placeholder="Short Description" [(ngModel)]="data.description"></textarea>
     </mat-form-field>
-    <p>How high priority is this task</p>
     <mat-form-field>
-        <input matInput placeholder="Input" [(ngModel)]="data.priority">
+        <mat-select placeholder="Priority" [(ngModel)]="data.priority">
+            <mat-option value="5">High Priority</mat-option>
+            <mat-option value="4">Medium High Priority</mat-option>
+            <mat-option value="3">Medium Priority</mat-option>
+            <mat-option value="2">Low Medium Priority</mat-option>
+            <mat-option value="1">Low Priority</mat-option>
+        </mat-select>
     </mat-form-field>
-    <p>How many points is the task worth</p>
     <mat-form-field>
-        <input  matInput placeholder="Input" [(ngModel)]="data.points">
+        <input  matInput type="number" placeholder="Points Allocated" [(ngModel)]="data.points">
     </mat-form-field>
-    <p>Is this task repeatable</p>
+    <p><mat-checkbox [(ngModel)]="data.repeat_task">Is this task repeatable</mat-checkbox></p>
     <mat-form-field>
-        <input matInput placeholder="Input" [(ngModel)]="data.repeat_task">
+        <mat-select placeholder="Assign to" [(ngModel)]="data.assigned_to">
+            <mat-option default>unassigned</mat-option>
+            <mat-option>myself</mat-option>
+        </mat-select>
     </mat-form-field>
-    <p>Assign this task to..</p>
     <mat-form-field>
-        <input  matInput placeholder="Input" [(ngModel)]="data.assigned_to">
+        <mat-select placeholder="Status" [(ngModel)]="data.status">
+            <mat-option value="1">Todo</mat-option>
+            <mat-option value="2">In Progress</mat-option>
+            <mat-option value="3">Completed</mat-option>
+        </mat-select>
     </mat-form-field>
 </div>
 <div mat-dialog-actions>

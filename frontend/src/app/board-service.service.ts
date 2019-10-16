@@ -121,6 +121,10 @@ export class BoardService {
     this.tasks = this.tasks.map(element => task.id ===  element.id ? task : element);
   }
 
+  postTask(newTask: task): Observable<any>{
+    newTask.id = null;
+    return this.http.post<task>(`http://localhost:8000/my-boards/${newTask.board}`, newTask)
+  }
   addTask(newTask: task){
     this.tasks = [...this.tasks, newTask]
   }
