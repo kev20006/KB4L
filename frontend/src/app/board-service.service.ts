@@ -113,5 +113,15 @@ export class BoardService {
       result => this.boardList = [...this.boardList, result]
     );
   }
+
+  deleteBoard( boardUrl: string ) {
+    this.api.deleteBoardByUrl( boardUrl ).subscribe(
+      result => {
+        if(result.success){
+          this.boardList = this.boardList.filter(board => board.board_url != `/${boardUrl}/`)
+        }
+      }
+    )
+  }
 }
 

@@ -24,4 +24,9 @@ export class BoardsListComponent implements OnInit {
   setBoard(board){
     this.boardService.setBoard(board)
   }
+
+  delete(boardUrl){
+    boardUrl = boardUrl.split('/').join('');
+    this.boardService.deleteBoard( boardUrl );
+  }
 }

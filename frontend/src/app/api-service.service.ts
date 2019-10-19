@@ -31,6 +31,10 @@ export class ApiService {
     return this.http.post<board>('http://localhost:8000/boards/username/admin', postObject)
   }
 
+  deleteBoardByUrl( boardUrl: string ): Observable<any> {
+    return this.http.delete<any>(`http://localhost:8000/boards/url/${boardUrl}?format=json`)
+  }
+
   /* Task API Methods */
   getTasksByBoard(boardId): Observable<task[]> {
     return boardId ? this.http.get<task[]>(`http://localhost:8000/my-boards/${boardId}?format=json`) : null;
