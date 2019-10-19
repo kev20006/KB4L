@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { task, board, taskList } from './interfaces/interfaces'
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ApiService } from './api-service.service'
 
 
 @Injectable({
@@ -12,14 +13,9 @@ import { map } from 'rxjs/operators';
 
 export class BoardService {
 
-  constructor(private http: HttpClient) {
-    this.httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    };
-  }
+  constructor( private api: ApiService ) {}
 
   public boardSet: boolean = false
-  private httpOptions: any;
   private currentBoard: BehaviorSubject<board> = new BehaviorSubject<board>(null);
   private _tasks: BehaviorSubject<task[]> = new BehaviorSubject<task[]>([]);
   private _boardList: BehaviorSubject<board[]> = new BehaviorSubject<board[]>([]);
@@ -57,19 +53,11 @@ export class BoardService {
   }
 
   setBoardListByUser( username ){
-    this.http.get<any>(`http://localhost:8000/boards/username/${username}?format=json`).subscribe(data => {
+    this.api.getBoardListByUser(username).subscribe(data => {
       if (data) {
         this.boardList = data.boards;
       }
     })
-  }
-
-  private getTasksFromServer( boardId ) : Observable<task[]>{
-    return boardId ? this.http.get<task[]>(`http://localhost:8000/my-boards/${boardId}?format=json`) : null;
-  }
-
-  private getBoardFromServer(boardUrl): Observable<board> {
-    return this.http.get<board>(`http://localhost:8000/boards/url/${boardUrl}?format=json`)
   }
 
   getTasks(): any{
@@ -81,7 +69,6 @@ export class BoardService {
   }
 
   setBoard( board ): void{
-    console.log("setting board!")
     this.boardSet = true;
     if (board.id=== -1){
       this.boardSet = false;
@@ -91,11 +78,10 @@ export class BoardService {
       this.currentBoard.next(board) 
       this.getBoardTasks()
     }
-    
   }
 
   setBoardByUrl(url){
-    this.getBoardFromServer(url).subscribe(data => {
+    this.api.getBoardByUrl(url).subscribe(data => {
       if(data){
         this.setBoard(data)
       }
@@ -106,13 +92,8 @@ export class BoardService {
     return this.currentBoard.getValue()
   } 
 
-
-  getBoardByUrl(boardUrl): Observable<board>{
-    return this.http.get<board>(`http://localhost:8000/boards/url/${boardUrl}?format=json`)
-  }
-
   getBoardTasks(){
-    this.getTasksFromServer(this.currentBoard.getValue().id).subscribe((response) => {
+    this.api.getTasksByBoard(this.currentBoard.getValue().id).subscribe((response) => {
       this._tasks.next(response);
     })
   }
@@ -121,29 +102,16 @@ export class BoardService {
     this.tasks = this.tasks.map(element => task.id ===  element.id ? task : element);
   }
 
-  postTask(newTask: task): Observable<any>{
-    newTask.id = null;
-    return this.http.post<task>(`http://localhost:8000/my-boards/${newTask.board}`, newTask)
-  }
   addTask(newTask: task){
-    this.tasks = [...this.tasks, newTask]
-  }
-
-  postBoard(newBoard: board):Observable<any>{
-    let postObject: { [k: string]: any } = {}
-    if (newBoard.board_url){
-      postObject.board_url = `/${newBoard.board_url}/`
-    }
-    postObject.name = newBoard.name
-    postObject.board_picture = newBoard.board_picture
-    postObject.description = newBoard.description
-    console.log(postObject)
-    return this.http.post<board>('http://localhost:8000/boards/username/admin', postObject)
+    this.api.postTask(newTask).subscribe(
+      result => this.tasks = [...this.tasks, result]
+    )
   }
 
   addBoard(board: board){
-    this.boardList = [...this.boardList, board]
+    this.api.postBoard(board).subscribe(
+      result => this.boardList = [...this.boardList, result]
+    );
   }
 }
-
 

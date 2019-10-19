@@ -30,9 +30,7 @@ export class OpenModalButtonComponent {
           assigned_to: null,
           board: this.boardService.getCurrentBoard().id
         };
-        this.boardService.postTask(newTask).subscribe(
-          result => this.boardService.addTask(result)
-        )
+        this.boardService.addTask(newTask)
       }
     },
     "AddNewBoardDialog": {
@@ -46,9 +44,7 @@ export class OpenModalButtonComponent {
           board_url: result.url,
           joining_code: "placeholder"
         };
-        this.boardService.postBoard(newBoard).subscribe(
-          result=>this.boardService.addBoard(result)
-        );
+        this.boardService.addBoard(newBoard);
       }
     }
   }
