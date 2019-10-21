@@ -41,6 +41,11 @@ export class ApiService {
     return this.http.post< task >(`http://localhost:8000/my-boards/${newTask.board}`, newTask)
   }
 
+  /* User API Methods */
+  postUser( newUser: any): Observable<any>{
+    return this.http.post<task>(`http://localhost:8000/user/member`, newUser)
+  }
+
 
 
 

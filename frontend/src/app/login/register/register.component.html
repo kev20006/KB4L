@@ -1,0 +1,25 @@
+<div class="example-container">
+    <mat-form-field>
+        <input matInput placeholder="username" [(ngModel)]="username">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <input matInput placeholder="email address" [(ngModel)]="email">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <input matInput placeholder="password" type="password" [(ngModel)]="password">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <input matInput placeholder="password" type="password" [(ngModel)]="password2">
+    </mat-form-field>
+    <div *ngIf="!passwordMatch()"> Passwords must match </div>
+    <div *ngIf="!passwordValid()"> The password's first character must be a letter,
+    it must contain at least 4 characters and no more than 15 characters and no characters other than letters,
+    numbers and the underscore may be used</div>
+
+    
+    <br>
+    <button mat-raised-button color="accent" (click)="register()" [disabled]="!formValid()">Register</button>
+</div>

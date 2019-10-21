@@ -1,31 +1,59 @@
-import { Injectable, ModuleWithComponentFactories, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as moment from 'moment';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { ApiService } from './api-service.service';
 
 
 @Injectable()
 export class UserService {
 
+    private _username: BehaviorSubject<string> = new BehaviorSubject<string>("");
+    private _token: BehaviorSubject<string> = new BehaviorSubject<string>("");
+    private _tokenExpires: BehaviorSubject<Date> = new BehaviorSubject<Date>(null);
+
+    readonly username$ = this._username.asObservable();
+    readonly token$ = this._token.asObservable();
+    readonly tokenExpires$ = this._tokenExpires.asObservable();
+
+    get username(): string {
+        return this._username.getValue();
+    }
+
+    set username(value:string){
+        this._username.next(value);
+    }
+
+    get token(): string {
+        return this._token.getValue();
+    }
+
+    set token(value: string) {
+        this._token.next(value);
+    }
+
+    get tokenExpires(): Date {
+        return this._tokenExpires.getValue();
+    }
+
+    set tokenExpires(value: Date) {
+        this._tokenExpires.next(value);
+    }
     //http options for API calls
     private httpOptions: any;
-
     //the JWT token
-    public token: string;
     public tokenDecoded: any;
-    //token expiration date
-    public tokenExpires: Date;
-
-    // the username of the logged in user
-    public username: string;
+   
 
     public errors: any = [];
 
-    constructor(private http: HttpClient){
+    constructor(private http: HttpClient, private api: ApiService){
         this.httpOptions = {
             headers: new HttpHeaders({ 'Content-Type': 'application/json' })
         };
         this.token = localStorage.token ? localStorage.token : null;
         this.tokenDecoded = localStorage.token ? this.decodeToken(this.token) : null;
+        this.username = localStorage.token ? this.tokenDecoded.username: null;
         this.tokenExpires = localStorage.tokenExpires ? new Date(Date.parse(localStorage.tokenExpires)) : null;
     }
 
@@ -55,7 +83,7 @@ export class UserService {
         this.token = null;
         this.tokenExpires = null;
         this.username = null;
-        localStorage.removeItem('token_expires');
+        localStorage.removeItem('tokenExpires');
         localStorage.removeItem('token');
     }
 
@@ -69,15 +97,21 @@ export class UserService {
 
         // decode the token to read the username and expiration timestamp
         this.tokenDecoded = this.decodeToken(token)
- 
+        this.username = this.tokenDecoded.username
         this.tokenExpires = new Date(this.tokenDecoded.exp * 1000);
-
+        console.log(this.tokenDecoded)
         localStorage.setItem('token', this.token);
         localStorage.setItem('tokenExpires', `${this.tokenExpires}`)
     }
 
     public isLoggedIn(){
-        return moment().isBefore(this.tokenExpires)
+        try{
+            return moment().isBefore(this.tokenExpires)
+        }
+        catch{
+            return false;
+        }
+       
     }
 
     public isLoggedOut(){
@@ -99,5 +133,17 @@ export class UserService {
                 this.errors = err['error'];
             }
         );
+    }
+
+    public createUser(user: any){
+        let tmpPassword = user.password
+        this.api.postUser(user).subscribe(
+            data => {
+                this.login({
+                    username: data.username,
+                    password: tmpPassword
+                })
+            }
+        )
     }
 }

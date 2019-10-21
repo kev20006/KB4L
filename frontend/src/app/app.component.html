@@ -1,11 +1,18 @@
 <nav>
   <mat-toolbar color="primary">
     <mat-toolbar-row>
-      <h1>kanban4life</h1>
-      <p *ngIf="userService.isLoggedIn() else login">{{userService.tokenDecoded.username}}</p>
+      <h1><a routerLink="/">kanban4life</a></h1>
+      <div *ngIf="userService.isLoggedIn() else login" style="display:flex">
+        <p><a routerLink="my-boards">{{ username }}</a></p>
+        <p style="margin-left:15px"><a href="#" (click)="logout()">Logout</a></p>
+      </div>
       <ng-template #login>
-        <p><a routerLink="/login">Login</a></p>
+        <div style="display:flex">
+          <p><a routerLink="/login">Login</a></p>
+          <p style="margin-left:15px"><a routerLink="register">Register</a></p>
+        </div>
       </ng-template>
+    
     </mat-toolbar-row>
   </mat-toolbar>
 </nav>

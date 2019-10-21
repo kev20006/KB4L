@@ -30,7 +30,8 @@ import { OpenModalButtonComponent, AddNewTaskDialog, AddNewBoardDialog } from '.
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashboardHeaderComponent } from './dashboard/dashboard-header/dashboard-header.component';
 import { RecentActivityComponent } from './dashboard/recent-activity/recent-activity.component';
-import { LoginTestComponent } from './login-test/login-test.component';
+import { LoginTestComponent } from './login/login-test/login-test.component';
+import { RegisterComponent } from './login/register/register.component';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { LoginTestComponent } from './login-test/login-test.component';
     DashboardHeaderComponent,
     RecentActivityComponent,
     LoginTestComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

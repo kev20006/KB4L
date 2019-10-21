@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../user.service'
 import { BoardService } from '../../board-service.service'
-import { Observable } from 'rxjs';
 import { board} from '../../interfaces/interfaces'
+
 @Component({
   selector: 'app-boards-list',
   templateUrl: './boards-list.component.html',
@@ -15,7 +15,8 @@ export class BoardsListComponent implements OnInit {
   constructor(private userService: UserService, private boardService: BoardService) { }
 
   ngOnInit() {
-    this.boardService.setBoardListByUser('admin')
+    this.userService.refreshToken();
+    this.boardService.setBoardListByUser(this.userService.tokenDecoded.username)
     this.boardService.boardList$.subscribe(
       data => this.boardList = data
     )
