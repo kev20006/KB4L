@@ -63,7 +63,7 @@ def board_by_user(request, username):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET', 'DELETE'])
+@api_view(['GET', 'DELETE '])
 @permission_classes([IsAuthenticated])
 def board_by_url(request, url):
     url = '/{0}/'.format(url)
