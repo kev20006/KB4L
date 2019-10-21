@@ -8,4 +8,4 @@ urlpatterns = [
     path('member', is_member),
     path('username/<str:username>', board_by_user),
     path('url/<str:url>', board_by_url)
-    ]
+]

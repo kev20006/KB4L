@@ -63,12 +63,11 @@ def board_by_user(request, username):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'DELETE '])
 @permission_classes([IsAuthenticated])
 def board_by_url(request, url):
+    url = '/{0}/'.format(url)
     if request.method == 'GET':
-        url = '/{0}/'.format(url)
-        print(url)
         try:
             board = Board.objects.get(board_url=url)
             return Response(BoardSerializer(board).data)
@@ -77,6 +76,17 @@ def board_by_url(request, url):
                 "id": -1,
                 "error": "invalid url"
                 })
+    if request.method == 'DELETE':
+        try:
+            Board.objects.get(board_url=url).delete()
+            return Response({
+                "success": True
+            })
+        except:
+            return Response({
+                "success": False
+            })
+
 
 
 @api_view(['GET'])
