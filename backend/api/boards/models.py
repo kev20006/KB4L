@@ -12,14 +12,10 @@ class Board(models.Model):
     board_picture = models.CharField(max_length=100)
     description = models.TextField()
     board_url = models.CharField(max_length=25, default="/"+ new_code +"/", unique=True)
-    joining_code = models.CharField(max_length=10, default=new_code, unique=False)
+    joining_code = models.CharField(max_length=10, default=new_code, unique=True)
 
 class Member(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     board_id = models.ForeignKey(Board, on_delete=models.CASCADE)
     is_admin = models.BooleanField()
     score = models.IntegerField(default=0)
-
-class Recent_Activity(models.Model):
-    board_id = models.ForeignKey(Board, on_delete=models.CASCADE)
-    message = models.TextField()
