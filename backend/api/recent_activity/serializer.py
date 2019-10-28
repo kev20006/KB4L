@@ -1,9 +1,9 @@
 from django.db import models
 
 from rest_framework import serializers
-from .models import Recent_Activity
+from .models import RecentActivity
 
 class Recent_Activity_Serializer(serializers.ModelSerializer):
     class Meta:
-        model = Recent_Activity
+        model = RecentActivity
         fields = ['board_id', 'message']

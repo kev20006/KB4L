@@ -37,12 +37,12 @@ export class ApiService {
 
   /* Task API Methods */
   getTasksByBoard(boardId): Observable<task[]> {
-    return boardId ? this.http.get<task[]>(`http://localhost:8000/my-boards/${boardId}?format=json`) : null;
+    return boardId ? this.http.get<task[]>(`http://localhost:8000/tasks/${boardId}?format=json`) : null;
   }
 
   postTask( newTask: task ): Observable<any> {
     newTask.id = null;
-    return this.http.post< task >(`http://localhost:8000/my-boards/${newTask.board}`, newTask)
+    return this.http.post<task>(`http://localhost:8000/tasks/${newTask.board}`, newTask)
   }
 
   /* User API Methods */
