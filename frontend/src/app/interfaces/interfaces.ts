@@ -24,3 +24,14 @@ export interface taskList {
     inProgress: task[],
     completed: task[]
 }
+
+export interface member {
+    username: string,
+    score: number,
+    is_admin: boolean
+}
+
+export interface memberList {
+    members: member[],
+    
+}

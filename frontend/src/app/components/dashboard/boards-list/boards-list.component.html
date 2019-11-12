@@ -19,7 +19,7 @@
                 <button mat-raised-button color="primary" routerLink="{{'../my-boards' + board.board_url }}"
                     (click)="setBoard(board)">VIEW</button>
                 <button mat-raised-button color="accent">EDIT</button>
-                <button mat-raised-button color="warn" (click)="delete(board.board_url)">DELETE</button>
+                <button mat-raised-button color="warn" (click)="delete(board.id)">DELETE</button>
             </mat-card-actions>
         </mat-card>
     </main>

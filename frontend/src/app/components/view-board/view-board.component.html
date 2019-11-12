@@ -6,6 +6,14 @@
             <h1>{{ board.name }}</h1>
         </mat-card-title>
     </mat-card-header>
+    <button  mat-raised-button [matMenuTriggerFor]="menu">Board Members <span> {{ boardService.memberList.length }} </span></button>
+    <app-open-modal-button color="accent" buttonMessage="Add New Member" modalTarget="AddNewMembers"></app-open-modal-button>
+    <button *ngIf="isAdmin()" mat-raised-button color="warn">Delete Board</button>
+    <mat-menu #menu="matMenu">
+        <mat-list role="list">
+            <mat-list-item *ngFor="let member of boardService.memberList">{{ member.username }}</mat-list-item>
+        </mat-list>
+    </mat-menu>
     <div cdkDropListGroup>
         <div class="example-container">
             <h2>To do</h2>

@@ -1,8 +1,11 @@
-import { Component, Inject, Input, TemplateRef } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatChipInputEvent } from '@angular/material/chips';
 
-import { task, board } from '../interfaces/interfaces'
-import { BoardService } from '../board-service.service'
+
+import { task, board } from '../../interfaces/interfaces'
+import { BoardService } from '../../services/board-service.service'
 
 @Component({
   selector: 'app-open-modal-button',
@@ -13,6 +16,7 @@ export class OpenModalButtonComponent {
 
   @Input() buttonMessage:string
   @Input() modalTarget: string
+  @Input() color: string = "primary"
   constructor(private dialog: MatDialog, private boardService: BoardService) { }
 
   private modalStore = {
@@ -20,7 +24,7 @@ export class OpenModalButtonComponent {
       "component":AddNewTaskDialog,
       "exitFunction": (result)=>{
         const newTask: task = {
-          id: `${Math.ceil(Math.random() * 1000 + 1)}`,
+          id: `${-Math.ceil(Math.random() * 1000 + 1)}`,
           title: result.title,
           description: result.description,
           points: result.points,
@@ -37,7 +41,7 @@ export class OpenModalButtonComponent {
       "component": AddNewBoardDialog,
       "exitFunction": (result) => {
         const newBoard: board = {
-          id: Math.ceil(Math.random() * 1000 + 1),
+          id: -Math.ceil(Math.random() * 1000 + 1),
           name: result.name,
           board_picture: result.imageUrl,
           description: result.description,
@@ -45,6 +49,12 @@ export class OpenModalButtonComponent {
           joining_code: "placeholder"
         };
         this.boardService.addBoard(newBoard);
+      }
+    },
+    "AddNewMembers": {
+      "component": AddNewMembersDialog,
+      "exitFunction": (result) => {
+        console.log("I'm done!!")
       }
     }
   }
@@ -66,8 +76,8 @@ export class OpenModalButtonComponent {
 
 /********************* Add New Task **********************/
 @Component({
-  selector: 'dialog-overview-example-dialog',
   templateUrl: './templates/add-new-task-template.html',
+  styleUrls: ['./open-modal-button.component.scss']
 })
 
 export class AddNewTaskDialog {
@@ -84,8 +94,8 @@ export class AddNewTaskDialog {
 
 /********************* Add New Board **********************/
 @Component({
-  selector: 'dialog-overview-example-dialog',
   templateUrl: './templates/add-new-board-template.html',
+  styleUrls: ['./open-modal-button.component.scss']
 })
 
 export class AddNewBoardDialog {
@@ -100,3 +110,58 @@ export class AddNewBoardDialog {
 
 }
 
+/********************* Add New Members **********************/
+
+@Component({
+  templateUrl: './templates/add-new-members-template.html',
+  styleUrls: ['./open-modal-button.component.scss']
+})
+
+export class AddNewMembersDialog implements OnInit {
+
+  private emails: string[] = [];
+  private boardCode
+  // config for chips
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  
+  constructor(
+    public boardService: BoardService,
+    public dialogRef: MatDialogRef<AddNewMembersDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: board) { }
+
+  ngOnInit(){
+    this.boardCode = this.boardService.getCurrentBoard().joining_code
+  }
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add an email
+    if ((value || '').trim()) {
+      this.emails.push(value.trim());
+    }
+
+    // reset the value for next input
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  remove(email: string): void {
+    const index = this.emails.indexOf(email);
+
+    if (index >= 0) {
+      this.emails.splice(index, 1);
+    }
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}

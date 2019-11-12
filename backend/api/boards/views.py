@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
@@ -88,6 +88,30 @@ def board_by_url(request, url):
             })
 
 
+@api_view(['GET', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def board_by_id(request, id):
+    if request.method == 'GET':
+        try:
+            board = Board.objects.get(id=id)
+            return Response(BoardSerializer(board).data)
+        except:
+            return Response({
+                "id": -1,
+                "error": "invalid id"
+            })
+    elif request.method == 'DELETE':
+        try:
+            Board.objects.get(id=id).delete()
+            return Response({
+                "success": True
+            })
+        except:
+            return Response({
+                "success": False
+            })
+
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -100,3 +124,21 @@ def is_member(request):
             return Response({"is_member": True})
         except:
             return Response({"is_member": False})
+
+
+@api_view(['GET'])
+@permission_classes([])
+def member_by_board(request, id):
+    try:
+        members = Member.objects.filter(board_id=id)
+        member_names = []
+        member_scores = []
+        admins = []
+        for i in members:
+            member_names.append(i.user_id.username)
+            member_scores.append(i.score)
+            if i.is_admin:
+                admins.append(i.user_id.username)
+        return Response({"memberNames": member_names, "memberScores": member_scores, "admins": admins })
+    except:
+        return Response({"error": "resource not found"}, status=status.HTTP_404_NOT_FOUND)

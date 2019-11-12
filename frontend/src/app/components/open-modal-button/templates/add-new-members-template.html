@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>Add New Members</h1>
+<mat-tab-group dynamicHeight>
+    <mat-tab label="Add by Email"> 
+        <p>Send out invites to your friends and family by there email account</p>
+        <mat-form-field class="email-chip-list input-100">
+            <mat-chip-list #chipList aria-label="Add Email Addresses">
+                <mat-chip *ngFor="let email of emails" [selectable]="selectable" [removable]="removable"
+                    (removed)="remove(email)">
+                    {{email}}
+                    <span matChipRemove *ngIf="removable">x</span>
+                </mat-chip>
+                <input placeholder="invite emails" [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                    (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+        </mat-form-field>
+        <p>People on this list who already have a kb4l membership will automatically be added to the board</p>
+        <p>Emails will be sent to any new users and will prompt them to open an account.</p>
+        <div class="example-button-row">
+            <button mat-raised-button color="accent" [mat-dialog-close]="data">Add Members</button>
+            <button mat-raised-button color="warn" (click)="onNoClick()"> Cancel </button>
+        </div>
+    </mat-tab>
+    <mat-tab label="Share a Joining Code"> 
+        <h3>Board Joining Code:</h3> 
+        <p>Share the following code with your friends and family, they can use this to join if they have an account with kb4l</p>
+        <h3 class="mono-spaced">{{ boardCode }}</h3>
+        <button mat-raised-button color="accent" (click)="onNoClick()"> Ok </button>
+    </mat-tab>
+</mat-tab-group>

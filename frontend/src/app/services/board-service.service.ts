@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { task, board, taskList } from './interfaces/interfaces'
+import { task, board, member } from '../interfaces/interfaces'
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from './api-service.service'
@@ -19,10 +19,12 @@ export class BoardService {
   private currentBoard: BehaviorSubject<board> = new BehaviorSubject<board>(null);
   private _tasks: BehaviorSubject<task[]> = new BehaviorSubject<task[]>([]);
   private _boardList: BehaviorSubject<board[]> = new BehaviorSubject<board[]>([]);
+  private _memberList: BehaviorSubject<member[]> = new BehaviorSubject<member[]>([]);
 
   readonly currentBoard$ = this.currentBoard.asObservable();
   readonly tasks$ = this._tasks.asObservable();
   readonly boardList$ = this._boardList.asObservable();
+  readonly memberList$ = this._memberList.asObservable();
 
   readonly todo$ = this.tasks$.pipe(
     map(tasks => tasks.filter(task => task.status === "1"))
@@ -52,6 +54,14 @@ export class BoardService {
     this._boardList.next(val);
   }
 
+  get memberList(): member[] {
+    return this._memberList.getValue()
+  }
+
+  set memberList(val: member[]) {
+    this._memberList.next(val);
+  }
+
   setBoardListByUser( username ){
     this.api.getBoardListByUser(username).subscribe(data => {
       if (data) {
@@ -77,6 +87,7 @@ export class BoardService {
     else{
       this.currentBoard.next(board) 
       this.getBoardTasks()
+      this.getMemberList(this.currentBoard.getValue().id)
     }
   }
 
@@ -114,11 +125,28 @@ export class BoardService {
     );
   }
 
-  deleteBoard( boardUrl: string ) {
-    this.api.deleteBoardByUrl( boardUrl ).subscribe(
+  deleteBoard( boardId: string ) {
+    this.api.deleteBoardById( boardId ).subscribe(
       result => {
         if(result.success){
-          this.boardList = this.boardList.filter(board => board.board_url != `/${boardUrl}/`)
+          this.boardList = this.boardList.filter(board => board.id != + boardId)
+        }
+      }
+    )
+  }
+
+  getMemberList ( boardId: number ) {
+    this.api.getUsersByBoard( boardId ).subscribe(
+      result => {
+        if(!result.error){
+          console.log(result)
+          this.memberList = result.memberNames.map((element, index) => {
+            return {
+              username: element,
+              score: result.memberScores[index],
+              is_admin: result.admins.includes(element)
+            }
+          })
         }
       }
     )

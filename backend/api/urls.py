@@ -22,12 +22,12 @@ from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/boards/', include('api.boards.urls')),
+    path('api/tasks/', include('api.tasks.urls')),
+    path('api/user/', include('api.users.urls')),
+    path('api/recent/', include('api.recent_activity.urls')),
+    path('api/api-token-auth/', obtain_jwt_token),
+    path('api/api-token-refresh/', refresh_jwt_token),
+    path('api/api-token-verify/', verify_jwt_token),
     path('', include('api.index.urls')),
-    path('boards/', include('api.boards.urls')),
-    path('tasks/', include('api.tasks.urls')),
-    path('user/', include('api.users.urls')),
-    path('recent/', include('api.recent_activity.urls')),
-    path('api-token-auth/', obtain_jwt_token),
-    path('api-token-refresh/', refresh_jwt_token),
-    path('api-token-verify/', verify_jwt_token),
 ]

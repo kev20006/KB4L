@@ -6,8 +6,8 @@ import { APP_BASE_HREF } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UserService } from './user.service';
-import { BoardsListComponent } from './dashboard/boards-list/boards-list.component';
+import { UserService } from './services/user.service';
+import { BoardsListComponent } from './components/dashboard/boards-list/boards-list.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,17 +21,20 @@ import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { AuthInterceptor } from './auth.interceptor';
-import { IndexComponent } from './index/index.component';
+import { IndexComponent } from './components/index/index.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ViewBoardComponent } from './view-board/view-board.component';
-import { OpenModalButtonComponent, AddNewTaskDialog, AddNewBoardDialog } from './open-modal-button/open-modal-button.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { DashboardHeaderComponent } from './dashboard/dashboard-header/dashboard-header.component';
-import { RecentActivityComponent } from './dashboard/recent-activity/recent-activity.component';
-import { LoginTestComponent } from './login/login-test/login-test.component';
-import { RegisterComponent } from './login/register/register.component';
+import { ViewBoardComponent } from './components/view-board/view-board.component';
+import { OpenModalButtonComponent, AddNewTaskDialog, AddNewBoardDialog, AddNewMembersDialog } from './components/open-modal-button/open-modal-button.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashboardHeaderComponent } from './components/dashboard/dashboard-header/dashboard-header.component';
+import { RecentActivityComponent } from './components/dashboard/recent-activity/recent-activity.component';
+import { LoginTestComponent } from './components/login/login-test/login-test.component';
+import { RegisterComponent } from './components/login/register/register.component';
+
 
 
 @NgModule({
@@ -43,6 +46,7 @@ import { RegisterComponent } from './login/register/register.component';
     OpenModalButtonComponent,
     AddNewTaskDialog,
     AddNewBoardDialog,
+    AddNewMembersDialog,
     DashboardComponent,
     DashboardHeaderComponent,
     RecentActivityComponent,
@@ -66,11 +70,14 @@ import { RegisterComponent } from './login/register/register.component';
     MatTableModule,
     MatChipsModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatMenuModule,
+    MatTabsModule
   ],
   entryComponents: [
     AddNewTaskDialog,
-    AddNewBoardDialog
+    AddNewBoardDialog,
+    AddNewMembersDialog
   ],
   providers: [
     UserService,

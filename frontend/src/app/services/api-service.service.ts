@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { task, board, taskList } from './interfaces/interfaces'
+import { task, board, taskList } from '../interfaces/interfaces'
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -12,11 +12,11 @@ export class ApiService {
 
   /* Board API Methods */
   getBoardListByUser(username: string ) : Observable<any> {
-    return this.http.get< board []>(`http://localhost:8000/boards/username/${username}?format=json`)
+    return this.http.get< board []>(`http://localhost:8000/api/boards/username/${username}?format=json`)
   }
 
   getBoardByUrl( boardUrl: string ): Observable<board> {
-    return this.http.get<board>(`http://localhost:8000/boards/url/${boardUrl}?format=json`)
+    return this.http.get<board>(`http://localhost:8000/api/boards/url/${boardUrl}?format=json`)
   }
 
   postBoard(newBoard: board): Observable<any> {
@@ -27,27 +27,30 @@ export class ApiService {
     postObject.name = newBoard.name
     postObject.board_picture = newBoard.board_picture
     postObject.description = newBoard.description
-    console.log(postObject)
-    return this.http.post<board>('http://localhost:8000/boards/username/admin', postObject)
+    return this.http.post<board>('http://localhost:8000/api/boards/username/admin', postObject)
   }
 
-  deleteBoardByUrl( boardUrl: string ): Observable<any> {
-    return this.http.delete<any>(`http://localhost:8000/boards/url/${boardUrl}?format=json`)
+  deleteBoardById( boardId: string ): Observable<any> {
+    return this.http.delete<any>(`http://localhost:8000/api/boards/id/${boardId}`)
   }
 
   /* Task API Methods */
   getTasksByBoard(boardId): Observable<task[]> {
-    return boardId ? this.http.get<task[]>(`http://localhost:8000/tasks/${boardId}?format=json`) : null;
+    return boardId ? this.http.get<task[]>(`http://localhost:8000/api/tasks/${boardId}?format=json`) : null;
   }
 
   postTask( newTask: task ): Observable<any> {
     newTask.id = null;
-    return this.http.post<task>(`http://localhost:8000/tasks/${newTask.board}`, newTask)
+    return this.http.post<task>(`http://localhost:8000/api/tasks/${newTask.board}`, newTask)
   }
 
   /* User API Methods */
   postUser( newUser: any): Observable<any>{
-    return this.http.post<task>(`http://localhost:8000/user/member`, newUser)
+    return this.http.post<task>(`http://localhost:8000/api/user/member`, newUser)
+  }
+
+  getUsersByBoard(boardId: number): Observable<any>{
+    return this.http.get(`http://localhost:8000/api/boards/member/${boardId}`)
   }
 
 
