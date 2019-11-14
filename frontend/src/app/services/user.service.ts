@@ -135,14 +135,23 @@ export class UserService {
         );
     }
 
-    public createUser(user: any){
+    public createUser(user: any, boardCode: string){
         let tmpPassword = user.password
         this.api.postUser(user).subscribe(
             data => {
+                console.log(data)
                 this.login({
                     username: data.username,
                     password: tmpPassword
                 })
+                this.api.postMemberByBoard({
+                    user_id: data.id,
+                    board_code: boardCode
+                }).subscribe(
+                    res => {
+                        console.log(res)
+                    }
+                )
             }
         )
     }

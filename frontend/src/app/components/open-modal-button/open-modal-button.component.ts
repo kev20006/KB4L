@@ -54,7 +54,7 @@ export class OpenModalButtonComponent {
     "AddNewMembers": {
       "component": AddNewMembersDialog,
       "exitFunction": (result) => {
-        console.log("I'm done!!")
+        this.boardService.addMembers(result);
       }
     }
   }
@@ -119,8 +119,6 @@ export class AddNewBoardDialog {
 
 export class AddNewMembersDialog implements OnInit {
 
-  private emails: string[] = [];
-  private boardCode
   // config for chips
   visible = true;
   selectable = true;
@@ -131,37 +129,45 @@ export class AddNewMembersDialog implements OnInit {
   constructor(
     public boardService: BoardService,
     public dialogRef: MatDialogRef<AddNewMembersDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: board) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(){
-    this.boardCode = this.boardService.getCurrentBoard().joining_code
+    this.data.emails = [];
+    this.data.boardCode = this.boardService.getCurrentBoard().joining_code
   }
 
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
-
-    // Add an email
     if ((value || '').trim()) {
-      this.emails.push(value.trim());
+      if (this.validateEmail(event.value)) {
+        this.data.emails.push({ value: value, invalid: false });
+      } 
+      else {
+        this.data.emails.push({ value: value, invalid: true });
+      }
     }
 
-    // reset the value for next input
     if (input) {
       input.value = '';
     }
   }
 
   remove(email: string): void {
-    const index = this.emails.indexOf(email);
+    const index = this.data.emails.indexOf(email);
 
     if (index >= 0) {
-      this.emails.splice(index, 1);
+      this.data.emails.splice(index, 1);
     }
   }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  private validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
   }
 
 }

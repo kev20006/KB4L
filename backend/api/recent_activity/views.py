@@ -39,6 +39,14 @@ def task_assigned_to_user(username, board_id, task_name):
     )
     RecentActivity.objects.create(board_id=board, message=message)
 
+
+def add_user_to_board(username, board_id):
+    board = Board.objects.get(id=board_id)
+    message = "{}: {} has joined the board".format(
+        board.name, username
+    )
+    RecentActivity.objects.create(board_id=board, message=message)
+
 @api_view(['GET'])
 @authentication_classes([])
 @permission_classes([])

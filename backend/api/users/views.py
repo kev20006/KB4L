@@ -15,10 +15,11 @@ from .serializers import UserSerializer
 @api_view(['POST'])
 @authentication_classes([])
 @permission_classes([ ])
-def createUser( request, format = None):
-        serializer=UserSerializer(data = request.data)
-        if serializer.is_valid():
-            user=serializer.save()
-            if user:
-                return Response(serializer.data, status = status.HTTP_201_CREATED)
-
+def createUser(request, format = None):
+    print(request.data)
+    serializer=UserSerializer(data = request.data)
+    if serializer.is_valid():
+        user=serializer.save()
+        if user:
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+    return Response({"error":"fail"})

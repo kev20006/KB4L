@@ -4,13 +4,18 @@
         <p>Send out invites to your friends and family by there email account</p>
         <mat-form-field class="email-chip-list input-100">
             <mat-chip-list #chipList aria-label="Add Email Addresses">
-                <mat-chip *ngFor="let email of emails" [selectable]="selectable" [removable]="removable"
-                    (removed)="remove(email)">
-                    {{email}}
+                <mat-chip [color]= "(email.invalid)?'warn':'primary'" *ngFor="let email of data.emails" 
+                    [selectable]="selectable"
+                    [removable]="removable"
+                    (removed)="remove(email)"
+                    selected>
+                    {{ email.value }}
                     <span matChipRemove *ngIf="removable">x</span>
                 </mat-chip>
-                <input placeholder="invite emails" [matChipInputFor]="chipList"
-                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                <input placeholder="invite emails" type="email"
+                    [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" 
+                    [matChipInputAddOnBlur]="addOnBlur"
                     (matChipInputTokenEnd)="add($event)">
             </mat-chip-list>
         </mat-form-field>

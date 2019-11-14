@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 
 @Component({
@@ -12,10 +13,22 @@ export class RegisterComponent implements OnInit {
   public password: string;
   public password2: string;
   public email: string;
+  private board_code: string = null
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
+    this.route
+      .queryParams
+      .subscribe(params => {
+        this.email = params['email']
+        this.board_code = params['board_code']
+        console.log(this.board_code)
+      })
   }
 
   passwordMatch(){
@@ -47,6 +60,6 @@ export class RegisterComponent implements OnInit {
       username: this.username,
       password: this.password,
       email: this.email
-    })
+    }, this.board_code)
   }
 }

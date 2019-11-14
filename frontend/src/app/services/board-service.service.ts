@@ -151,5 +151,22 @@ export class BoardService {
       }
     )
   }
+
+  addMembers ( mailingList: any ) {
+    const validMembers = mailingList.emails.filter(element => {
+      if(!element.invalid){
+        return element.value
+      }
+    })
+    const postObject = {
+      boardCode: mailingList.boardCode,
+      emails: validMembers
+    }
+    this.api.postMembers(postObject).subscribe(
+      result=> {
+        this.getMemberList(this.getCurrentBoard().id)
+      }
+    );
+  }
 }
 

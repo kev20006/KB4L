@@ -53,9 +53,12 @@ export class ApiService {
     return this.http.get(`http://localhost:8000/api/boards/member/${boardId}`)
   }
 
+  postMemberByBoard(postData: any): Observable<any> {
+    console.log(postData)
+    return this.http.post<any>(`http://localhost:8000/api/boards/members/new`, postData)
+  }
 
-
-
-
-
+  postMembers(listOfMembers){
+    return this.http.post<any>(`http://localhost:8000/api/boards/members`, listOfMembers)
+  }
 }
