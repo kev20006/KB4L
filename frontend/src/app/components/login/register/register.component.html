@@ -1,25 +1,43 @@
 <div class="example-container">
-    <mat-form-field>
-        <input matInput placeholder="username" [(ngModel)]="username">
-    </mat-form-field>
-    <br>
-    <mat-form-field>
-        <input matInput placeholder="email address" [(ngModel)]="email">
-    </mat-form-field>
-    <br>
-    <mat-form-field>
-        <input matInput placeholder="password" type="password" [(ngModel)]="password">
-    </mat-form-field>
-    <br>
-    <mat-form-field>
-        <input matInput placeholder="password" type="password" [(ngModel)]="password2">
-    </mat-form-field>
-    <div *ngIf="!passwordMatch()"> Passwords must match </div>
-    <div *ngIf="!passwordValid()"> The password's first character must be a letter,
-    it must contain at least 4 characters and no more than 15 characters and no characters other than letters,
-    numbers and the underscore may be used</div>
-
-    
-    <br>
-    <button mat-raised-button color="accent" (click)="register()" [disabled]="!formValid()">Register</button>
+    <form [formGroup]="regiserUserForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+            <input matInput placeholder="username" formControlName="username">
+        </mat-form-field>
+        <div *ngIf="registerForm.username.dirty && registerForm.username.errors" class="invalid-feedback">
+            <div class="error-text" *ngIf="registerForm.username.errors.required">username is required</div>
+        </div>
+        <br>
+        <mat-form-field>
+            <input matInput placeholder="email address" formControlName="email">
+        </mat-form-field>
+        <div *ngIf="registerForm.email.dirty && registerForm.email.errors" class="invalid-feedback">
+            <div class="error-text" *ngIf="registerForm.email.errors.required">Email is required</div>
+            <div class="error-text" *ngIf="registerForm.email.errors.email">Email must be a valid email address</div>
+        </div>
+        <br>
+        <mat-form-field>
+            <input matInput placeholder="password" type="password" formControlName="password">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <input matInput placeholder="password" type="password" formControlName="password2">
+        </mat-form-field>
+        <div *ngIf="registerForm.password.submit && registerForm.password.errors" class="invalid-feedback">
+            <div class="error-text" *ngIf="registerForm.password.errors.required || registerForm.password2.errors.required">
+                password is required
+            </div>
+            <div class="error-text" *ngIf="registerForm.password.errors.pattern || registerForm.password2.errors.required">
+                <ul>
+                    <li>The password's first character must be a letter</li>
+                    <li>It must contain at least 4 characters and no more than 15 characters</li>
+                    <li>No characters other than letters, numbers and the underscore may be used</li>
+                </ul>
+            </div>
+           
+        </div>
+        <div class="error-text" *ngIf="regiserUserForm.errors">Passwords must match</div>
+        <br>
+        <div class="error-text" *ngIf="error == 'could-not-add-user'"> {{ errors }}</div>
+        <button mat-raised-button color="accent" type="submit" (click)="register()" [disabled]="!registerForm.valid && registerForm.pristine">Register</button>
+    </form>
 </div>

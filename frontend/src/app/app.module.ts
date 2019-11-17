@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -34,6 +34,7 @@ import { DashboardHeaderComponent } from './components/dashboard/dashboard-heade
 import { RecentActivityComponent } from './components/dashboard/recent-activity/recent-activity.component';
 import { LoginTestComponent } from './components/login/login-test/login-test.component';
 import { RegisterComponent } from './components/login/register/register.component';
+import { RegisterModalComponent } from './components/login/register/register.modal.component';
 
 
 
@@ -51,7 +52,8 @@ import { RegisterComponent } from './components/login/register/register.componen
     DashboardHeaderComponent,
     RecentActivityComponent,
     LoginTestComponent,
-    RegisterComponent
+    RegisterComponent,
+    RegisterModalComponent
   ],
   imports: [
     BrowserModule,
@@ -72,12 +74,15 @@ import { RegisterComponent } from './components/login/register/register.componen
     MatSelectModule,
     MatCheckboxModule,
     MatMenuModule,
-    MatTabsModule
+    MatTabsModule,
+    ReactiveFormsModule
   ],
   entryComponents: [
     AddNewTaskDialog,
     AddNewBoardDialog,
-    AddNewMembersDialog
+    AddNewMembersDialog,
+    LoginTestComponent,
+    RegisterModalComponent
   ],
   providers: [
     UserService,

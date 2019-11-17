@@ -1,7 +1,10 @@
 <mat-card>
     <mat-card-header class="my-boards-header">
         <mat-card-title>My Boards</mat-card-title>
-        <app-open-modal-button buttonMessage="add new board" modalTarget="AddNewBoardDialog"></app-open-modal-button>
+        <div class="button-wrapper">
+            <app-open-modal-button buttonMessage="add new board" modalTarget="AddNewBoardDialog"></app-open-modal-button>
+            <app-open-modal-button buttonMessage="Join a Board" modalTarget="AddNewBoardDialog"></app-open-modal-button>
+        </div>
     </mat-card-header>
     <h3></h3>
     <main *ngIf="boardList" class="my-boards-wrapper">

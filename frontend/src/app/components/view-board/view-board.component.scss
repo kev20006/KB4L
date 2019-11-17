@@ -56,3 +56,10 @@
 .member-list{
   list-style: none;
 }
+
+.button-wrapper{
+  display:flex;
+  app-open-modal-button, button{
+    margin-left:5px;
+  }
+}

@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Component, OnInit, Inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms'
 import { UserService } from '../../../services/user.service';
+
 
 @Component({
   selector: 'app-register',
@@ -9,57 +11,63 @@ import { UserService } from '../../../services/user.service';
 })
 export class RegisterComponent implements OnInit {
   
-  public username: string;
-  public password: string;
-  public password2: string;
-  public email: string;
-  private board_code: string = null
+  public regiserUserForm: FormGroup = new FormGroup({
+    username: new FormControl('', [Validators.required]),
+    password: new FormControl('', [
+      Validators.pattern(/^[a-zA-Z]\w{3,14}$/),
+      Validators.required
+    ]),
+    password2: new FormControl('', [
+      Validators.pattern(/^[a-zA-Z]\w{3,14}$/),
+      Validators.required,
+    ]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email
+    ])
+  })
 
+  get registerForm(){ return this.regiserUserForm.controls}
+  
+  private board_code: string = null
+  private error: string = ""
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router
   ) {}
 
   ngOnInit() {
     this.route
       .queryParams
       .subscribe(params => {
-        this.email = params['email']
+        this.regiserUserForm.controls.email.setValue(params['email'])
         this.board_code = params['board_code']
-        console.log(this.board_code)
       })
+    this.userService.errors$.subscribe(
+      data => {
+        this.error = data
+      }
+    )  
+    this.regiserUserForm.setValidators([this.passwordConfirming])
   }
 
-  passwordMatch(){
-    return this.password === this.password2
-  }
-
-  passwordBlank(){
-    return this.username === "" && this.password === ""
-  }
-
-  passwordValid(){
-    return (/^[a-zA-Z]\w{3,14}$/).test(this.password)
-  }
-  //The password's first character must be a letter, 
-  //it must contain at least 4 characters and no more than 15 characters and no characters other than letters, 
-  //numbers and the underscore may be used
-
-
-  usernameIsOriginal(){
-    return true;
-  }
-
-  formValid(){
-    return this.usernameIsOriginal() && this.passwordMatch() && !this.passwordBlank() && this.passwordValid();
+  passwordConfirming(control: AbstractControl): { [key: string]: any } | null {
+    const passMatch = control.get("password2").value === control.get("password").value;
+    return passMatch ? null : { invalid: true };
   }
 
   register(){
     this.userService.createUser({
-      username: this.username,
-      password: this.password,
-      email: this.email
+      username: this.registerForm.username.value,
+      password: this.registerForm.password.value,
+      email: this.registerForm.email.value
     }, this.board_code)
+    
+  }
+
+  onSubmit() {
+    if(this.regiserUserForm.valid){
+      this.register
+    }
   }
 }

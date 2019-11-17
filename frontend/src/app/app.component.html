@@ -8,8 +8,10 @@
       </div>
       <ng-template #login>
         <div style="display:flex">
-          <p><a routerLink="/login">Login</a></p>
-          <p style="margin-left:15px"><a routerLink="register">Register</a></p>
+          <p>
+            <app-open-modal-button buttonMessage="Login" modalTarget="Login" color="accent"></app-open-modal-button>
+          </p>
+          <p style="margin-left:15px"><app-open-modal-button buttonMessage="Register" modalTarget="Register" color="accent"></app-open-modal-button></p>
         </div>
       </ng-template>
     

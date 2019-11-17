@@ -8,14 +8,6 @@
     </mat-form-field>
     <br>
     <button mat-raised-button color="accent" (click)="login()">login</button>
+    <p class="error-text" *ngIf="error =='invalid-request'"> Incorrect username or password </p>
 </div>
-<button (click)="verify()" > verify</button>
-<div>
-    <p>debug:</p>
-    <pre> {{ username }} </pre>
-    <pre> {{ password }} </pre>
-    <pre> {{ userService.username }} </pre>
-    <pre> {{ userService.token }} </pre>
-    <pre> {{ userService.tokenExpires }} </pre>
-    <pre> {{ userService.isLoggedIn() }} </pre>
-</div>
+

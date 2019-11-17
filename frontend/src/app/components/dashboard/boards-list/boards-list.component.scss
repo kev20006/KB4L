@@ -14,6 +14,13 @@
 .my-boards-header {
     display:flex;
     justify-content: space-between;
+
+    .button-wrapper{
+        display:flex;
+        app-open-modal-button{
+            margin-right:5px;
+        }
+    }
 }
 
 mat-card{

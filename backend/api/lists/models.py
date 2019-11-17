@@ -6,11 +6,17 @@ from ..boards.models import Board
 # Create your models here.
 
 class List(models.Model):
+    """
+    Django model of a shopping list - each list consists of many items
+    """
     total_value = models.DecimalField(decimal_places=2, max_digits= 5)
     paid_so_far = models.DecimalField(default=0, decimal_places=2, max_digits=5)
     board_id = models.ForeignKey(Board, on_delete=models.CASCADE)
 
 class ListItem(models.Model):
+    """
+    Django model of a shopping list item
+    """
     name = models.CharField(max_length=25)
     description = models.TextField()
     thumbnail = models.CharField(max_length=100)

@@ -3,6 +3,9 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 
+// import the login and register components
+import { LoginTestComponent } from '../login/login-test/login-test.component'
+import { RegisterModalComponent } from '../login/register/register.modal.component'
 
 import { task, board } from '../../interfaces/interfaces'
 import { BoardService } from '../../services/board-service.service'
@@ -56,6 +59,12 @@ export class OpenModalButtonComponent {
       "exitFunction": (result) => {
         this.boardService.addMembers(result);
       }
+    },
+    "Login": {
+      "component": LoginTestComponent
+    },
+    "Register": {
+      "component": RegisterModalComponent
     }
   }
 

@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 import * as moment from 'moment';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 import { ApiService } from './api-service.service';
+import { retry, catchError } from 'rxjs/operators';
+
 
 
 @Injectable()
@@ -11,10 +14,12 @@ export class UserService {
     private _username: BehaviorSubject<string> = new BehaviorSubject<string>("");
     private _token: BehaviorSubject<string> = new BehaviorSubject<string>("");
     private _tokenExpires: BehaviorSubject<Date> = new BehaviorSubject<Date>(null);
+    private _errors: BehaviorSubject<string> = new BehaviorSubject<string>("bob");
 
     readonly username$ = this._username.asObservable();
     readonly token$ = this._token.asObservable();
     readonly tokenExpires$ = this._tokenExpires.asObservable();
+    readonly errors$ = this._errors.asObservable();
 
     get username(): string {
         return this._username.getValue();
@@ -39,15 +44,21 @@ export class UserService {
     set tokenExpires(value: Date) {
         this._tokenExpires.next(value);
     }
+
+    get errors(): string {
+        return this._errors.getValue();
+    }
+
+    set errors(value: string) {
+        this._errors.next(value);
+    }
+
     //http options for API calls
     private httpOptions: any;
     //the JWT token
     public tokenDecoded: any;
-   
 
-    public errors: any = [];
-
-    constructor(private http: HttpClient, private api: ApiService){
+    constructor( private http: HttpClient, private api: ApiService, private router: Router){
         this.httpOptions = {
             headers: new HttpHeaders({ 'Content-Type': 'application/json' })
         };
@@ -57,16 +68,39 @@ export class UserService {
         this.tokenExpires = localStorage.tokenExpires ? new Date(Date.parse(localStorage.tokenExpires)) : null;
     }
 
-    public login(user){
-        this.http.post('http://localhost:8000/api/api-token-auth/', JSON.stringify(user), this.httpOptions).subscribe(
-           data => {
-               this.updateData(data['token']);
+    public login(user) {
+        this.http.post('http://localhost:8000/api/api-token-auth/', JSON.stringify(user), this.httpOptions)
+            .pipe(
+                retry(1),
+                catchError(this.handleError)
+            )
+        .subscribe(
+            (response:any)=>{
+                this.updateData(response['token']);
+                this.router.navigate(["my-boards"])
+                this.errors = "logged-in";   
            },
            err => {
-               this.errors = err['error']
+               console.log(err)
+               this.errors = "invalid-request";   
            }
         );
     }
+    
+    handleError(error) {
+        let errorMessage = '';
+        if (error.error instanceof ErrorEvent) {
+            // client-side error
+            errorMessage = `Error: ${error.error.message}`;
+        } else {
+            // server-side error
+            errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`
+            this.errors = "invalid-request";
+            console.log(this.errors)
+        }
+        return throwError(errorMessage);
+    }
+
 
     public refreshToken(){
         this.http.post('http://localhost:8000/api/api-token-refresh/', JSON.stringify({ token: this.token }), this.httpOptions).subscribe(
@@ -85,6 +119,7 @@ export class UserService {
         this.username = null;
         localStorage.removeItem('tokenExpires');
         localStorage.removeItem('token');
+        this.router.navigate([""])
     }
 
     public tokenLogin(){
@@ -93,7 +128,7 @@ export class UserService {
 
     private updateData(token) {
         this.token = token;
-        this.errors = [];
+        this.errors = "";
 
         // decode the token to read the username and expiration timestamp
         this.tokenDecoded = this.decodeToken(token)
@@ -139,19 +174,36 @@ export class UserService {
         let tmpPassword = user.password
         this.api.postUser(user).subscribe(
             data => {
-                console.log(data)
-                this.login({
-                    username: data.username,
-                    password: tmpPassword
-                })
-                this.api.postMemberByBoard({
-                    user_id: data.id,
-                    board_code: boardCode
-                }).subscribe(
-                    res => {
-                        console.log(res)
+                if(!data.error){
+                    this.login({
+                        username: data.username,
+                        password: tmpPassword
+                    })
+                    if (boardCode) {
+                        this.api.postMemberByBoard({
+                            user_id: data.id,
+                            board_code: boardCode
+                        }).subscribe(
+                            res => {
+                                if (!res.error) {
+                                    this.router.navigate(['my-boards'])
+                                    this.errors = "user-added-successfully";
+                                }
+                                else{
+                                    this.errors = "could-not-add-user";
+                                }
+
+                            }
+                        )
                     }
-                )
+                    else{
+                        this.router.navigate(['my-boards'])
+                        this.errors = "user-added-successfully";
+                    }
+                }
+                else{
+                    this.errors = "could-not-add-user";
+                }
             }
         )
     }
