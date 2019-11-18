@@ -7,12 +7,13 @@
         <textarea matInput placeholder="Short Description" [(ngModel)]="data.description"></textarea>
     </mat-form-field>
     <mat-form-field>
-        <mat-select placeholder="Priority" [(ngModel)]="data.priority">
-            <mat-option value="5">High Priority</mat-option>
-            <mat-option value="4">Medium High Priority</mat-option>
-            <mat-option value="3">Medium Priority</mat-option>
-            <mat-option value="2">Low Medium Priority</mat-option>
-            <mat-option value="1">Low Priority</mat-option>
+        <mat-select placeholder="Priority" [(ngModel)]="data.priority" [(value)]="selected">
+            <mat-select-trigger>{{ getPriorityText(selected)}}</mat-select-trigger>
+            <mat-option value="5"><app-priority [priority]="5"></app-priority>High Priority</mat-option>
+            <mat-option value="4"><app-priority [priority]="4"></app-priority>Medium High Priority</mat-option>
+            <mat-option value="3"><app-priority [priority]="3"></app-priority>Medium Priority</mat-option>
+            <mat-option value="2"><app-priority [priority]="2"></app-priority>Low Medium Priority</mat-option>
+            <mat-option value="1"><app-priority [priority]="1"></app-priority>Low Priority</mat-option>
         </mat-select>
     </mat-form-field>
     <mat-form-field>

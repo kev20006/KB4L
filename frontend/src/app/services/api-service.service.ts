@@ -46,6 +46,10 @@ export class ApiService {
     return boardId ? this.http.get<task[]>(`http://localhost:8000/api/tasks/${boardId}?format=json`) : null;
   }
 
+  getTasksByUser(userId): Observable<any[]> {
+    return this.http.get<task[]>(`http://localhost:8000/api/tasks/all/${userId}?format=json`);
+  }
+
   postTask( newTask: task ): Observable<any> {
     newTask.id = null;
     return this.http.post<task>(`http://localhost:8000/api/tasks/${newTask.board}`, newTask)

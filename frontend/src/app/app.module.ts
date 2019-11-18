@@ -49,6 +49,8 @@ import { RegisterComponent } from './components/login/register/register.componen
 import { RegisterModalComponent } from './components/login/register/register.modal.component';
 import { BoardComponent } from './components/view-board/board/board.component';
 import { TaskComponent } from './components/view-board/task/task.component';
+import { CurrentTaskComponent } from './components/dashboard/dashboard-header/current-task/current-task.component';
+import { PriorityComponent } from './global-components/priority/priority.component';
 
 
 
@@ -71,7 +73,9 @@ import { TaskComponent } from './components/view-board/task/task.component';
     BoardComponent,
     TaskComponent,
     PaymentOptionsDialog,
-    CardPaymentDialog
+    CardPaymentDialog,
+    CurrentTaskComponent,
+    PriorityComponent
   ],
   imports: [
     BrowserModule,

@@ -114,6 +114,22 @@ export class AddNewTaskDialog implements OnInit {
     })
   } 
 
+  getPriorityText(priority: string){
+    switch (priority){
+      case "5": 
+        return "High Priority"
+      case "4":
+        return "Medium High Priority"
+      case "3":
+        return "Medium Priority"
+      case "2":
+        return "Low Medium Priority"
+      case "1":
+        return "Low Priority"
+
+    }
+  }
+
   onNoClick(): void {
     this.dialogRef.close();
   }

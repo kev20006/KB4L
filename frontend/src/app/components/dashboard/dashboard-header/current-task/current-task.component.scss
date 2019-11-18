@@ -1,0 +1,17 @@
+h3{
+    margin: 0;
+}
+
+p{
+    margin: 0;
+}
+
+.my-tasks-wraper{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    .left-wrapper{
+        display: flex;
+    }
+}
+

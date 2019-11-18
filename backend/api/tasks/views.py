@@ -1,6 +1,6 @@
 import jwt
 from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
@@ -8,6 +8,7 @@ from django.shortcuts import render
 
 from django.contrib.auth.models import User
 from .models import Job
+from ..boards.models import Board
 from .serializer import TaskSerializer
 
 from ..recent_activity.views import add_task_to_board
@@ -41,6 +42,25 @@ def get_job_list_by_board(request, board_id, format=None):
             )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+@authentication_classes([])
+@permission_classes([])
+def get_job_list_by_user(request, user_id):
+    """
+    Get a list of jobs assigned to a user
+    """
+    if request.method == 'GET':
+        jobs = Job.objects.filter(assigned_to=user_id)
+        serializer = TaskSerializer(jobs, many=True)
+        response_data = serializer.data
+        #modify default response to include board url and board name
+        for i in range(len(response_data)):
+            board_details = Board.objects.get(id=response_data[i]["board"])
+            response_data[i]["board_name"] = board_details.name
+            response_data[i]["board_url"] = board_details.board_url
+        return Response(response_data)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])

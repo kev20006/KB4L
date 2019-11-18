@@ -19,12 +19,14 @@ export class BoardService {
   private _boardList: BehaviorSubject<board[]> = new BehaviorSubject<board[]>([]);
   private _memberList: BehaviorSubject<member[]> = new BehaviorSubject<member[]>([]);
   private _boardCount: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  private _currentTasks: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
 
   readonly currentBoard$ = this.currentBoard.asObservable();
   readonly tasks$ = this._tasks.asObservable();
   readonly boardList$ = this._boardList.asObservable();
   readonly memberList$ = this._memberList.asObservable();
   readonly boardCount$ = this._boardCount.asObservable();
+  readonly currentTasks$ = this._currentTasks.asObservable();
 
   readonly todo$ = this.tasks$.pipe(map(tasks => tasks.filter(task => task.status === '1')));
 
@@ -64,11 +66,25 @@ export class BoardService {
     this._boardCount.next(val);
   }
 
+  get currentTasks(): any[] {
+    return this._currentTasks.getValue();
+  }
+
+  set currentTasks(val: any[]) {
+    this._currentTasks.next(val);
+  }
+
   setBoardListByUser(username) {
     this.api.getBoardListByUser(username).subscribe(data => {
       if (data) {
         this.boardList = data.boards;
       }
+    });
+  }
+
+  getCurrentTasksByUser(username){
+    return this.api.getTasksByUser(username).subscribe(data => {
+      this.currentTasks = data;
     });
   }
 
