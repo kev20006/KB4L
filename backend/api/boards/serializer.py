@@ -7,7 +7,7 @@ from .models import Board, Member
 class BoardSerializer(serializers.ModelSerializer):
     class Meta:
        model = Board
-       fields = ['id', 'name', 'board_picture', 'description', 'board_url','joining_code']
+       fields = ['id', 'name', 'board_picture', 'description', 'board_url', 'joining_code']
 
     def create(self, validated_data):
         """
@@ -39,10 +39,19 @@ class BoardSerializer(serializers.ModelSerializer):
 class MemberSerializer(serializers.ModelSerializer):
     class Meta:
        model = Member
-       fields = ['user_id', 'board_id', 'is_admin', 'score']
+       fields = ['user_id', 'board_id', 'is_admin', "is_creator", 'score']
 
     def create(self, validated_data):
         """
         Create and return a new member instance, given the validated data.
         """
         return Member.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        """
+        Update and return Member instance, given the validated data.
+        """
+        instance.is_admin = validated_data.get('is_admin', instance.is_admin)
+        instance.score = validated_data.get('score', instance.score)
+        instance.save()
+        return instance

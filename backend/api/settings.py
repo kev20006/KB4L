@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'api.lists',
     'api.tasks',
     'api.index',
+    'api.users',
     'api.recent_activity'
 ]
 

@@ -19,28 +19,6 @@
             <mat-list-item *ngFor="let member of boardService.memberList">{{ member.username }}</mat-list-item>
         </mat-list>
     </mat-menu>
-    <div cdkDropListGroup>
-        <div class="example-container">
-            <h2>To do</h2>
-            <div id="todo" cdkDropList [cdkDropListData]="boardService.todo$ | async"
-                class="example-list" (cdkDropListDropped)="drop($event)">
-                <div class="example-box" [cdkDragData]="item" *ngFor="let item of boardService.todo$ | async" cdkDrag>{{item.title}}</div>
-            </div>
-        </div>
-        <div class="example-container">
-            <h2>In Progress</h2>
-            <div id="inProgress" cdkDropList [cdkDropListData]="boardService.inProgress$ | async"
-                class="example-list" (cdkDropListDropped)="drop($event)">
-                <div class="example-box" [cdkDragData]="item" *ngFor="let item of boardService.inProgress$ | async" cdkDrag>{{item.title}}</div>
-            </div>
-        </div>
-        <div class="example-container">
-            <h2>Done</h2>
-            <div id="completed" cdkDropList [cdkDropListData]="boardService.completed$ | async"
-                class="example-list" (cdkDropListDropped)="drop($event)">
-                <div class="example-box" [cdkDragData]="item" *ngFor="let item of boardService.completed$ | async" cdkDrag>{{item.title}}</div>
-            </div>
-        </div>
-    </div>
+    <app-board></app-board>
 </mat-card>
 <app-open-modal-button buttonMessage="add new task" modalTarget="AddNewTaskDialog"></app-open-modal-button>

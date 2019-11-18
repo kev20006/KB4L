@@ -32,24 +32,6 @@ export class ViewBoardComponent implements OnInit {
     this.boardService.currentBoard$.subscribe(data => this.board = data )
   }
 
-  drop(event: CdkDragDrop<any>){
-    let status = ""
-    switch (event.container.id){
-      case "todo":
-        status = "1";
-        break;
-      case "inProgress":
-        status = "2";
-        break;
-      case "completed":
-        status = "3";
-        break;
-    }
-    event.previousContainer.data[event.previousIndex].status = status
-    console.log(event.previousContainer.data[event.previousIndex])
-    this.boardService.updateTasksStatus(event.previousContainer.data[event.previousIndex])
-  }
-
   isAdmin(){
     return this.boardService.memberList.some(element => {
       return element.username === this.userService.username && element.is_admin

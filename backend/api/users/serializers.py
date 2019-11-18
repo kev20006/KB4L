@@ -2,6 +2,8 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.models import User
 
+from .models import Subscription
+
 
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
@@ -21,3 +23,31 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'password')
+
+
+class SubscriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subscription
+        fields = ('user', 'max_boards', 'subscription', 'sub_expires')
+
+    def create(self, validated_data):
+        """
+        Create and return a new board instance, given the validated data.
+        """
+        return Subscription.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        """
+        Update and return an existing `Snippet` instance, given the validated data.
+        """
+        instance.max_boards = validated_data.get(
+            'max_boards', instance.max_boards
+        )
+        instance.subscription = validated_data.get(
+            'subscription', instance.subscription
+        )
+        instance.sub_expires = validated_data.get(
+            'sub_expires', instance.sub_expires
+        )
+        instance.save()
+        return instance

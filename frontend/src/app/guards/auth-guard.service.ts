@@ -10,7 +10,6 @@ export class AuthGuardService implements CanActivate {
   constructor(public userService: UserService) { }
   
   canActivate(): boolean {
-    console.log("guardinng!!")
     if(this.userService.isLoggedIn()){
       return true;
     }

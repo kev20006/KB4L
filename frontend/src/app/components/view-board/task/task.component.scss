@@ -1,0 +1,23 @@
+.mat-chip {
+    margin-right: 5px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width:25px;
+    height:25px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 50%;
+
+    .points{
+        display: block;
+        
+    }
+}
+
+.left-header-wrapper{
+    display:flex;
+
+}

@@ -1,0 +1,101 @@
+<h1 mat-dialog-title>Payment Options</h1>
+<mat-tab-group dynamicHeight>
+    <mat-tab label="Free Tier">
+        <div class="price free">
+            <h3>
+                £0.00
+            </h3>
+        </div>
+        <mat-list>
+            <mat-list-item>
+                <div class="item-wrapper">
+                <i class="material-icons"> check_circle_outline </i>
+                 Create a maximum of two boards 
+                 </div>
+            </mat-list-item>
+            <mat-list-item> 
+                <div class="item-wrapper">
+                <i class="material-icons"> check_circle_outline </i>
+                Join an unlimited numbers of boards 
+                </div>
+            </mat-list-item>
+            <mat-list-item>
+                <div class="item-wrapper">
+                <i class="material-icons"> check_circle_outline </i>
+                Only 1 admin per board 
+                </div>
+            </mat-list-item>
+        </mat-list>
+        <div class="example-button-row">
+            <button mat-raised-button color="accent" (click)="onNoClick()">Continue as a free user</button>
+        </div>
+    </mat-tab>
+    <mat-tab label="Buy an additional Board">
+        <div class="price per-board">
+            <h3>
+                <span> £1.00 </span> <span class="sub-price">per board</span>
+            </h3>
+        </div>
+        <mat-list>
+            <mat-list-item>
+                <div class="item-wrapper">
+                    <i class="material-icons"> check_circle_outline </i>
+                    Increase your board limit by 1
+                </div>   
+            </mat-list-item>
+            <mat-list-item>
+                <div class="item-wrapper">
+                <i class="material-icons"> check_circle_outline </i>
+                Multiple Admins 
+                </div>
+            </mat-list-item>
+            <mat-list-item>
+                <div class="item-wrapper">
+                <i class="material-icons"> check_circle_outline </i>
+                Join Unlimited Boards 
+                </div>
+            </mat-list-item>
+        </mat-list>
+        <div class="example-button-row">
+            <button mat-raised-button color="accent" (click)="payment()"> purchase a board </button>
+            <button mat-raised-button color="warn" (click)="onNoClick()"> cancel </button>
+        </div>
+    </mat-tab>
+    <mat-tab label="Subscribe">
+        <div class="price sub">
+            <h3>
+                <span> £9.99 </span> <span class="sub-price">per year</span>
+            </h3>
+        </div>
+        <mat-list>
+            <mat-list-item> 
+                <div class="item-wrapper">
+                <i class="material-icons"> check_circle_outline </i>
+                Create Unlimited Boards
+                </div> 
+            </mat-list-item>
+            <mat-list-item> 
+                <div class="item-wrapper">
+                <i class="material-icons"> check_circle_outline </i>
+                 Multiple admins
+                </div>
+            </mat-list-item>
+            <mat-list-item>
+                <div class="item-wrapper">
+                <i class="material-icons"> check_circle_outline </i>
+                Early Access to Live Chat
+                </div>
+            </mat-list-item>
+            <mat-list-item>
+                <div class="item-wrapper">
+                <i class="material-icons"> check_circle_outline </i>
+                Join Unlimited Boards
+                </div>
+            </mat-list-item>
+        </mat-list>
+        <div class="example-button-row">
+            <button mat-raised-button color="accent" (click)="payment()"> subscribe </button>
+            <button mat-raised-button color="warn" (click)="onNoClick()"> cancel </button>
+        </div>
+    </mat-tab>
+</mat-tab-group>

@@ -17,5 +17,6 @@ class Board(models.Model):
 class Member(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     board_id = models.ForeignKey(Board, on_delete=models.CASCADE)
+    is_creator = models.BooleanField()
     is_admin = models.BooleanField()
     score = models.IntegerField(default=0)

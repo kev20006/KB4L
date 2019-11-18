@@ -23,18 +23,32 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatBadgeModule } from '@angular/material/badge';
+
+//third party library https://github.com/Bartosz-D3V/ng-payment-card
+import { NgPaymentCardModule } from 'ng-payment-card';
 
 import { AuthInterceptor } from './auth.interceptor';
 import { IndexComponent } from './components/index/index.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ViewBoardComponent } from './components/view-board/view-board.component';
-import { OpenModalButtonComponent, AddNewTaskDialog, AddNewBoardDialog, AddNewMembersDialog } from './components/open-modal-button/open-modal-button.component';
+import {
+  OpenModalButtonComponent,
+  AddNewTaskDialog,
+  AddNewBoardDialog,
+  AddNewMembersDialog,
+  PaymentOptionsDialog,
+  CardPaymentDialog,
+} from './components/open-modal-button/open-modal-button.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DashboardHeaderComponent } from './components/dashboard/dashboard-header/dashboard-header.component';
 import { RecentActivityComponent } from './components/dashboard/recent-activity/recent-activity.component';
 import { LoginTestComponent } from './components/login/login-test/login-test.component';
 import { RegisterComponent } from './components/login/register/register.component';
 import { RegisterModalComponent } from './components/login/register/register.modal.component';
+import { BoardComponent } from './components/view-board/board/board.component';
+import { TaskComponent } from './components/view-board/task/task.component';
 
 
 
@@ -53,13 +67,17 @@ import { RegisterModalComponent } from './components/login/register/register.mod
     RecentActivityComponent,
     LoginTestComponent,
     RegisterComponent,
-    RegisterModalComponent
+    RegisterModalComponent,
+    BoardComponent,
+    TaskComponent,
+    PaymentOptionsDialog,
+    CardPaymentDialog
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule, 
-    FormsModule, 
+    HttpClientModule,
+    FormsModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
@@ -75,20 +93,25 @@ import { RegisterModalComponent } from './components/login/register/register.mod
     MatCheckboxModule,
     MatMenuModule,
     MatTabsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatExpansionModule,
+    MatBadgeModule,
+    NgPaymentCardModule,
   ],
   entryComponents: [
     AddNewTaskDialog,
     AddNewBoardDialog,
     AddNewMembersDialog,
     LoginTestComponent,
-    RegisterModalComponent
+    RegisterModalComponent,
+    PaymentOptionsDialog,
+    CardPaymentDialog,
   ],
   providers: [
     UserService,
     { provide: APP_BASE_HREF, useValue: '/' },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

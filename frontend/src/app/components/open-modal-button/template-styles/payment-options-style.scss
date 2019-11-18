@@ -1,0 +1,46 @@
+.price{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 2em;
+    color:white;
+    height: 150px;
+    width:100%;
+
+    h3{
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    &.free{
+        background: rgb(63,81,181);
+background: linear-gradient(153deg, rgba(63,81,181,1) 0%, rgba(246,93,145,1) 100%);
+    }
+
+    &.per-board{
+        background: rgb(255,64,129);
+        background: linear-gradient(153deg, rgba(255,64,129,1) 0%, rgba(148,87,166,1) 100%);
+    }
+
+    &.sub{
+        background: rgb(63,81,181);
+background: linear-gradient(310deg, rgba(63,81,181,1) 0%, rgba(148,87,166,1) 100%);
+    }
+}
+
+.item-wrapper{
+    display: flex;
+    width:100%;
+    justify-content: center;
+}
+
+.material-icons{
+    color: rgb(63,81,181);
+    margin-right:5px;
+}
+
+.example-button-row{
+    display: flex;
+    justify-content: space-around;
+}

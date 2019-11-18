@@ -1,25 +1,31 @@
+<pre> {{boardList | json }}</pre>
 <div class = "card-wrapper">
     <!-- current usage -->
     <mat-card>
         <mat-card-header>
             <div mat-card-avatar class="example-header-image"></div>
-            <mat-card-title>Current Use</mat-card-title>
-            <mat-card-subtitle>Free Account</mat-card-subtitle>
+            <mat-card-title> Current Usage</mat-card-title>
+            <mat-card-subtitle *ngIf="subscriptionInfo">
+                <span *ngIf="!subscriptionInfo.subscription"> Free User </span>
+                <span *ngIf="subscriptionInfo.subscription"> Full Member </span>
+            </mat-card-subtitle>   
         </mat-card-header>
     
         <mat-card-content>
-            <p>
-                You are currently using 2 / 2 boards
-            </p>
-            <p class="warning">
-                this is the limit of the free account
-            </p>
-            <p>
-                to view options to extend click the button below.
-            </p>
+            <div *ngIf="subscriptionInfo">
+                <h3>
+                    You are currently using {{ boardCount }} / {{ subscriptionInfo.max_boards }} boards
+                </h3>
+                <p *ngIf="!subscriptionInfo.subscription && (boardCount === subscriptionInfo.max_boards )" class="warning">
+                    this is the limit of the free account - you cannot add any more boards
+                </p>
+                <p>
+                    to view options to extend click the button below.
+                </p>
+            </div>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-button>Payment Options</button>
+            <app-open-modal-button buttonMessage="Payment Options" modalTarget="paymentOptions"></app-open-modal-button>
         </mat-card-actions>
     </mat-card>
     <!-- end of current usage -->
@@ -69,16 +75,11 @@
         </mat-card-header>
         <mat-card-content>
             <mat-list>
-                <mat-list-item> 
+                <mat-list-item *ngFor="let board of boardList"> 
                     <div class="score-list-item">
-                        <span> test board </span>
+                        <span> {{ board.name}} </span>
                         <mat-chip color="accent" selected>15</mat-chip>
                     </div> 
-                </mat-list-item>
-                <mat-list-item> 
-                    <div class="score-list-item">
-                        <span> board #2 </span> <mat-chip color="accent" selected>10</mat-chip>
-                    </div>
                 </mat-list-item>
                 <mat-list-item class="total-score"> 
                     <div class="score-list-item">

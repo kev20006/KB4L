@@ -32,6 +32,12 @@ export interface member {
 }
 
 export interface memberList {
-    members: member[],
-    
+    members: member[],   
+}
+
+export interface subscription {
+    user: number,
+    max_boards: number,
+    sunscription: boolean,
+    expiration: string
 }

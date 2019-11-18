@@ -25,7 +25,7 @@ def board_by_user(request, username):
             response_data = []
             boards = Member.objects.filter(user_id=user.id).select_related('board_id')
             for board in boards:
-               response_data.append(BoardSerializer(board.board_id).data)
+                response_data.append(BoardSerializer(board.board_id).data)
             return Response({"boards": response_data})
         except ObjectDoesNotExist:
             return Response({"error":"user does not exist"})
@@ -36,7 +36,8 @@ def board_by_user(request, username):
             member_serializer = MemberSerializer(data= {
                 "user_id": user.id,
                 "board_id": serializer.data["id"],
-                "is_admin": True
+                "is_admin": True,
+                "is_creator":True
             })
             if member_serializer.is_valid():
                 member_serializer.save()
@@ -94,6 +95,14 @@ def board_by_id(request, id):
             })
 
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_usage_count(request, user_id):
+    """
+    Route to count the number of boards user is an admin of
+    """
+    board_count = Member.objects.filter(user_id=user_id, is_creator=True).count()
+    return Response({"board_count": board_count})
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

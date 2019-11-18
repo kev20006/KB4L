@@ -9,6 +9,7 @@ import { RegisterModalComponent } from '../login/register/register.modal.compone
 
 import { task, board } from '../../interfaces/interfaces'
 import { BoardService } from '../../services/board-service.service'
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-open-modal-button',
@@ -20,7 +21,11 @@ export class OpenModalButtonComponent {
   @Input() buttonMessage:string
   @Input() modalTarget: string
   @Input() color: string = "primary"
-  constructor(private dialog: MatDialog, private boardService: BoardService) { }
+  constructor(
+    private dialog: MatDialog,
+    private boardService: BoardService,
+    private userService: UserService
+  ) { }
 
   private modalStore = {
     "AddNewTaskDialog": {
@@ -34,7 +39,7 @@ export class OpenModalButtonComponent {
           priority: result.priority,
           status: result.status,
           repeat_task: result.repeat_task ? true : false,
-          assigned_to: null,
+          assigned_to: result.assigned_to,
           board: this.boardService.getCurrentBoard().id
         };
         this.boardService.addTask(newTask)
@@ -51,7 +56,7 @@ export class OpenModalButtonComponent {
           board_url: result.url,
           joining_code: "placeholder"
         };
-        this.boardService.addBoard(newBoard);
+        this.boardService.addBoard(newBoard, this.userService.username);
       }
     },
     "AddNewMembers": {
@@ -65,6 +70,9 @@ export class OpenModalButtonComponent {
     },
     "Register": {
       "component": RegisterModalComponent
+    },
+    "paymentOptions":{
+      "component": PaymentOptionsDialog
     }
   }
 
@@ -89,11 +97,22 @@ export class OpenModalButtonComponent {
   styleUrls: ['./open-modal-button.component.scss']
 })
 
-export class AddNewTaskDialog {
+export class AddNewTaskDialog implements OnInit {
 
+  private members: string[]
   constructor(
     public dialogRef: MatDialogRef<AddNewTaskDialog>,
+    private boardService: BoardService,
+    private userService: UserService,
     @Inject(MAT_DIALOG_DATA) public data: task) { }
+    
+  ngOnInit(){
+    this.members = this.boardService.memberList.map(element =>{
+      if (element.username !== this.userService.username){
+        return element.username;
+      }
+    })
+  } 
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -179,4 +198,43 @@ export class AddNewMembersDialog implements OnInit {
     return re.test(String(email).toLowerCase());
   }
 
+}
+
+@Component({
+  templateUrl: './templates/payment-options-template.html',
+  styleUrls: ['./open-modal-button.component.scss', './template-styles/payment-options-style.scss'],
+})
+export class PaymentOptionsDialog {
+  constructor(public dialogRef: MatDialogRef<AddNewBoardDialog>, 
+    private dialog: MatDialog) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  payment(): void {
+    this.dialogRef.close();
+    this.dialog.open(CardPaymentDialog, {
+      width: '60%',
+      data: {},
+      panelClass: 'custom-dialog-container'
+    });
+  }
+}
+
+@Component({
+  templateUrl: './templates/card-payment-template.html',
+  styleUrls: ['./open-modal-button.component.scss'],
+})
+export class CardPaymentDialog {
+  constructor(public dialogRef: MatDialogRef<CardPaymentDialog>) {}
+  private paymentSuccessful: boolean = false;
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  processPayment(cc){
+    console.log(cc)
+    this.paymentSuccessful = true;
+  }
 }

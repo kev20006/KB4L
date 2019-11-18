@@ -2,12 +2,13 @@ from django.db import models
 
 from rest_framework import serializers
 from .models import Job
+from django.contrib.auth.models import User
 
 
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
        model = Job
-       fields = ['id','title', 'description', 'points', 'priority',
+       fields = ['id', 'title', 'description', 'points', 'priority',
                  'status', 'repeat_task', 'assigned_to', 'board'] 
 
     def create(self, validated_data):
@@ -20,6 +21,7 @@ class TaskSerializer(serializers.ModelSerializer):
         """
         Update and return an existing task instance, given the validated data.
         """
+    
         instance.title = validated_data.get(
             'title', instance.title
         )
@@ -37,9 +39,6 @@ class TaskSerializer(serializers.ModelSerializer):
         )
         instance.repeat_task = validated_data.get(
             'repeat_task', instance.repeat_task
-        )
-        instance.assigned_to = validated_data.get(
-            'assigned_to', instance.assigned_to
         )
         instance.board = validated_data.get(
             'board', instance.board

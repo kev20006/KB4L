@@ -9,7 +9,8 @@ from .views import(
     board_by_id,
     member_by_board,
     add_member_list_board,
-    add_user_by_board_code
+    add_user_by_board_code,
+    get_usage_count
 ) 
 
 urlpatterns = [
@@ -18,6 +19,7 @@ urlpatterns = [
     path('username/<str:username>', board_by_user),
     path('url/<str:url>', board_by_url),
     path('id/<str:id>', board_by_id),
+    path('member/count/<str:user_id>', get_usage_count),
     path('members', add_member_list_board),
     path('members/new', add_user_by_board_code)
 ]

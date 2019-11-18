@@ -22,7 +22,8 @@
     <mat-form-field>
         <mat-select placeholder="Assign to" [(ngModel)]="data.assigned_to">
             <mat-option default>unassigned</mat-option>
-            <mat-option>myself</mat-option>
+            <mat-option [value]="userService.username">myself</mat-option>
+            <mat-option *ngFor="let user of members" [value]="user">{{ user }}</mat-option>
         </mat-select>
     </mat-form-field>
     <mat-form-field>

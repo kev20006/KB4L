@@ -1,0 +1,8 @@
+<ng-payment-card *ngIf="!paymentSuccessful" (formSaved)="processPayment($event)">
+</ng-payment-card>
+
+<div class="payment-success" *ngIf="paymentSuccessful">
+    <h3>Payment Successful</h3>
+    <h1><i class="material-icons"> check_circle_outline </i></h1>
+    <button mat-raised-button color="accent" [mat-dialog-close]="data">Ok</button>
+</div>
