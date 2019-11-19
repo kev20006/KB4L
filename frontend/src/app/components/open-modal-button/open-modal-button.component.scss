@@ -15,3 +15,12 @@
     }
    
 }
+
+.med-and-up{
+    display:inline-block;
+}
+@media (min-width: 768px){
+    .med-and-up{
+        display:inline-block;
+  }
+}

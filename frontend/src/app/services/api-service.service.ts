@@ -80,4 +80,8 @@ export class ApiService {
   updateSubByUser( username: string, sub: subscription){
     return this.http.put<subscription>(`http://localhost:8000/api/user/member/subscription/${username}`, sub);
   }
+
+  getUserNameById( id: number): Observable<any>{
+    return this.http.get(`http://localhost:8000/api/user/${id}`);
+  }
 }

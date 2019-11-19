@@ -30,5 +30,5 @@ urlpatterns = [
     path('api/api-token-refresh/', refresh_jwt_token),
     path('api/api-token-verify/', verify_jwt_token),
     path('', include('api.index.urls')),
-    re_path(r'^(?P<path>.*)/$', include('api.index.urls'))
+    re_path(r'^(?P<path>.*)/', include('api.index.urls'))
 ]

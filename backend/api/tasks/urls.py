@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, re_path, include
 
 from .views import get_job_list_by_board, modify_job_status, get_job_list_by_user
 

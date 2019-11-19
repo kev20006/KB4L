@@ -54,3 +54,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     font-weight: 500;
     border-radius: 50%;
 }
+
+.button-wrapper{
+  margin-top:10px;
+  display:flex;
+  flex-wrap: wrap;
+  app-open-modal-button, button{
+    margin-left:5px;
+  }
+}

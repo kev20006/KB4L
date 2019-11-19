@@ -1,10 +1,31 @@
-.example-container {
-  width: 400px;
-  max-width: 100%;
-  margin: 0 25px 25px 0;
-  display: inline-block;
-  vertical-align: top;
+.board-wrapper{
+  display: none;
 }
+
+.up-to-med{
+  padding-top:15px;
+  display:block;
+}
+
+@media (min-width: 768px){
+  .board-wrapper {
+    width:100%;
+    display: flex;
+    justify-content: center;
+  }
+  .up-to-med{
+    display:none;
+  }
+
+  .example-container {
+    width: 30%;
+    max-width: 100%;
+    margin: 0 25px 25px 0;
+    display: inline-block;
+    vertical-align: top;
+  }
+}
+
 
 .example-list {
   border: solid 1px #ccc;

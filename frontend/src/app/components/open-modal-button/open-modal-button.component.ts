@@ -18,9 +18,11 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class OpenModalButtonComponent {
 
-  @Input() buttonMessage:string
+  @Input() buttonMessage: string
   @Input() modalTarget: string
   @Input() color: string = "primary"
+  @Input() icon: string = null;
+
   constructor(
     private dialog: MatDialog,
     private boardService: BoardService,

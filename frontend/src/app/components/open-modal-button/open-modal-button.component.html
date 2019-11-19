@@ -1,3 +1,6 @@
 <div class="example-button-row">
-    <button mat-raised-button [color]="color" (click)="openDialog()">{{ buttonMessage }}</button>
+    <button mat-raised-button [color]="color" (click)="openDialog()">
+        {{ buttonMessage }}
+        <i *ngIf="icon" class="material-icons">{{ icon }}</i>
+    </button>
 </div>

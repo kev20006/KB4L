@@ -1,14 +1,15 @@
 <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
     <mat-expansion-panel-header>
         <div class="left-header-wrapper">
-            <mat-chip color="accent" selected>
+            <app-priority [priority]="task.priority"> </app-priority>
+            <h3>{{ task.title }}</h3>
+            <mat-chip color="accent" class="circle big" selected>
                 <div class="points">{{ task.points }}</div>
             </mat-chip>
-            <h3>{{ task.title }}</h3>
         </div>
     </mat-expansion-panel-header>
-    <h3 *ngIf="task.assigned_to"> Assigned to {{ task.assigned_to }}</h3>
-    <p> This is a {{ getPriority(task.priority) }} Priority task </p>
+    <h3 *ngIf="task.assigned_to"> Assigned to {{ assignedMember.username }}</h3>
+    <p> <app-priority [priority]="task.priority"> </app-priority>This is a {{ getPriority(task.priority) }} Priority task </p>
     <h3 *ngIf="!task.assigned_to"> Nobody has picked up this task</h3>
     <p> {{ task.description }}</p>
     <pre>{{ task | json }}</pre>

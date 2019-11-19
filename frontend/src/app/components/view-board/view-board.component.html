@@ -10,8 +10,12 @@
         <button mat-raised-button [matMenuTriggerFor]="menu">
             Board Members <span> {{ boardService.memberList.length }}</span>
         </button>
-        <app-open-modal-button color="accent" buttonMessage="Add New Member" modalTarget="AddNewMembers">
+        <app-open-modal-button color="accent" buttonMessage="New Member" modalTarget="AddNewMembers" icon="person_add">
         </app-open-modal-button>
+    </div>
+    <p>{{ board.description}}</p>
+    <div class="button-wrapper">
+        <app-open-modal-button buttonMessage="new task" modalTarget="AddNewTaskDialog"></app-open-modal-button>
         <button *ngIf="isAdmin()" mat-raised-button color="warn">Delete Board</button>
     </div>
     <mat-menu #menu="matMenu">
@@ -21,4 +25,3 @@
     </mat-menu>
     <app-board></app-board>
 </mat-card>
-<app-open-modal-button buttonMessage="add new task" modalTarget="AddNewTaskDialog"></app-open-modal-button>

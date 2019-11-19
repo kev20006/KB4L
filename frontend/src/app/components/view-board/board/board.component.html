@@ -1,4 +1,4 @@
-<div cdkDropListGroup>
+<div class="board-wrapper" cdkDropListGroup>
     <div class="example-container">
         <h2>To do</h2>
         <div id="todo" cdkDropList [cdkDropListData]="boardService.todo$ | async" class="example-list"
@@ -27,3 +27,33 @@
         </div>
     </div>
 </div>
+<mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4 up-to-med">
+    <mat-tab label="To Do">
+        <div class="example-container">
+            <div id="todo" class="example-list">
+                <div class="example-box" [cdkDragData]="item" *ngFor="let item of boardService.todo$ | async" cdkDrag>
+                    <app-task [task]="item"></app-task>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="In Progress">
+        <div class="example-container">
+            <div id="inProgress"  class="example-list">
+                <div class="example-box" [cdkDragData]="item" *ngFor="let item of boardService.inProgress$ | async" cdkDrag>
+                    <app-task [task]="item"></app-task>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="Done">
+        <div class="example-container">
+            <div id="completed" class="example-list">
+                <div class="example-box" [cdkDragData]="item" *ngFor="let item of boardService.completed$ | async" cdkDrag>
+                    <app-task [task]="item"></app-task>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
+</mat-tab-group>
+

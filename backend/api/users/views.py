@@ -23,7 +23,6 @@ def create_user(request):
 @api_view(['GET', 'PUT'])
 @authentication_classes([])
 @permission_classes([])
-#@permission_classes([IsAuthenticated])
 def manage_subscription(request, username):
     """
     Route to manage subscriptions and sub status
@@ -41,3 +40,15 @@ def manage_subscription(request, username):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+@authentication_classes([])
+@permission_classes([])
+def get_user_by_id(request, id):
+    if User.objects.filter(id=id).exists():
+        user = User.objects.get(id=id)
+        serialiser = UserSerializer(user)
+        print(serialiser.data)
+        return Response({"username": serialiser.data["username"], "id": id})
+    return Response({"error": "no user by that id"}, status=status.HTTP_200_OK)
