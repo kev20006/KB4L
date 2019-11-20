@@ -80,7 +80,6 @@ export class OpenModalButtonComponent {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(this.modalStore[this.modalTarget].component, {
-      width: '60%',
       data: {}
     });
 
