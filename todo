@@ -1,8 +1,15 @@
-get board and score list by user
-recent activity
-shopping list
-assign tasks to members (1/2 done)
-update tasks (BE)
-score tasks
-reset board
+Homepage:
+    header into a carousel
+    get board and score list by user
+    recent activity
+
+Shopping list:
+
+tasks:
+    assign tasks to members (1/2 done)
+    update tasks (BE)
+    move tasks
+    score tasks
+    reset board
+
 readme file

@@ -1,4 +1,4 @@
-h3{
+h4{
     margin: 0;
 }
 
@@ -7,11 +7,16 @@ p{
 }
 
 .my-tasks-wraper{
+    padding: 5px 0;
     width: 100%;
     display: flex;
     justify-content: space-between;
     .left-wrapper{
         display: flex;
     }
+}
+
+.mat-list-base .mat-list-item .mat-list-item-content{
+    padding:5px 0px;
 }
 

@@ -52,3 +52,15 @@ def get_user_by_id(request, id):
         print(serialiser.data)
         return Response({"username": serialiser.data["username"], "id": id})
     return Response({"error": "no user by that id"}, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@authentication_classes([])
+@permission_classes([])
+def get_user_id_by_name(request, username):
+    if User.objects.filter(username=username).exists():
+        user = User.objects.get(username=username)
+        serialiser = UserSerializer(user)
+        print(serialiser.data)
+        return Response({"username": serialiser.data["username"], "id": serialiser.data["id"]})
+    return Response({"error": "no user by that username"}, status=status.HTTP_200_OK)

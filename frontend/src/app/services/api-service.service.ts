@@ -84,4 +84,7 @@ export class ApiService {
   getUserNameById( id: number): Observable<any>{
     return this.http.get(`http://localhost:8000/api/user/${id}`);
   }
+  getIdByUsername(username: string): Observable<any> {
+    return this.http.get(`http://localhost:8000/api/user/${username}`);
+  }
 }

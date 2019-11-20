@@ -1,17 +1,17 @@
-    <a mat-list-item routerLink="{{'../my-boards' + taskData.board_url }}">
-        <div class="my-tasks-wraper">
-            <div class="left-wrapper"> 
-                <div class="priority-wrapper">
-                    <app-priority [priority]="taskData.priority"></app-priority>
-                </div>
-                <div class="text-wrapper">
-                    <h3>{{ taskData.title }}</h3>
-                    <p>{{ taskData.board_name}}</p>
-                </div>
+<a routerLink="{{'../my-boards' + taskData.board_url }}">
+    <div class="my-tasks-wraper">
+        <div class="left-wrapper"> 
+            <div class="priority-wrapper">
+                <app-priority [priority]="taskData.priority"></app-priority>
             </div>
-            <div class="points-wrapper">
-                <mat-chip class="circle big">{{ taskData.points}}</mat-chip>
+            <div class="text-wrapper">
+                <h4>{{ taskData.title }}</h4>
+                <p>{{ taskData.board_name}}</p>
             </div>
         </div>
-    </a>
+        <div class="points-wrapper">
+            <mat-chip class="circle big">{{ taskData.points}}</mat-chip>
+        </div>
+    </div>
+</a>
 
