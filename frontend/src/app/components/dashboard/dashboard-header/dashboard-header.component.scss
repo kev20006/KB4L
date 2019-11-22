@@ -29,3 +29,53 @@ table {
     padding: 10px;
     border-radius: 50%;
 }
+
+.card-wrapper{
+  display: none;
+}
+
+.up-to-med{
+  padding: 15px 30px;
+  display:block;
+}
+
+@media (min-width: 768px){
+  .card-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  .up-to-med{
+    display:none;
+  }
+}
+
+.button-wrapper {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.tab-content-wrapper{
+    padding: 5%;
+
+    h3{
+        margin-top:0;
+    }
+}
+
+.pseudo-chip{
+  display: inline;
+  margin: 10px auto;
+  padding: 10px;
+  color: white;
+  font-weight: 400;
+  border-radius: 5%;
+  &.primary{
+    background-color: #3f51b5;
+  }
+  &.accent{
+    background-color: #ff4081;
+  }
+}

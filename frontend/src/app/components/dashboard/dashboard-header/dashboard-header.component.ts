@@ -12,9 +12,9 @@ import { Observable } from 'rxjs';
 })
 export class DashboardHeaderComponent implements OnInit {
   private subscriptionInfo: subscription
-  private boardList: board[];
+  private boardList: board[] = null;
   private boardCount: number = 0;
-  private currentTasks: any[] = [];
+  private currentTasks: any[] = null;
   constructor(private user: UserService, private boardService: BoardService) {}
 
   ngOnInit() {

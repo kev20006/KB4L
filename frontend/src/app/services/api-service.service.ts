@@ -87,4 +87,8 @@ export class ApiService {
   getIdByUsername(username: string): Observable<any> {
     return this.http.get(`http://localhost:8000/api/user/${username}`);
   }
+
+  getRecentActivityByUser(username: string): Observable<any>{
+    return this.http.get(`http://localhost:8000/api/recent/user/${username}`);
+  }
 }

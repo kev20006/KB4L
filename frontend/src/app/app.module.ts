@@ -40,6 +40,7 @@ import {
   AddNewMembersDialog,
   PaymentOptionsDialog,
   CardPaymentDialog,
+  JoinBoardDialog
 } from './components/open-modal-button/open-modal-button.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DashboardHeaderComponent } from './components/dashboard/dashboard-header/dashboard-header.component';
@@ -51,6 +52,7 @@ import { BoardComponent } from './components/view-board/board/board.component';
 import { TaskComponent } from './components/view-board/task/task.component';
 import { CurrentTaskComponent } from './components/dashboard/dashboard-header/current-task/current-task.component';
 import { PriorityComponent } from './global-components/priority/priority.component';
+import { ActivityItemComponent } from './components/dashboard/recent-activity/activity-item/activity-item.component';
 
 
 
@@ -75,7 +77,9 @@ import { PriorityComponent } from './global-components/priority/priority.compone
     PaymentOptionsDialog,
     CardPaymentDialog,
     CurrentTaskComponent,
-    PriorityComponent
+    PriorityComponent,
+    JoinBoardDialog,
+    ActivityItemComponent
   ],
   imports: [
     BrowserModule,
@@ -110,6 +114,7 @@ import { PriorityComponent } from './global-components/priority/priority.compone
     RegisterModalComponent,
     PaymentOptionsDialog,
     CardPaymentDialog,
+    JoinBoardDialog
   ],
   providers: [
     UserService,

@@ -70,7 +70,6 @@ def board_by_url(request, url):
             "success": False
         })
 
-
 @api_view(['GET', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def board_by_id(request, id):

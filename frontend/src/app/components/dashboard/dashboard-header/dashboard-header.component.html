@@ -1,4 +1,4 @@
-<div class = "card-wrapper">
+<div class ="card-wrapper">
     <!-- current usage -->
     <mat-card>
         <mat-card-header>
@@ -24,7 +24,8 @@
             </div>
         </mat-card-content>
         <mat-card-actions>
-            <app-open-modal-button buttonMessage="Payment Options" modalTarget="paymentOptions"></app-open-modal-button>
+            <app-open-modal-button buttonMessage="Payment Options" modalTarget="paymentOptions">
+            </app-open-modal-button>
         </mat-card-actions>
     </mat-card>
     <!-- end of current usage -->
@@ -36,7 +37,9 @@
         <mat-card-content>
             <mat-nav-list>
                 <div *ngIf="currentTasks">
-                    <app-current-task *ngFor="let task of currentTasks" [taskData]=task></app-current-task>
+                    <app-current-task *ngFor="let task of currentTasks" [taskData]=task>
+
+                    </app-current-task>
                 </div>
             </mat-nav-list>
         </mat-card-content>
@@ -67,3 +70,90 @@
     </mat-card>
     <!-- end of score -->
 </div>
+<div class="up-to-med">
+    <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4">
+        <mat-tab label="My Usage">
+            <div class="tab-content-wrapper">
+                <div *ngIf="subscriptionInfo">
+                    <h3 *ngIf="!subscriptionInfo.subscription">
+                        Free User
+                    </h3>
+                    <h3 *ngIf="subscriptionInfo.subscription">
+                         Full Member
+                    </h3>
+                </div>
+                <div *ngIf="subscriptionInfo">
+                    <div>
+                        <h3 *ngIf="subscriptionInfo.subscription">
+                            You are currently Subscribed
+                        </h3>
+                        <p>
+                            Your subscription will expire on: 
+                        </p>
+                        <h4>
+                            {{ subscriptionInfo.sub_expires }}
+                        </h4>
+                    </div>
+                    <div *ngIf="!subscriptionInfo.subscription">
+                        <h3>
+                            You are currently using {{ boardCount }} / {{ subscriptionInfo.max_boards }} boards
+                        </h3>
+                        <p *ngIf="!subscriptionInfo.subscription && (boardCount === subscriptionInfo.max_boards )" 
+                        class="warning">
+                            this is the limit of the free account - you cannot add any more boards
+                        </p>
+                        <p>
+                            to view options to extend click the button below.
+                        </p>
+                    </div>
+                </div>
+                <div class="button-wrapper" *ngIf="!subscriptionInfo.subscription">
+                    <app-open-modal-button 
+                    buttonMessage="Payment Options" 
+                    modalTarget="paymentOptions">
+                </app-open-modal-button>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Current Tasks">
+            <div class="tab-content-wrapper">
+                <!-- if user has tasks assigned to them -->
+                <mat-nav-list *ngIf="currentTasks">
+                    <div>
+                        <app-current-task *ngFor="let task of currentTasks" [taskData]=task></app-current-task>
+                    </div>
+                </mat-nav-list>
+                <!-- else show message -->
+                <div *ngIf="currentTasks.length === 0">
+                    <h3>You have no tasks</h3>
+                    <p>Looks like you have completed all your tasks</p>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="My Scores">
+            <div class="tab-content-wrapper">
+                <!-- if boards exist show scores -->
+                <mat-list *ngIf="boardList.length > 0">
+                    <mat-list-item *ngFor="let board of boardList">
+                        <div class="score-list-item">
+                            <span> {{ board.name}} </span>
+                            <mat-chip color="accent" selected>15</mat-chip>
+                        </div>
+                    </mat-list-item>
+                    <mat-list-item class="total-score">
+                        <div class="score-list-item">
+                            <span> total-score </span>
+                            <mat-chip color="primary" selected>25</mat-chip>
+                        </div>
+                    </mat-list-item>
+                </mat-list>
+                <!-- else show message -->
+                <div *ngIf="boardList.length === 0">
+                    <h3>It seems you don't have any boards just yet</h3>
+                    <p> Either create or join a board to start tracking your scores</p>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>    
+

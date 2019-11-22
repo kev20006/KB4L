@@ -6,4 +6,4 @@ from .models import RecentActivity
 class Recent_Activity_Serializer(serializers.ModelSerializer):
     class Meta:
         model = RecentActivity
-        fields = ['board_id', 'message']
+        fields = ['board_id', 'message', 'time']

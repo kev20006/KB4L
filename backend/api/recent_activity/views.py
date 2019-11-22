@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from .models import RecentActivity
+from django.contrib.auth.models import User
 from ..boards.models import Board, Member
 from ..tasks.models import Job
 from .serializer import Recent_Activity_Serializer
@@ -25,6 +26,9 @@ def add_task_to_board(username, board_id, task_name):
 
 
 def task_changed_status(username, board_id, task_id):
+    """
+    Record to the logs when a task changes status
+    """
     board = Board.objects.get(id=board_id)
     task = Job.objects.get(id=task_id)
     message  = "{}: {} has moved {} to {}".format(
@@ -33,6 +37,9 @@ def task_changed_status(username, board_id, task_id):
     RecentActivity.objects.create(board_id=board, message=message)
 
 def task_assigned_to_user(username, board_id, task_name):
+    """
+    Record to logs when a user is assigned to a task
+    """
     board = Board.objects.get(id=board_id)
     message = "{}: {} has been assigned to {}".format(
         board.name, task_name, username
@@ -41,6 +48,9 @@ def task_assigned_to_user(username, board_id, task_name):
 
 
 def add_user_to_board(username, board_id):
+    """
+    Record to logs when a user is added to a board
+    """
     board = Board.objects.get(id=board_id)
     message = "{}: {} has joined the board".format(
         board.name, username
@@ -51,12 +61,17 @@ def add_user_to_board(username, board_id):
 @authentication_classes([])
 @permission_classes([])
 def get_activity_by_user(request, username):
+    """
+    Api route to return the recent activity by user
+    """
     recent_activity_array = []
-    for i in Member.objects.filter(user_id=username):
-        for j in RecentActivity.objects.filter(board_id=i.board_id):
-
+    user = User.objects.get(username=username)
+    for i in Member.objects.filter(user_id=user):
+        for j in RecentActivity.objects.filter(board_id=i.board_id).order_by('-time'):
             recent_activity_array.append(Recent_Activity_Serializer(j).data)
-    if len(recent_activity_array) == 0:
+    if recent_activity_array == []:
         return Response({"results":"no recent news"})
-    return Response({"results": recent_activity_array})
-    
+    return Response({
+        "results": sorted(recent_activity_array, key=lambda i: i['time'], reverse=True)
+        })
+  

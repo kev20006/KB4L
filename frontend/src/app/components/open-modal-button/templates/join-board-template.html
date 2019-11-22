@@ -1,0 +1,11 @@
+<div class="payment-success">
+    <h3>Enter Board Code</h3>
+    <mat-form-field class="input-100">
+        <input matInput placeholder="code" [(ngModel)]="boardCode">
+    </mat-form-field>
+    <div class="button-wrapper">
+        <button mat-raised-button color="accent" (click)="joinBoard()"> Ok </button>
+        <button mat-raised-button color="warn" (click)="onNoClick()"> Cancel </button>
+    </div>
+    <p *ngIf="submit && error"><small> {{ errorDescription }}</small></p>
+</div>

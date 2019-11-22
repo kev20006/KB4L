@@ -38,6 +38,12 @@ export interface memberList {
 export interface subscription {
     user: number,
     max_boards: number,
-    sunscription: boolean,
+    subscription: boolean,
     expiration: string
+}
+
+export interface recentActivity {
+    board_id: number,
+    message: string,
+    time: string
 }

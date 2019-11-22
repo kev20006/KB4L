@@ -10,6 +10,7 @@ import { RegisterModalComponent } from '../login/register/register.modal.compone
 import { task, board } from '../../interfaces/interfaces'
 import { BoardService } from '../../services/board-service.service'
 import { UserService } from 'src/app/services/user.service';
+import { ApiService } from 'src/app/services/api-service.service';
 
 @Component({
   selector: 'app-open-modal-button',
@@ -75,6 +76,9 @@ export class OpenModalButtonComponent {
     },
     "paymentOptions":{
       "component": PaymentOptionsDialog
+    },
+    "JoinBoardDialog":{
+      "component": JoinBoardDialog
     }
   }
 
@@ -155,6 +159,49 @@ export class AddNewBoardDialog {
 
 }
 
+/********************* Join Board **********************/
+@Component({
+  templateUrl: './templates/join-board-template.html',
+  styleUrls: ['./open-modal-button.component.scss']
+})
+
+export class JoinBoardDialog {
+
+  private boardCode: string = "";
+  private submit: boolean;
+  private error: boolean;
+  private errorDescription: string = ""
+
+  constructor(
+    public dialogRef: MatDialogRef<AddNewBoardDialog>,
+    private api: ApiService,
+    private userService: UserService,
+    private boardService: BoardService) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+ joinBoard(){
+    this.submit = true;
+    this.api
+      .postMemberByBoard({
+        user_id: this.userService.tokenDecoded.user_id,
+        board_code: this.boardCode,
+      })
+      .subscribe(res => {
+        console.log(res)
+        if (!res.error) {
+          this.dialogRef.close()
+          this.boardService.setBoardListByUser(this.userService.username)
+        } else {
+          this.errorDescription = res.error
+          this.error = true;
+        }
+      })
+    }
+}
+
 /********************* Add New Members **********************/
 
 @Component({
@@ -222,20 +269,43 @@ export class AddNewMembersDialog implements OnInit {
   styleUrls: ['./open-modal-button.component.scss', './template-styles/payment-options-style.scss'],
 })
 export class PaymentOptionsDialog {
-  constructor(public dialogRef: MatDialogRef<AddNewBoardDialog>, 
-    private dialog: MatDialog) {}
+  constructor(
+    public dialogRef: MatDialogRef<AddNewBoardDialog>, 
+    private dialog: MatDialog,
+    private apiService: ApiService,
+    private userService: UserService) {}
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  payment(): void {
+  payment(type:string): void {
     this.dialogRef.close();
     this.dialog.open(CardPaymentDialog, {
-      width: '60%',
       data: {},
       panelClass: 'custom-dialog-container'
     });
+    console.log(this.userService.subscription)
+    switch (type){
+      case "sub": 
+        this.apiService.updateSubByUser(this.userService.username,{
+          user: this.userService.tokenDecoded.user_id,
+          max_boards: this.userService.subscription.max_boards,
+          subscription: true,
+          expiration: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toString()
+        }).subscribe( data => this.userService.getSubscription(this.userService.username));
+        break;
+      case "board":
+        this.apiService.updateSubByUser(this.userService.username, {
+          user: this.userService.tokenDecoded.user_id,
+          max_boards: this.userService.subscription.max_boards + 1,
+          subscription: this.userService.subscription.subscription,
+          expiration: this.userService.subscription.expiration
+        }).subscribe(data => this.userService.getSubscription(this.userService.username));
+        break;
+        
+        
+    }
   }
 }
 
@@ -246,6 +316,7 @@ export class PaymentOptionsDialog {
 export class CardPaymentDialog {
   constructor(public dialogRef: MatDialogRef<CardPaymentDialog>) {}
   private paymentSuccessful: boolean = false;
+  
   onNoClick(): void {
     this.dialogRef.close();
   }

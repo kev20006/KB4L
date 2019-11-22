@@ -3,11 +3,6 @@
         <mat-card-title>Activity</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <mat-list role="list">
-            <mat-list-item role="listitem">[timestamp] Bob has joined  - board #2</mat-list-item>
-            <mat-list-item role="listitem">[timestamp] Imhotep as completed "clean the oven"  - test board</mat-list-item>
-            <mat-list-item role="listitem">[timestamp] You have been invited to join a new board </mat-list-item>
-            <mat-list-item role="listitem">[timestamp] Sarah has checked of "Cheesy Wotsits" from party shoppng list </mat-list-item>
-        </mat-list>
+        <app-activity-item *ngFor="let activity of mostRecent" [recent]="activity"></app-activity-item>
     </mat-card-content>
 </mat-card>
