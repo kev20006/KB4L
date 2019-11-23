@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { task, board, member } from '../interfaces/interfaces'
+import { task, member, board } from '../interfaces/interfaces'
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from './api-service.service'
@@ -157,7 +157,6 @@ export class BoardService {
   getMemberList(boardId: number) {
     this.api.getUsersByBoard(boardId).subscribe(result => {
       if (!result.error) {
-        console.log(result);
         this.memberList = result.memberNames.map((element, index) => {
           return {
             username: element,

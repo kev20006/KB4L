@@ -30,7 +30,6 @@ export class BoardComponent implements OnInit {
         break;
     }
     event.previousContainer.data[event.previousIndex].status = status
-    console.log(event.previousContainer.data[event.previousIndex])
     this.boardService.updateTasksStatus(event.previousContainer.data[event.previousIndex])
   }
 

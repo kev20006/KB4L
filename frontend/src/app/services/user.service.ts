@@ -90,7 +90,6 @@ export class UserService {
           this.errors = 'logged-in';
         },
         err => {
-          console.log(err);
           this.errors = 'invalid-request';
         }
       );
@@ -105,7 +104,6 @@ export class UserService {
       // server-side error
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
       this.errors = 'invalid-request';
-      console.log(this.errors);
     }
     return throwError(errorMessage);
   }
@@ -172,7 +170,7 @@ export class UserService {
       .post('http://localhost:8000/api/api-token-verify/', JSON.stringify({ token: this.token }), this.httpOptions)
       .subscribe(
         data => {
-          console.log(data);
+          // do nothing
         },
         err => {
           this.errors = err['error'];

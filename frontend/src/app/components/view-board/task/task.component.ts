@@ -28,10 +28,8 @@ export class TaskComponent implements OnInit {
     private taskService: TaskService) { }
 
   ngOnInit() {
-    console.log(this.task)
     this.boardService.memberList$.subscribe(data => {
       this.memberList = data
-      console.log(this.memberList)
     });
     if (this.task.assigned_to){
       this.apiService.getUserNameById(this.task.assigned_to).subscribe(

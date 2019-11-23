@@ -29,7 +29,7 @@
     
     <h3>Description:</h3>
     <p> {{ task.description }}</p>
-    <pre>{{ boardService.memberList | json }}</pre>
+    <pre>{{ task | json}}</pre>
     <div class="controls">
         <button mat-mini-fab color="primary" [disabled]="!moveToPrevText()" (click)="movePrev()">
             <i class="material-icons">
@@ -37,9 +37,14 @@
             </i>
         </button>
         <h4>Move Task</h4>
-        <button mat-mini-fab color="primary" [disabled]="!moveToNextText()" (click)="moveNext()">
+        <button *ngIf="task.status!=='3'" mat-mini-fab color="primary" [disabled]="!moveToNextText()" (click)="moveNext()">
             <i class="material-icons">
                 keyboard_arrow_right
+            </i>
+        </button>
+        <button *ngIf="task.status==='3' && taskService.isAdmin()" class="approve" mat-mini-fab (click)="moveNext()">
+            <i class="material-icons">
+                done
             </i>
         </button>
     </div>

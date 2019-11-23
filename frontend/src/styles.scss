@@ -29,7 +29,12 @@ $frontend-theme: mat-light-theme($frontend-primary, $frontend-accent, $frontend-
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+  margin: 0;
+  margin-top:56px; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+  background-color: aliceblue;
+}
 
 //override mat-dialog for the card payment menu
 .custom-dialog-container .mat-dialog-container{

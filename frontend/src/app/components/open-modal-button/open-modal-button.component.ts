@@ -23,6 +23,7 @@ export class OpenModalButtonComponent {
   @Input() modalTarget: string
   @Input() color: string = "primary"
   @Input() icon: string = null;
+  @Input() data: any = null;
 
   constructor(
     private dialog: MatDialog,
@@ -57,7 +58,8 @@ export class OpenModalButtonComponent {
           board_picture: result.imageUrl,
           description: result.description,
           board_url: result.url,
-          joining_code: "placeholder"
+          joining_code: "placeholder",
+          score: 0
         };
         this.boardService.addBoard(newBoard, this.userService.username);
       }
@@ -91,7 +93,6 @@ export class OpenModalButtonComponent {
       if (result){
         this.modalStore[this.modalTarget].exitFunction(result)
       }
-      console.log('The dialog was closed');
     });
   }
 }
@@ -190,7 +191,6 @@ export class JoinBoardDialog {
         board_code: this.boardCode,
       })
       .subscribe(res => {
-        console.log(res)
         if (!res.error) {
           this.dialogRef.close()
           this.boardService.setBoardListByUser(this.userService.username)
@@ -285,7 +285,6 @@ export class PaymentOptionsDialog {
       data: {},
       panelClass: 'custom-dialog-container'
     });
-    console.log(this.userService.subscription)
     switch (type){
       case "sub": 
         this.apiService.updateSubByUser(this.userService.username,{
@@ -322,7 +321,6 @@ export class CardPaymentDialog {
   }
 
   processPayment(cc){
-    console.log(cc)
     this.paymentSuccessful = true;
   }
 }

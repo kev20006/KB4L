@@ -1,8 +1,3 @@
-Homepage:
-    get board and score list by user
-
-Shopping list:
-
 tasks:
     assign tasks to members (1/2 done)
     update tasks (BE)

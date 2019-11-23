@@ -10,8 +10,6 @@ export class DateService {
   // this function is taken from my project 3, with only minor alterations to support typescript
   formatDate(dateString){
     const date = new Date(dateString)
-    console.log(date)
-    console.log(new Date())
     const diff = new Date().getTime() - date.getTime() ; // the difference in milliseconds
 
     if (diff < 1000) {

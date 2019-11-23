@@ -1,6 +1,7 @@
 .my-boards-wrapper{
     display:flex;
     flex-wrap: wrap;
+    margin-bottom: 10px;
     mat-card{
         margin:5px;
 
@@ -9,6 +10,10 @@
             justify-content: space-around;
         }
     }
+}
+
+.board-list{
+    margin-bottom:20px;
 }
 
 .my-boards-header {
@@ -22,7 +27,18 @@
         }
     }
 }
+.board-card{
+    width:90%;
+}
 
-mat-card{
-    margin-bottom: 2%;
+@media only screen and (min-width: 724px){
+    .board-card{
+        width:43%;
+    }
+}
+
+@media only screen and (min-width: 1000px){
+    .board-card{
+        width:28%;
+    }
 }

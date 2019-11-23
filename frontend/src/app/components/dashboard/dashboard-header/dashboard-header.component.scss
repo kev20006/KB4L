@@ -23,13 +23,6 @@ table {
     padding: 2%;
 }
 
-.mat-chip {
-    font-size: 14px;
-    font-weight: 500;
-    padding: 10px;
-    border-radius: 50%;
-}
-
 .card-wrapper{
   display: none;
 }
@@ -57,8 +50,13 @@ table {
     margin-bottom: 10px;
 }
 
+mat-tab-group{
+  background: white;
+}
+
 .tab-content-wrapper{
     padding: 5%;
+    background: white;
 
     h3{
         margin-top:0;

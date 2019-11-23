@@ -1,23 +1,47 @@
-<nav>
+
+<nav class="nav-bar">
   <mat-toolbar color="primary">
     <mat-toolbar-row>
-      <h1><a routerLink="/">kanban4life</a></h1>
+      <h1><a mat-flat-button color="primary" routerLink="/">KB4L</a></h1>
       <div *ngIf="userService.isLoggedIn() else login" style="display:flex">
-        <p><a routerLink="my-boards">{{ username }}</a></p>
-        <p style="margin-left:15px"><a href="#" (click)="logout()">Logout</a></p>
+        <p>
+          <a id="menu-button" mat-flat-button color="primary" (click)=showMenu()>
+            <i class="material-icons">
+              menu
+            </i>
+          </a>
+        </p>
       </div>
       <ng-template #login>
         <div style="display:flex">
           <p>
             <app-open-modal-button buttonMessage="Login" modalTarget="Login" color="accent"></app-open-modal-button>
           </p>
-          <p style="margin-left:15px"><app-open-modal-button buttonMessage="Register" modalTarget="Register" color="accent"></app-open-modal-button></p>
+          <p style="margin-left:15px">
+            <app-open-modal-button buttonMessage="Register" modalTarget="Register" color="accent"></app-open-modal-button>
+          </p>
         </div>
       </ng-template>
-    
     </mat-toolbar-row>
   </mat-toolbar>
 </nav>
+<aside class="drawer-menu" (clickOutside)="close($event)" [ngClass]="{'open': menuOpen, 'close':!menuOpen }">
+  <mat-list *ngIf="userService.isLoggedIn()">
+    <h3 matSubheader>{{ username }}</h3>
+    <mat-list-item>
+      <h4><a color="primary" routerLink="my-boards">Home</a></h4>
+    </mat-list-item>
+    <mat-list-item>
+      <h4><a href="#" color="primary" (click)="logout()">Logout</a></h4>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <h3 matSubheader>My Boards</h3>
+    <mat-list-item *ngIf="!boardService.boardList">
+      <p> You are not yet a member of any boards</p>
+    </mat-list-item>
+    <mat-list-item *ngFor="let board of boardService.boardList">{{board.name}}</mat-list-item>
+  </mat-list>
+</aside>
 
   
 <router-outlet></router-outlet>

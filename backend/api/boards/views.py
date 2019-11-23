@@ -2,6 +2,9 @@
 Routes to manage boards and board membership
 '''
 
+import random
+import string
+
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.response import Response
@@ -25,15 +28,19 @@ def board_by_user(request, username):
             response_data = []
             boards = Member.objects.filter(user_id=user.id).select_related('board_id')
             for board in boards:
-                response_data.append(BoardSerializer(board.board_id).data)
+                serialised_board = BoardSerializer(board.board_id).data
+                serialised_board["score"] = board.score
+                print(serialised_board)
+                response_data.append(serialised_board)
             return Response({"boards": response_data})
         except ObjectDoesNotExist:
             return Response({"error":"user does not exist"})
     if request.method == 'POST':
-        serializer = BoardSerializer(data=request.data)
+        new_board = request.data
+        serializer = BoardSerializer(data=new_board)
         if serializer.is_valid():
             serializer.save()
-            member_serializer = MemberSerializer(data= {
+            member_serializer = MemberSerializer(data={
                 "user_id": user.id,
                 "board_id": serializer.data["id"],
                 "is_admin": True,
@@ -44,6 +51,7 @@ def board_by_user(request, username):
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             else:
                 return Response(member_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        print("invalid")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

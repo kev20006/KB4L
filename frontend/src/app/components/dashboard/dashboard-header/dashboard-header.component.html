@@ -35,13 +35,17 @@
             <mat-card-title> Assigned Tasks </mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <mat-nav-list>
+            <mat-nav-list *ngIf="currentTasks.length === 0">
                 <div *ngIf="currentTasks">
                     <app-current-task *ngFor="let task of currentTasks" [taskData]=task>
 
                     </app-current-task>
                 </div>
             </mat-nav-list>
+            <div *ngIf="currentTasks.length === 0">
+                <h3>You have no tasks</h3>
+                <p>Looks like you have completed all your tasks</p>
+            </div>
         </mat-card-content>
     </mat-card>
     <!-- end of current tasks -->
@@ -52,20 +56,24 @@
             <mat-card-title>Board Score</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <mat-list>
+            <mat-list *ngIf="boardList.length > 0">
                 <mat-list-item *ngFor="let board of boardList"> 
                     <div class="score-list-item">
                         <span> {{ board.name}} </span>
-                        <mat-chip color="accent" selected>15</mat-chip>
+                        <mat-chip class="circle big" color="accent" selected>{{ board.score }}</mat-chip>
                     </div> 
                 </mat-list-item>
-                <mat-list-item class="total-score"> 
+                <mat-list-item  *ngIf="boardList" class="total-score"> 
                     <div class="score-list-item">
                         <span> total-score </span>
-                        <mat-chip color="primary" selected>25</mat-chip>
+                        <mat-chip class="circle big" color="primary" selected>{{boardScoreTotal(boardList)}}</mat-chip>
                     </div>
                 </mat-list-item>
             </mat-list>
+            <div *ngIf="boardList.length === 0">
+                <h3>It seems you don't have any boards just yet</h3>
+                <p> Either create or join a board to start tracking your scores</p>
+            </div>
         </mat-card-content>
     </mat-card>
     <!-- end of score -->
@@ -136,14 +144,14 @@
                 <mat-list *ngIf="boardList.length > 0">
                     <mat-list-item *ngFor="let board of boardList">
                         <div class="score-list-item">
-                            <span> {{ board.name}} </span>
-                            <mat-chip color="accent" selected>15</mat-chip>
+                            <span> {{ board.name }} </span>
+                            <mat-chip class="circle big" color="accent" selected>{{ board.score }}</mat-chip>
                         </div>
                     </mat-list-item>
-                    <mat-list-item class="total-score">
+                    <mat-list-item *ngIf="boardList" class="total-score">
                         <div class="score-list-item">
                             <span> total-score </span>
-                            <mat-chip color="primary" selected>25</mat-chip>
+                            <mat-chip class="circle big" color="primary" selected>{{boardScoreTotal(boardList)}}</mat-chip>
                         </div>
                     </mat-list-item>
                 </mat-list>

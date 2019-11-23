@@ -4,7 +4,8 @@ export interface board {
     board_picture: string,
     description: string,
     board_url: string,
-    joining_code: string
+    joining_code: string,
+    score: number
 }
 
 export interface task {

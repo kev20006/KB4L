@@ -53,6 +53,7 @@ import { TaskComponent } from './components/view-board/task/task.component';
 import { CurrentTaskComponent } from './components/dashboard/dashboard-header/current-task/current-task.component';
 import { PriorityComponent } from './global-components/priority/priority.component';
 import { ActivityItemComponent } from './components/dashboard/recent-activity/activity-item/activity-item.component';
+import { ClickOutsideDirective } from './click-outside.directive';
 
 
 
@@ -79,7 +80,8 @@ import { ActivityItemComponent } from './components/dashboard/recent-activity/ac
     CurrentTaskComponent,
     PriorityComponent,
     JoinBoardDialog,
-    ActivityItemComponent
+    ActivityItemComponent,
+    ClickOutsideDirective
   ],
   imports: [
     BrowserModule,

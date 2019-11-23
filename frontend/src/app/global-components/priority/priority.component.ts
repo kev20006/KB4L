@@ -34,7 +34,7 @@ export class PriorityComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.priority)
+
   }
 
 }

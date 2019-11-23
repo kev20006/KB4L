@@ -65,7 +65,6 @@ export class ApiService {
   }
 
   postMemberByBoard(postData: any): Observable<any> {
-    console.log(postData)
     return this.http.post<any>(`http://localhost:8000/api/boards/members/new`, postData)
   }
 

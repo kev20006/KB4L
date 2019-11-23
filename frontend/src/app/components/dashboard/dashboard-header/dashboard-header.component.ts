@@ -23,11 +23,16 @@ export class DashboardHeaderComponent implements OnInit {
       this.boardService.getBoardCount(`${this.user.tokenDecoded.user_id}`);
       this.boardService.getCurrentTasksByUser(`${this.user.tokenDecoded.user_id}`)
     });
-    this.boardService.boardList$.subscribe(data => this.boardList = data);
+    this.boardService.boardList$.subscribe(data => {
+      this.boardList = data
+    });
     this.boardService.boardCount$.subscribe(data => this.boardCount = data);
     this.boardService.currentTasks$.subscribe(data => {
-      console.log(data);
       this.currentTasks = data;
     })
+  }
+
+  boardScoreTotal(boardList: board[]) {
+      return boardList.map(board=> board.score).reduce((prev,next) => prev + next);
   }
 }
