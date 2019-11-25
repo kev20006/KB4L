@@ -37,6 +37,8 @@ In this section, you should mention all of the languages, frameworks, libraries,
 
 - [Angular](https://jquery.com)
     - The front end of the site uses the angular framework 
+- [Angular Material Components](https://jquery.com)
+    - To support the framework and for some nice out of the box components i used Angular Material Components
 - [Django](https://jquery.com)
     - The back end is powered by the python framework Django
 - [Django Rest Framework](https://jquery.com)

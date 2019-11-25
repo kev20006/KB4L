@@ -14,7 +14,7 @@ export class BoardService {
   constructor(private api: ApiService) {}
 
   public boardSet: boolean = false;
-  private currentBoard: BehaviorSubject<board> = new BehaviorSubject<board>(null);
+  public currentBoard: BehaviorSubject<board> = new BehaviorSubject<board>(null);
   private _tasks: BehaviorSubject<task[]> = new BehaviorSubject<task[]>([]);
   private _boardList: BehaviorSubject<board[]> = new BehaviorSubject<board[]>([]);
   private _memberList: BehaviorSubject<member[]> = new BehaviorSubject<member[]>([]);
@@ -138,6 +138,18 @@ export class BoardService {
 
   addTask(newTask: task) {
     this.api.postTask(newTask).subscribe(result => (this.tasks = [...this.tasks, result]));
+  }
+
+  scoreTask(task: task) {
+    // api call goes here 
+    this.boardList = this.boardList.map(board =>{
+      if (board.id === task.board){
+        board.score += task.points
+      }
+      return board 
+    })
+    this.tasks = this.tasks.map(element => (task.id === element.id ? task : element));
+
   }
 
   addBoard(board: board, username: string) {

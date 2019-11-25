@@ -16,16 +16,16 @@ import { TaskService } from 'src/app/services/task.service';
 })
 export class ViewBoardComponent implements OnInit {
 
-  private route: string;
-  private board: board;
-  private memberList: member[]
+  public route: string;
+  public board: board;
+  public memberList: member[]
  
 
   constructor(
-    private userService: UserService,
-    private boardService: BoardService,
-    private taskService: TaskService,
-    private router: Router) {}
+    public userService: UserService,
+    public boardService: BoardService,
+    public taskService: TaskService,
+    public router: Router) {}
  
   ngOnInit() {
     this.route = this.router.url.split('/')[2]

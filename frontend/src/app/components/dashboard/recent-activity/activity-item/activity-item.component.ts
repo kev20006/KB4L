@@ -15,7 +15,7 @@ export class ActivityItemComponent implements OnInit {
   boardname: string;
   message: string;
 
-  constructor(private ds: DateService) { }
+  constructor(public ds: DateService) { }
 
   ngOnInit() {
     this.username = this.recent.message.split(":")[1].split(" ")[1];

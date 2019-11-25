@@ -5,17 +5,20 @@
             <div mat-card-avatar class="example-header-image"></div>
             <mat-card-title> Current Usage</mat-card-title>
             <mat-card-subtitle *ngIf="subscriptionInfo">
-                <span *ngIf="!subscriptionInfo.subscription"> Free User </span>
-                <span *ngIf="subscriptionInfo.subscription"> Full Member </span>
+                <span *ngIf="!subscriptionInfo?.subscription"> Free User </span>
+                <span *ngIf="subscriptionInfo?.subscription"> Full Member </span>
             </mat-card-subtitle>   
         </mat-card-header>
     
         <mat-card-content>
+            <div *ngIf="!subscriptionInfo">
+                loading sub info....
+            </div>
             <div *ngIf="subscriptionInfo">
                 <h3>
                     You are currently using {{ boardCount }} / {{ subscriptionInfo.max_boards }} boards
                 </h3>
-                <p *ngIf="!subscriptionInfo.subscription && (boardCount === subscriptionInfo.max_boards )" class="warning">
+                <p *ngIf="!subscriptionInfo?.subscription && (boardCount === subscriptionInfo?.max_boards )" class="warning">
                     this is the limit of the free account - you cannot add any more boards
                 </p>
                 <p>
@@ -35,14 +38,14 @@
             <mat-card-title> Assigned Tasks </mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <mat-nav-list *ngIf="currentTasks.length === 0">
+            <mat-nav-list *ngIf="currentTasks?.length === 0">
                 <div *ngIf="currentTasks">
                     <app-current-task *ngFor="let task of currentTasks" [taskData]=task>
 
                     </app-current-task>
                 </div>
             </mat-nav-list>
-            <div *ngIf="currentTasks.length === 0">
+            <div *ngIf="currentTasks?.length === 0">
                 <h3>You have no tasks</h3>
                 <p>Looks like you have completed all your tasks</p>
             </div>
@@ -56,7 +59,7 @@
             <mat-card-title>Board Score</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <mat-list *ngIf="boardList.length > 0">
+            <mat-list *ngIf="boardList?.length > 0">
                 <mat-list-item *ngFor="let board of boardList"> 
                     <div class="score-list-item">
                         <span> {{ board.name}} </span>
@@ -70,7 +73,7 @@
                     </div>
                 </mat-list-item>
             </mat-list>
-            <div *ngIf="boardList.length === 0">
+            <div *ngIf="boardList?.length === 0">
                 <h3>It seems you don't have any boards just yet</h3>
                 <p> Either create or join a board to start tracking your scores</p>
             </div>
@@ -82,17 +85,20 @@
     <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4">
         <mat-tab label="My Usage">
             <div class="tab-content-wrapper">
+                <div *ngIf="!subscriptionInfo">
+                    loading sub info....
+                </div>
                 <div *ngIf="subscriptionInfo">
-                    <h3 *ngIf="!subscriptionInfo.subscription">
+                    <h3 *ngIf="!subscriptionInfo?.subscription">
                         Free User
                     </h3>
-                    <h3 *ngIf="subscriptionInfo.subscription">
+                    <h3 *ngIf="subscriptionInfo?.subscription">
                          Full Member
                     </h3>
                 </div>
                 <div *ngIf="subscriptionInfo">
-                    <div>
-                        <h3 *ngIf="subscriptionInfo.subscription">
+                    <div *ngIf="subscriptionInfo?.subscription">
+                        <h3>
                             You are currently Subscribed
                         </h3>
                         <p>
@@ -102,11 +108,11 @@
                             {{ subscriptionInfo.sub_expires }}
                         </h4>
                     </div>
-                    <div *ngIf="!subscriptionInfo.subscription">
+                    <div *ngIf="!(subscriptionInfo?.subscription)">
                         <h3>
                             You are currently using {{ boardCount }} / {{ subscriptionInfo.max_boards }} boards
                         </h3>
-                        <p *ngIf="!subscriptionInfo.subscription && (boardCount === subscriptionInfo.max_boards )" 
+                        <p *ngIf="!subscriptionInfo?.subscription && (boardCount === subscriptionInfo.max_boards )" 
                         class="warning">
                             this is the limit of the free account - you cannot add any more boards
                         </p>
@@ -115,7 +121,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="button-wrapper" *ngIf="!subscriptionInfo.subscription">
+                <div class="button-wrapper" *ngIf="!subscriptionInfo?.subscription">
                     <app-open-modal-button 
                     buttonMessage="Payment Options" 
                     modalTarget="paymentOptions">

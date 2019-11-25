@@ -11,11 +11,11 @@ import { BoardService } from './services/board-service.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  private menuOpen: boolean = false;
+  public menuOpen: boolean = false;
   public username: string;
   constructor( 
-    private userService: UserService, 
-    private boardService: BoardService) { }
+    public userService: UserService, 
+    public boardService: BoardService) { }
 
   ngOnInit(){
     this.userService.username$.subscribe(

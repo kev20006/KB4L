@@ -70,7 +70,7 @@ def get_activity_by_user(request, username):
         for j in RecentActivity.objects.filter(board_id=i.board_id).order_by('-time'):
             recent_activity_array.append(Recent_Activity_Serializer(j).data)
     if recent_activity_array == []:
-        return Response({"results":"no recent news"})
+        return Response({"error":"no recent news"})
     return Response({
         "results": sorted(recent_activity_array, key=lambda i: i['time'], reverse=True)
         })

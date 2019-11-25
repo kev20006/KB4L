@@ -1,4 +1,4 @@
-import random, string
+from django.utils.crypto import get_random_string
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -6,10 +6,8 @@ from django.contrib.auth.models import User
 
 
 class Board(models.Model):
-    new_code = ''.join(random.choices(
-        string.ascii_lowercase + string.digits, k=8))
+    new_code = get_random_string(length=8)
     name = models.CharField(max_length=100)
-    board_picture = models.CharField(max_length=100)
     description = models.TextField()
     board_url = models.CharField(max_length=25, default="/"+ new_code +"/", unique=True)
     joining_code = models.CharField(max_length=10, default=new_code, unique=True)

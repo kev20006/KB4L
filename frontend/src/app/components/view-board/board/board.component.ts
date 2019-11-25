@@ -10,7 +10,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 export class BoardComponent implements OnInit {
 
   constructor(
-    private boardService: BoardService
+    public boardService: BoardService
   ) { }
 
   ngOnInit() {

@@ -11,10 +11,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class LoginTestComponent implements OnInit {
   
   public error: string
-  private username: string
-  private password: string
+  public username: string
+  public password: string
   constructor(
-    private userService: UserService,
+    public userService: UserService,
     public dialogRef: MatDialogRef<LoginTestComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 

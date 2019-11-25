@@ -57,7 +57,7 @@ export class OpenModalButtonComponent {
           name: result.name,
           board_picture: result.imageUrl,
           description: result.description,
-          board_url: result.url,
+          board_url: result.board_url,
           joining_code: "placeholder",
           score: 0
         };
@@ -105,11 +105,12 @@ export class OpenModalButtonComponent {
 
 export class AddNewTaskDialog implements OnInit {
 
-  private members: string[]
+  public members: string[];
+  public selected: string;
   constructor(
     public dialogRef: MatDialogRef<AddNewTaskDialog>,
-    private boardService: BoardService,
-    private userService: UserService,
+    public boardService: BoardService,
+    public userService: UserService,
     @Inject(MAT_DIALOG_DATA) public data: task) { }
     
   ngOnInit(){
@@ -168,16 +169,16 @@ export class AddNewBoardDialog {
 
 export class JoinBoardDialog {
 
-  private boardCode: string = "";
-  private submit: boolean;
-  private error: boolean;
-  private errorDescription: string = ""
+  public boardCode: string = "";
+  public submit: boolean;
+  public error: boolean;
+  public errorDescription: string = ""
 
   constructor(
     public dialogRef: MatDialogRef<AddNewBoardDialog>,
-    private api: ApiService,
-    private userService: UserService,
-    private boardService: BoardService) { }
+    public api: ApiService,
+    public userService: UserService,
+    public boardService: BoardService) { }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -271,9 +272,9 @@ export class AddNewMembersDialog implements OnInit {
 export class PaymentOptionsDialog {
   constructor(
     public dialogRef: MatDialogRef<AddNewBoardDialog>, 
-    private dialog: MatDialog,
-    private apiService: ApiService,
-    private userService: UserService) {}
+    public dialog: MatDialog,
+    public apiService: ApiService,
+    public userService: UserService) {}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -291,7 +292,7 @@ export class PaymentOptionsDialog {
           user: this.userService.tokenDecoded.user_id,
           max_boards: this.userService.subscription.max_boards,
           subscription: true,
-          expiration: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toString()
+          sub_expires: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toString()
         }).subscribe( data => this.userService.getSubscription(this.userService.username));
         break;
       case "board":
@@ -299,7 +300,7 @@ export class PaymentOptionsDialog {
           user: this.userService.tokenDecoded.user_id,
           max_boards: this.userService.subscription.max_boards + 1,
           subscription: this.userService.subscription.subscription,
-          expiration: this.userService.subscription.expiration
+          sub_expires: this.userService.subscription.sub_expires
         }).subscribe(data => this.userService.getSubscription(this.userService.username));
         break;
         
@@ -313,8 +314,9 @@ export class PaymentOptionsDialog {
   styleUrls: ['./open-modal-button.component.scss'],
 })
 export class CardPaymentDialog {
-  constructor(public dialogRef: MatDialogRef<CardPaymentDialog>) {}
-  private paymentSuccessful: boolean = false;
+  constructor(public dialogRef: MatDialogRef<CardPaymentDialog>,
+  @Inject(MAT_DIALOG_DATA) public data: any) {}
+  public paymentSuccessful: boolean = false;
   
   onNoClick(): void {
     this.dialogRef.close();

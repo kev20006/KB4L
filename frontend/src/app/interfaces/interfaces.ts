@@ -40,7 +40,7 @@ export interface subscription {
     user: number,
     max_boards: number,
     subscription: boolean,
-    expiration: string
+    sub_expires: string
 }
 
 export interface recentActivity {

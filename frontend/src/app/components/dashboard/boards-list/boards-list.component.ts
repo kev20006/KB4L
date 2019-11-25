@@ -10,8 +10,8 @@ import { board} from '../../../interfaces/interfaces'
 })
 export class BoardsListComponent implements OnInit {
 
-  private boardList: board[];
-  constructor(private userService: UserService, private boardService: BoardService) { }
+  public boardList: board[];
+  constructor(public userService: UserService, public boardService: BoardService) { }
 
   ngOnInit() {
     this.userService.refreshToken();

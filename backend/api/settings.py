@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import datetime
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,7 +27,11 @@ SECRET_KEY = '+t2p0w+xipg-5*a8n3x&-ng1z*j4$y(9&*4k9^!0^=qm+_8z07'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'kb4l.herokuapp.com',
+    'localhost',
+    '127.0.0.1'
+]
 
 
 # Application definition
@@ -50,6 +55,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -91,6 +97,9 @@ DATABASES = {
     }
 }
 
+prod_db = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(prod_db)
+
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
@@ -127,13 +136,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static'),
+    os.path.join(BASE_DIR, 'static'),
+    '/api/static/frontend/'
 ]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
@@ -152,10 +165,6 @@ JWT_AUTH = {
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
-
-CORS_ORIGIN_WHITELIST = [
-    "http://127.0.0.1:4200"
-]
 
 EMAIL_HOST = 'smtp.mailtrap.io'
 EMAIL_HOST_USER = 'b876681b70a1e6'

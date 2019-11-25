@@ -11,10 +11,15 @@ import { Observable } from 'rxjs';
   styleUrls: ['./dashboard-header.component.scss'],
 })
 export class DashboardHeaderComponent implements OnInit {
-  private subscriptionInfo: subscription
-  private boardList: board[] = null;
-  private boardCount: number = 0;
-  private currentTasks: any[] = null;
+  public subscriptionInfo: subscription = {
+    user: null,
+    max_boards: null,
+    subscription: false,
+    sub_expires: null
+  }
+  public boardList: board[] = null;
+  public boardCount: number = 0;
+  public currentTasks: any[] = null;
   constructor(private user: UserService, private boardService: BoardService) {}
 
   ngOnInit() {

@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+
 import * as moment from 'moment';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { ApiService } from './api-service.service';
@@ -11,7 +12,10 @@ import { subscription } from '../interfaces/interfaces'
 
 
 @Injectable()
-export class UserService {
+export class UserService implements OnInit {
+  
+  private urlPrefix: string = ''
+
   private _username: BehaviorSubject<string> = new BehaviorSubject<string>('');
   private _token: BehaviorSubject<string> = new BehaviorSubject<string>('');
   private _tokenExpires: BehaviorSubject<Date> = new BehaviorSubject<Date>(null);
@@ -79,9 +83,15 @@ export class UserService {
     this.tokenExpires = localStorage.tokenExpires ? new Date(Date.parse(localStorage.tokenExpires)) : null;
   }
 
+  ngOnInit(): void {
+    if (isDevMode()) {
+      this.urlPrefix = 'http://localhost:8000/'
+    }
+  }
+
   public login(user) {
     this.http
-      .post('http://localhost:8000/api/api-token-auth/', JSON.stringify(user), this.httpOptions)
+      .post(`${this.urlPrefix}api/api-token-auth/`, JSON.stringify(user), this.httpOptions)
       .pipe(retry(1), catchError(this.handleError))
       .subscribe(
         (response: any) => {
@@ -110,7 +120,7 @@ export class UserService {
 
   public refreshToken() {
     this.http
-      .post('http://localhost:8000/api/api-token-refresh/', JSON.stringify({ token: this.token }), this.httpOptions)
+      .post(`${this.urlPrefix}api/api-token-refresh/`, JSON.stringify({ token: this.token }), this.httpOptions)
       .subscribe(
         data => {
           this.updateData(data['token']);
@@ -167,7 +177,7 @@ export class UserService {
 
   public verify() {
     this.http
-      .post('http://localhost:8000/api/api-token-verify/', JSON.stringify({ token: this.token }), this.httpOptions)
+      .post(`${this.urlPrefix}api/api-token-verify/`, JSON.stringify({ token: this.token }), this.httpOptions)
       .subscribe(
         data => {
           // do nothing

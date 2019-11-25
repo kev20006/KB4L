@@ -11,16 +11,16 @@
     
         <mat-card class="board-card" *ngFor="let board of boardList">
             <mat-card-header>
-                <mat-card-title>{{ board.name }}</mat-card-title>
+                <mat-card-title>{{ board?.name }}</mat-card-title>
             </mat-card-header>
             <mat-card-content>
                 <p>
-                    {{ board.description }}
+                    {{ board?.description }}
                 </p>
             </mat-card-content>
             <mat-card-actions>
                 <div class="button-wrapper">
-                    <button mat-raised-button color="accent" routerLink="{{'../my-boards' + board.board_url }}"
+                    <button mat-raised-button color="accent" routerLink="{{'../my-boards' + board?.board_url }}"
                         (click)="setBoard(board)">VIEW</button>
                 </div>
             </mat-card-actions>

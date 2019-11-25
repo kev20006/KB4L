@@ -2,7 +2,10 @@
     <mat-card-header class="my-boards-header">
         <mat-card-title>Activity</mat-card-title>
     </mat-card-header>
-    <mat-card-content>
+    <mat-card-content *ngIf="!mostRecent">
+        Oops either we can't find your news or you don't have any
+    </mat-card-content>
+    <mat-card-content *ngIf="mostRecent">
         <app-activity-item *ngFor="let activity of mostRecent" [recent]="activity"></app-activity-item>
     </mat-card-content>
 </mat-card>

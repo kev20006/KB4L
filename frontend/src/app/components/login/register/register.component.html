@@ -22,7 +22,7 @@
         <mat-form-field>
             <input matInput placeholder="password" type="password" formControlName="password2">
         </mat-form-field>
-        <div *ngIf="registerForm.password.submit && registerForm.password.errors" class="invalid-feedback">
+        <div *ngIf="registerForm.password.dirty && registerForm.password.errors" class="invalid-feedback">
             <div class="error-text" *ngIf="registerForm.password.errors.required || registerForm.password2.errors.required">
                 password is required
             </div>
@@ -37,7 +37,7 @@
         </div>
         <div class="error-text" *ngIf="regiserUserForm.errors">Passwords must match</div>
         <br>
-        <div class="error-text" *ngIf="error == 'could-not-add-user'"> {{ errors }}</div>
+        <div class="error-text" *ngIf="error == 'could-not-add-user'"> {{ error }}</div>
         <button mat-raised-button color="accent" type="submit" (click)="register()" [disabled]="!registerForm.valid && registerForm.pristine">Register</button>
     </form>
 </div>

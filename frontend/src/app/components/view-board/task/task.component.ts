@@ -14,18 +14,18 @@ import { TaskService } from 'src/app/services/task.service';
 export class TaskComponent implements OnInit {
 
   @Input() task: task;
-  private memberList: any[];
-  private assignedMember: {username:string, id: number} = {
+  public memberList: any[];
+  public assignedMember: {username:string, id: number} = {
     username: "",
     id: null
   };
   panelOpenState = false;
   
   constructor(
-    private boardService: BoardService,
-    private apiService: ApiService,
-    private userService: UserService,
-    private taskService: TaskService) { }
+    public boardService: BoardService,
+    public apiService: ApiService,
+    public userService: UserService,
+    public taskService: TaskService) { }
 
   ngOnInit() {
     this.boardService.memberList$.subscribe(data => {
@@ -53,7 +53,7 @@ export class TaskComponent implements OnInit {
     }
   }
 
-  unasign(id: number){
+  unasign(id: string){
     this.task.assigned_to= null; 
   }
 
@@ -106,5 +106,12 @@ export class TaskComponent implements OnInit {
       default:
         return null
     }
+  }
+
+  done(){
+    if (this.task.repeat_task){
+      this.task.status = "1";
+    }
+    this.boardService.scoreTask(this.task);
   }
 }

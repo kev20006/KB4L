@@ -29,11 +29,11 @@ export class RegisterModalComponent implements OnInit {
 
     get registerForm() { return this.regiserUserForm.controls }
 
-    private board_code: string = null
-    private error: string = ""
+    public board_code: string = null
+    public error: string = ""
     constructor(
-        private userService: UserService,
-        private route: ActivatedRoute,
+        public userService: UserService,
+        public route: ActivatedRoute,
         public dialogRef: MatDialogRef<RegisterModalComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) { }

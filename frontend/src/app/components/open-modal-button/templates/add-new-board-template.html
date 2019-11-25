@@ -1,12 +1,8 @@
-<h1 mat-dialog-title>Add new task</h1>
+<h1 mat-dialog-title>Create a New Board</h1>
 <div mat-dialog-content>
     <p>Name of board</p>
     <mat-form-field>
         <input matInput placeholder="Title" [(ngModel)]="data.name" />
-    </mat-form-field>
-    <p>image url</p>
-    <mat-form-field>
-        <input matInput placeholder="Image Path" [(ngModel)]="data.imageUrl" />
     </mat-form-field>
     <p>Provide a short description of the board</p>
     <mat-form-field>
@@ -15,14 +11,14 @@
     </mat-form-field>
     <p>Desired URL</p>
     <mat-form-field>
-        <span matPrefix>http://192.168.0.1:4200/</span>
-        <input type="text" matInput placeholder="url" [(ngModel)]="data.url"/>
+        <span matPrefix>https://kb4l.herokuapp.com/</span>
+        <input type="text" matInput placeholder="url" [(ngModel)]="data.board_url"/>
         <span matSuffix>/</span>
     </mat-form-field>
 </div>
 <div mat-dialog-actions>
     <div class="example-button-row">
-        <button mat-raised-button color="accent" [mat-dialog-close]="data">Add Task</button>
+        <button mat-raised-button color="accent" [mat-dialog-close]="data">Create Board</button>
         <button mat-raised-button color="warn" (click)="onNoClick()"> Cancel </button>
     </div>
 </div>

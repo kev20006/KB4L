@@ -7,7 +7,7 @@ from .models import Board, Member
 class BoardSerializer(serializers.ModelSerializer):
     class Meta:
        model = Board
-       fields = ['id', 'name', 'board_picture', 'description', 'board_url', 'joining_code']
+       fields = ['id', 'name', 'description', 'board_url', 'joining_code']
 
     def create(self, validated_data):
         """
@@ -20,9 +20,6 @@ class BoardSerializer(serializers.ModelSerializer):
         Update and return an existing `Snippet` instance, given the validated data.
         """
         instance.name = validated_data.get('name', instance.name)
-        instance.board_picture = validated_data.get(
-            'board_picture', instance.code
-        )
         instance.description = validated_data.get(
             'description', instance.description
         )

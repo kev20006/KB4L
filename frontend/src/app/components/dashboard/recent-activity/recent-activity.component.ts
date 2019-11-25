@@ -11,19 +11,21 @@ import { recentActivity } from '../../../interfaces/interfaces'
 })
 export class RecentActivityComponent implements OnInit {
 
-  currentSlice: number = 5;
-  allRecent: recentActivity[] = []
-  mostRecent: recentActivity[] = []
+  currentSlice: number = 5;;
+  allRecent: recentActivity[] = [];
+  mostRecent: recentActivity[] = [];
   constructor(
-    private userService: UserService,
-    private apiService: ApiService
+    public userService: UserService,
+    public apiService: ApiService
   ) { }
 
   ngOnInit() {
     this.apiService.getRecentActivityByUser(this.userService.username).subscribe(
       data => {
-        this.allRecent = data.results
-        this.mostRecent = this.allRecent.slice(0, 5)
+        if (data.results){
+          this.allRecent = data.results;
+          this.mostRecent = this.allRecent.slice(0, 5);
+        } 
       } 
     )
   }
