@@ -38,7 +38,7 @@
             <mat-card-title> Assigned Tasks </mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <mat-nav-list *ngIf="currentTasks?.length === 0">
+            <mat-nav-list *ngIf="currentTasks?.length >= 1">
                 <div *ngIf="currentTasks">
                     <app-current-task *ngFor="let task of currentTasks" [taskData]=task>
 
@@ -59,8 +59,8 @@
             <mat-card-title>Board Score</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <mat-list *ngIf="boardList?.length > 0">
-                <mat-list-item *ngFor="let board of boardList"> 
+            <mat-list *ngIf="boardService.boardList?.length > 0">
+                <mat-list-item *ngFor="let board of boardService.boardList"> 
                     <div class="score-list-item">
                         <span> {{ board.name}} </span>
                         <mat-chip class="circle big" color="accent" selected>{{ board.score }}</mat-chip>
@@ -147,17 +147,17 @@
         <mat-tab label="My Scores">
             <div class="tab-content-wrapper">
                 <!-- if boards exist show scores -->
-                <mat-list *ngIf="boardList.length > 0">
-                    <mat-list-item *ngFor="let board of boardList">
+                <mat-list *ngIf="boardService.boardList?.length > 0">
+                    <mat-list-item *ngFor="let board of boardService.boardList">
                         <div class="score-list-item">
                             <span> {{ board.name }} </span>
                             <mat-chip class="circle big" color="accent" selected>{{ board.score }}</mat-chip>
                         </div>
                     </mat-list-item>
-                    <mat-list-item *ngIf="boardList" class="total-score">
+                    <mat-list-item *ngIf="boardService.boardList" class="total-score">
                         <div class="score-list-item">
                             <span> total-score </span>
-                            <mat-chip class="circle big" color="primary" selected>{{boardScoreTotal(boardList)}}</mat-chip>
+                            <mat-chip class="circle big" color="primary" selected>{{boardScoreTotal(boardService.boardList)}}</mat-chip>
                         </div>
                     </mat-list-item>
                 </mat-list>

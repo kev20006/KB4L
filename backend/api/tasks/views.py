@@ -8,7 +8,7 @@ from django.shortcuts import render
 
 from django.contrib.auth.models import User
 from .models import Job
-from ..boards.models import Board
+from ..boards.models import Board, Member
 from .serializer import TaskSerializer
 
 from ..recent_activity.views import add_task_to_board
@@ -22,8 +22,11 @@ def get_job_list_by_board(request, board_id, format=None):
         serializer = TaskSerializer(jobs, many=True)
         return Response(serializer.data)
     if request.method == 'POST':
-        username = request.data["assigned_to"]
-        request.data["assigned_to"] = None
+        print(request.data)
+        username = None
+        if "assigned_to" in request.data:
+            username = request.data["assigned_to"]
+            request.data["assigned_to"] = None
         serializer = TaskSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -63,8 +66,9 @@ def get_job_list_by_user(request, user_id):
         return Response(response_data)
 
 
-@api_view(['GET', 'PUT', 'DELETE'])
-@permission_classes([IsAuthenticated])
+@api_view(['PUT', 'DELETE'])
+@permission_classes([])
+@permission_classes([])
 def modify_job_status(request, board_id, task_id):
     try:
         job = Job.objects.get(id=task_id)
@@ -79,12 +83,33 @@ def modify_job_status(request, board_id, task_id):
         serializer = TaskSerializer(job, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response({"results": serializer.data}, status=status.HTTP_200_OK)
         else:
             print("invalid!!")
             print(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
     
     elif request.method == 'DELETE':
-        job.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        user = User.objects.get(username=job.assigned_to)
+        member = Member.objects.get(user_id=user, board_id=job.board)
+        member.score += job.points
+        member.save()
+        if job.repeat_task == True:
+            job.status = "1"
+            job.save()
+        else:
+            job.delete()
+        
+        return Response({"complete": True}, status=status.HTTP_200_OK)
+
+'''
+id: string,
+    title: string,
+    description: string,
+    points: number,
+    priority: string,
+    status: string,
+    repeat_task: boolean,
+    assigned_to: number,
+    board: number
+'''

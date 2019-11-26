@@ -20,7 +20,7 @@ export class DashboardHeaderComponent implements OnInit {
   public boardList: board[] = null;
   public boardCount: number = 0;
   public currentTasks: any[] = null;
-  constructor(private user: UserService, private boardService: BoardService) {}
+  constructor(public user: UserService, public boardService: BoardService) {}
 
   ngOnInit() {
     this.user.subscription$.subscribe(data => {

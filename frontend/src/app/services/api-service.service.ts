@@ -8,19 +8,15 @@ import { isDevMode } from '@angular/core';
   providedIn: 'root'
 })
 
-export class ApiService implements OnInit {
+export class ApiService {
 
-  private urlPrefix: string = ''
-
+  private urlPrefix: string = isDevMode() ? 'http://localhost:8000/' : ''
+  
+  
   constructor(
     private http: HttpClient,
    ) { }
 
-   ngOnInit(){
-     if (isDevMode()) {
-       this.urlPrefix = 'http://localhost:8000/'
-     }
-   }
   /* Board API Methods */
   getBoardListByUser(username: string ) : Observable<any> {
     return this.http.get<board[]>(`${this.urlPrefix}api/boards/username/${username}?format=json`)
@@ -61,6 +57,14 @@ export class ApiService implements OnInit {
   postTask( newTask: task ): Observable<any> {
     newTask.id = null;
     return this.http.post<task>(`${this.urlPrefix}api/tasks/${newTask.board}`, newTask)
+  }
+
+  completeTask(task: task): Observable<any> {
+    return this.http.delete<task>(`${this.urlPrefix}api/tasks/${task.board}/tasks/${task.id}`)
+  }
+
+  updateTask(task: task): Observable<any> {
+    return this.http.put<task>(`${this.urlPrefix}api/tasks/${task.board}/tasks/${task.id}`, task)
   }
 
   /* User API Methods */

@@ -157,7 +157,7 @@ def add_member_list_board(request):
             if Member.objects.filter(user_id=user.id, board_id=board.id).exists():
                 print("{} exists in database and is a member".format(user.username))
             else:
-                Member.objects.create(user_id=user, board_id=board, is_admin=False)
+                Member.objects.create(user_id=user, board_id=board, is_admin=False, is_creator=False)
                 add_user_to_board(user.username, board.id)
                 print("{} exists in database but is not a member".format(user.username))
         else:
@@ -187,7 +187,7 @@ def add_user_by_board_code(request):
             board = Board.objects.get(joining_code=request.data["board_code"])
             if not Member.objects.filter(board_id=board, user_id=user).exists():
                 Member.objects.create(
-                    user_id=user, board_id=board, is_admin=False)
+                    user_id=user, board_id=board, is_admin=False, is_creator=False)
                 add_user_to_board(user.username, board.id)
                 return Response({"success": "user added"})
             else:

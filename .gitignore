@@ -112,3 +112,4 @@ media/
 !**/migrations
 !**/migrations/__init__.py
 /backend/db.sqlite3
+/backend/api/.env

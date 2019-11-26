@@ -46,7 +46,11 @@ In this section, you should mention all of the languages, frameworks, libraries,
 - [Django-JWT](https://jquery.com)
     - Authentication is managed using JSON Web Tokens
 - [SQLite](https://jquery.com)
-    - The database is built using SQLite  
+    - The database is built using SQLite
+- [Gunicorn]
+    - Tool for better managing python deployment on heroku
+- [Heroku]
+    - For Hosting the App
 
 
 ## Testing
@@ -57,11 +61,22 @@ Whenever it is feasible, prefer to automate your tests, and if you've done so, p
 
 For any scenarios that have not been automated, test the user stories manually and provide as much detail as is relevant. A particularly useful form for describing your testing process is via scenarios, such as:
 
-1. Contact form:
-    1. Go to the "Contact Us" page
-    2. Try to submit the empty form and verify that an error message about the required fields appears
-    3. Try to submit the form with an invalid email address and verify that a relevant error message appears
-    4. Try to submit the form with all inputs valid and verify that a success message appears.
+### Manual e2e Testing
+
+1. Register a New  User:
+    1. Go to the Index page
+    2. Click Register to open the register modal
+    3. Fill in details correctly
+    4. Click Register
+
+2. Register a New User - Fail:
+    1. Go to the Index page
+    2. Click Register to open the register modal
+    3. Enter the same username as last time
+    4. enter an invalid email
+    5. enter 42 as your password
+    6. enter 53 as your password
+    7. click register
 
 In addition, you should mention in this section how your project looks and works on different browsers and screen sizes.
 

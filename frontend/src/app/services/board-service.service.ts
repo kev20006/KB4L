@@ -133,23 +133,24 @@ export class BoardService {
   }
 
   updateTasksStatus(task: task) {
-    this.tasks = this.tasks.map(element => (task.id === element.id ? task : element));
+    //this.tasks = this.tasks.map(element => (task.id === element.id ? task : element));
+    this.api.updateTask(task).subscribe( response =>{
+      this.getBoardTasks();
+    })
   }
 
   addTask(newTask: task) {
     this.api.postTask(newTask).subscribe(result => (this.tasks = [...this.tasks, result]));
   }
 
-  scoreTask(task: task) {
-    // api call goes here 
-    this.boardList = this.boardList.map(board =>{
-      if (board.id === task.board){
-        board.score += task.points
+  scoreTask(task: task, username: string) {
+    this.api.completeTask(task).subscribe(data => {
+      this.getBoardTasks();
+      if (data.results === "completed"){
+        this.getBoardTasks();
+        this.setBoardListByUser(username)
       }
-      return board 
     })
-    this.tasks = this.tasks.map(element => (task.id === element.id ? task : element));
-
   }
 
   addBoard(board: board, username: string) {

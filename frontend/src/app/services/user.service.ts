@@ -12,9 +12,9 @@ import { subscription } from '../interfaces/interfaces'
 
 
 @Injectable()
-export class UserService implements OnInit {
+export class UserService {
   
-  private urlPrefix: string = ''
+  private urlPrefix: string = isDevMode() ? 'http://localhost:8000/' : ''
 
   private _username: BehaviorSubject<string> = new BehaviorSubject<string>('');
   private _token: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -81,12 +81,6 @@ export class UserService implements OnInit {
     this.tokenDecoded = localStorage.token ? this.decodeToken(this.token) : null;
     this.username = localStorage.token ? this.tokenDecoded.username : null;
     this.tokenExpires = localStorage.tokenExpires ? new Date(Date.parse(localStorage.tokenExpires)) : null;
-  }
-
-  ngOnInit(): void {
-    if (isDevMode()) {
-      this.urlPrefix = 'http://localhost:8000/'
-    }
   }
 
   public login(user) {

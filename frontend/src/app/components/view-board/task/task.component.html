@@ -8,8 +8,16 @@
             </mat-chip>
         </div>
     </mat-expansion-panel-header>
-    <h3 *ngIf="task.assigned_to && (assignedToCurrentUser())"> Assigned to You 
-        <button mat-icon-button  color="warn" (click)="unasign(task.id)">
+    
+    <h3>Description:</h3>
+    <p> {{ task.description }}</p>
+    
+    <p>
+        <app-priority [priority]="task.priority"> </app-priority>This is a {{ getPriority(task.priority) }} Priority task
+    </p>
+
+    <h3 *ngIf="task.assigned_to && (assignedToCurrentUser())"> Assigned to You
+        <button mat-icon-button color="warn" (click)="unasign(task.id)">
             <i class="material-icons">
                 cancel
             </i>
@@ -25,10 +33,6 @@
             <mat-option *ngFor="let user of boardService.memberList" [value]="user.username">{{user.username}}</mat-option>
         </mat-select>
     </mat-form-field>
-    <p> <app-priority [priority]="task.priority"> </app-priority>This is a {{ getPriority(task.priority) }} Priority task </p>
-    
-    <h3>Description:</h3>
-    <p> {{ task.description }}</p>
     <div class="controls">
         <button mat-mini-fab color="primary" [disabled]="!moveToPrevText()" (click)="movePrev()">
             <i class="material-icons">

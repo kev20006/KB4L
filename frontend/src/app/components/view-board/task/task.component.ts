@@ -53,8 +53,11 @@ export class TaskComponent implements OnInit {
     }
   }
 
-  unasign(id: string){
+  unasign(id: string) {
+    this.assignedMember.username = ""
     this.task.assigned_to= null; 
+    
+    this.boardService.updateTasksStatus(this.task)
   }
 
   assignedToCurrentUser(){
@@ -109,9 +112,12 @@ export class TaskComponent implements OnInit {
   }
 
   done(){
+    console.log("done")
     if (this.task.repeat_task){
       this.task.status = "1";
+    }else{
+      this.task.status = "4"
     }
-    this.boardService.scoreTask(this.task);
+    this.boardService.scoreTask(this.task, this.userService.username);
   }
 }
