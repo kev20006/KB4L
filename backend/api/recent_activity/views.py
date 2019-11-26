@@ -1,3 +1,7 @@
+"""
+Views relating to recent activity
+"""
+
 from django.shortcuts import render
 from django.db import models
 

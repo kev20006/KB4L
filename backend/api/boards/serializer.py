@@ -5,6 +5,9 @@ from .models import Board, Member
 
 
 class BoardSerializer(serializers.ModelSerializer):
+    """
+    functions for serialising board data - to work with DRF 
+    """
     class Meta:
        model = Board
        fields = ['id', 'name', 'description', 'board_url', 'joining_code']
@@ -17,7 +20,7 @@ class BoardSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         """
-        Update and return an existing `Snippet` instance, given the validated data.
+        Update and return an existing board instance, given the validated data.
         """
         instance.name = validated_data.get('name', instance.name)
         instance.description = validated_data.get(
@@ -34,6 +37,9 @@ class BoardSerializer(serializers.ModelSerializer):
 
 
 class MemberSerializer(serializers.ModelSerializer):
+    """
+    functions for serialiseing Member data - to work with DRF
+    """
     class Meta:
        model = Member
        fields = ['user_id', 'board_id', 'is_admin', "is_creator", 'score']

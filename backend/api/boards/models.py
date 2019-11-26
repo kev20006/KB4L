@@ -6,6 +6,9 @@ from django.contrib.auth.models import User
 
 
 class Board(models.Model):
+    """
+    Model to represent a kanban board
+    """
     new_code = get_random_string(length=8)
     name = models.CharField(max_length=100)
     description = models.TextField()
@@ -13,6 +16,9 @@ class Board(models.Model):
     joining_code = models.CharField(max_length=10, default=new_code, unique=True)
 
 class Member(models.Model):
+    """
+    Model to represent a Member Relationship to a kanban board
+    """
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     board_id = models.ForeignKey(Board, on_delete=models.CASCADE)
     is_creator = models.BooleanField()

@@ -133,6 +133,7 @@ export class BoardService {
   }
 
   updateTasksStatus(task: task) {
+    console.log(task)
     //this.tasks = this.tasks.map(element => (task.id === element.id ? task : element));
     this.api.updateTask(task).subscribe( response =>{
       this.getBoardTasks();

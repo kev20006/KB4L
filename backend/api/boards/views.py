@@ -22,6 +22,9 @@ from ..recent_activity.views import add_user_to_board
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def board_by_user(request, username):
+    """
+    Given a username, retrieve corresponding boards
+    """
     user = User.objects.get(username=username)
     if request.method == 'GET':
         try:
@@ -35,6 +38,9 @@ def board_by_user(request, username):
             return Response({"boards": response_data})
         except ObjectDoesNotExist:
             return Response({"error":"user does not exist"})
+    """
+    Given a username, create a new board and add that user as a member
+    """
     if request.method == 'POST':
         new_board = request.data
         serializer = BoardSerializer(data=new_board)
@@ -58,6 +64,9 @@ def board_by_user(request, username):
 @api_view(['GET', 'DELETE '])
 @permission_classes([IsAuthenticated])
 def board_by_url(request, url):
+    """
+    Given a the url of a board - retrive that board, or delete the corresponding board
+    """
     url = '/{0}/'.format(url)
     if request.method == 'GET':
         if Board.objects.filter(board_url=url).exists():
@@ -81,6 +90,9 @@ def board_by_url(request, url):
 @api_view(['GET', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def board_by_id(request, id):
+    """
+    Given a the boards PK - retrive that board, or delete that board
+    """
     if request.method == 'GET':
         try:
             board = Board.objects.get(id=id)
@@ -90,7 +102,7 @@ def board_by_id(request, id):
                 "id": -1,
                 "error": "invalid id"
             })
-    elif request.method == 'DELETE':
+    if request.method == 'DELETE':
         try:
             Board.objects.get(id=id).delete()
             return Response({
@@ -114,6 +126,9 @@ def get_usage_count(request, user_id):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def is_member(request):
+    """
+    Route to confirm if user is a member of a board
+    """
     if request.method == "GET":
         user_id = request.GET.get('user_id', None)
         board_id = request.GET.get('board_id', None)
@@ -123,9 +138,12 @@ def is_member(request):
             return Response({"is_member": False})
 
 
-@api_view(['GET', "POST"])
+@api_view(['GET'])
 @permission_classes([])
 def member_by_board(request, board_id):
+    """
+    Route to get all the members of a board, along with there board scores
+    """
     if request.method == "GET":
         try:
             members = Member.objects.filter(board_id=board_id)
@@ -148,6 +166,11 @@ def member_by_board(request, board_id):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def add_member_list_board(request):
+    """
+    route to take a list of email addresses add them to the board
+    If the user is already a member of KB4l the are added to the board
+    If they are not the are sent an email that deeplinks into he register form
+    """
     print(request.data)
     board = Board.objects.get(joining_code=request.data["boardCode"])
     print(board.name)
@@ -181,6 +204,9 @@ def add_member_list_board(request):
 @authentication_classes([])
 @permission_classes([])
 def add_user_by_board_code(request):
+    """
+    Route to allow users to join using a board code
+    """
     if request.method == 'POST':
         if Board.objects.filter(joining_code=request.data["board_code"]).exists():
             user = User.objects.get(id=request.data["user_id"])

@@ -17,6 +17,10 @@ from ..recent_activity.views import add_task_to_board
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def get_job_list_by_board(request, board_id, format=None):
+    """
+    Route to take a board id and return the list of jobs on that board
+    Post method also adds new jobs to a board
+    """
     if request.method == 'GET':
         jobs = Job.objects.filter(board=board_id)
         serializer = TaskSerializer(jobs, many=True)
@@ -70,6 +74,9 @@ def get_job_list_by_user(request, user_id):
 @permission_classes([])
 @permission_classes([])
 def modify_job_status(request, board_id, task_id):
+    """
+   route to update the status of a job - change priority, user, compete etc.
+    """
     try:
         job = Job.objects.get(id=task_id)
     except job.DoesNotExist:
@@ -80,9 +87,16 @@ def modify_job_status(request, board_id, task_id):
         return Response(serializer.data)
 
     elif request.method == 'PUT':
+        print(request.data)
         serializer = TaskSerializer(job, data=request.data)
         if serializer.is_valid():
             serializer.save()
+            print(serializer.data)
+            new_job = Job.objects.get(id=serializer.data["id"])
+            new_job.assigned_to = None
+            if request.data["assigned_to"]:
+                new_job.assigned_to = User.objects.get(id=request.data["assigned_to"])
+            new_job.save()
             return Response({"results": serializer.data}, status=status.HTTP_200_OK)
         else:
             print("invalid!!")
@@ -90,26 +104,17 @@ def modify_job_status(request, board_id, task_id):
         return Response({"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
     
     elif request.method == 'DELETE':
+        if "assigned_to" not in request.data:
+            return Response({"error": "job must be assigned to be completed"})
         user = User.objects.get(username=job.assigned_to)
         member = Member.objects.get(user_id=user, board_id=job.board)
         member.score += job.points
         member.save()
+        # delete is called when a job completes. if a completed job is a repeat task, it goes
+        # into the todo list instead of being deleted
         if job.repeat_task == True:
             job.status = "1"
             job.save()
         else:
             job.delete()
-        
         return Response({"complete": True}, status=status.HTTP_200_OK)
-
-'''
-id: string,
-    title: string,
-    description: string,
-    points: number,
-    priority: string,
-    status: string,
-    repeat_task: boolean,
-    assigned_to: number,
-    board: number
-'''
