@@ -167,7 +167,8 @@ export class BoardService {
       })
   }
 
-  deleteBoard(boardId: string) {
+  deleteBoard() {
+    const boardId = `${this.currentBoard.getValue().id}`
     this.api.deleteBoardById(boardId).subscribe(result => {
       if (result.success) {
         this.boardCount = this.boardCount -= 1;

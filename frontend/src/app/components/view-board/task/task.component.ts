@@ -75,6 +75,17 @@ export class TaskComponent implements OnInit {
     )
   }
 
+  userAssignSelf(){
+    this.apiService.getIdByUsername(this.userService.username).subscribe(
+      data => {
+        if (!data.error) {
+          this.task.assigned_to = data.id
+          this.boardService.updateTasksStatus(this.task)
+        }
+      }
+    )
+  }
+
   moveNext(){
     if ( this.task.status === "1" || this.task.status == "2" ){
       this.task.status = `${+this.task.status + 1}`

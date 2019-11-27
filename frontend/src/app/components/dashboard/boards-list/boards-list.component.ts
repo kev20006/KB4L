@@ -24,8 +24,4 @@ export class BoardsListComponent implements OnInit {
   setBoard(board){
     this.boardService.setBoard(board)
   }
-
-  delete(boardId){
-    this.boardService.deleteBoard( boardId );
-  }
 }
