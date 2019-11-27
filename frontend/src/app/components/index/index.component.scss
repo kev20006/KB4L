@@ -1,23 +1,138 @@
 header{
     color:white;
     background: linear-gradient(180deg, #3f51b5 0%, #006cff 100%);
-    width:100%;
+    //width:100%;
     .container{
         margin: 0 auto;
         display: flex;
-        justify-content: space-around;
-        width:1200px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         max-width:80%;
+        padding-bottom:25px;
 
         .text-container{
-            width:60%;
+            max-width: 800px;
+            width:90%;
+            text-align: center;
         }
 
         .image-container{
-            width:40%;
+            padding-top:20px;
+            display:flex;
+            img{
+                height:10vh;
+            }
         }
-        img{
-            width:70%;
+        
+    }
+}
+
+.section-header{
+    text-align: center;
+}
+
+.card-container{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width:90%;
+    padding: 3%;
+    margin:0 auto;
+
+    .feature-card{
+        width: 120px;
+        text-align: center;
+        margin: 2%;
+    }
+
+    .feature-card-small{
+        width: 100px;
+        text-align: center;
+        margin: 10px;
+        .big{
+            font-size:5em;
+    }
+    }
+
+    .big{
+        font-size:8em;
+    }
+}
+
+.pricing{
+    background: rgb(255,64,129);
+    background: linear-gradient(357deg, rgba(255,64,129,1) 0%, rgba(78,129,217,1) 100%);
+    padding: 40px 0px;
+    
+    .price-card{
+        width:90%;
+        margin: 0 auto;
+    }
+    .section-header{
+        h2{
+            color: white;
+        }
+    }   
+    
+
+    mat-tab-group{
+        background-color: white;;
+        margin: 0 auto;
+        width: 90%;
+        max-width: 800px;
+
+        .price{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 2em;
+            color:white;
+            height: 150px;
+            width:100%;
+
+            h3{
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+            &.free{
+                background: rgb(63,81,181);
+                background: linear-gradient(153deg, rgba(63,81,181,1) 0%, rgba(246,93,145,1) 100%);
+            }
+
+            &.per-board{
+                background: rgb(255,64,129);
+                background: linear-gradient(153deg, rgba(255,64,129,1) 0%, rgba(148,87,166,1) 100%);
+            }
+
+            &.sub{
+                background: rgb(63,81,181);
+                background: linear-gradient(310deg, rgba(63,81,181,1) 0%, rgba(148,87,166,1) 100%);
+            }
+        }
+
+        .item-wrapper{
+            display: flex;
+            width:100%;
+            justify-content: center;
+        }
+
+        .material-icons{
+            color: rgb(63,81,181);
+            margin-right:5px;
         }
     }
+}
+    
+.early-access{
+    .coming-soon{
+        width:fit-content;
+        margin: 0 auto;
+
+        .card-head{
+            text-align: center;
+        }
+    }
+    
 }

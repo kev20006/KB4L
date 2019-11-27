@@ -155,8 +155,16 @@ export class BoardService {
   }
 
   addBoard(board: board, username: string) {
-    this.api.postBoard(board, username).subscribe(result => (this.boardList = [...this.boardList, result]));
-    this.boardCount = this.boardCount += 1;
+    this.api.postBoard(board, username).subscribe(
+      result => {
+        console.log(result)
+        if (result.error){
+          console.log(`error ${result.error}`)
+          return result.error
+        }
+        this.boardList = [...this.boardList, result];
+        this.boardCount = this.boardCount += 1;
+      })
   }
 
   deleteBoard(boardId: string) {

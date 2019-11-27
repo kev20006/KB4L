@@ -6,9 +6,7 @@
             <app-open-modal-button buttonMessage="Join a Board" modalTarget="JoinBoardDialog"></app-open-modal-button>
         </div>
     </mat-card-header>
-    <h3></h3>
-    <main *ngIf="boardList" class="my-boards-wrapper">
-    
+    <main class="my-boards-wrapper">
         <mat-card class="board-card" *ngFor="let board of boardList">
             <mat-card-header>
                 <mat-card-title>{{ board?.name }}</mat-card-title>
@@ -25,7 +23,19 @@
                 </div>
             </mat-card-actions>
         </mat-card>
+        <mat-card *ngIf="boardList.length==0" class="board-card">
+            <mat-card-header>
+                <mat-card-title>No Boards?</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p>
+                    Add a board to get started, or click join and enter a code from a friend
+                </p>
+            </mat-card-content>
+        </mat-card>
     </main>
+
+        
     
     
 

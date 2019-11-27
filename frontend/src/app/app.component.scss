@@ -27,3 +27,35 @@ mat-toolbar-row{
         right:0
     }
 }
+
+main{
+    margin-top: 50px;
+    min-height: 100%;
+    //display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+}
+
+footer{
+    margin-top:25px;
+    height: 125px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color:black;
+    a{
+        background-color:black;
+        color:white;
+        // https://codepen.io/sosuke/pen/Pjoqqp - used to generate filter
+        img{
+            filter: invert(98%) sepia(2%) saturate(7%) hue-rotate(339deg) brightness(101%) contrast(103%);
+        }
+        p{
+            margin:0;
+        }
+        &:hover{
+            background-color: #222222;
+        }
+    }
+}

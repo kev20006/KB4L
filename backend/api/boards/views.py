@@ -1,7 +1,7 @@
 '''
 Routes to manage boards and board membership
 '''
-
+from django.utils.crypto import get_random_string
 import random
 import string
 
@@ -17,7 +17,7 @@ from django.core.mail import send_mail
 from .models import Board, Member
 from .serializer import BoardSerializer, MemberSerializer
 from ..recent_activity.views import add_user_to_board
-
+from ..users.models import Subscription
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
@@ -26,6 +26,8 @@ def board_by_user(request, username):
     Given a username, retrieve corresponding boards
     """
     user = User.objects.get(username=username)
+    current_usage = Member.objects.filter(user_id=user, is_creator=True).count()
+    subs = Subscription.objects.get(user=user)
     if request.method == 'GET':
         try:
             response_data = []
@@ -43,22 +45,26 @@ def board_by_user(request, username):
     """
     if request.method == 'POST':
         new_board = request.data
+        new_board["joining_code"] = get_random_string(length=8)
         serializer = BoardSerializer(data=new_board)
         if serializer.is_valid():
-            serializer.save()
-            member_serializer = MemberSerializer(data={
-                "user_id": user.id,
-                "board_id": serializer.data["id"],
-                "is_admin": True,
-                "is_creator":True
-            })
-            if member_serializer.is_valid():
-                member_serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            if current_usage < subs.max_boards or subs.subscription:
+                serializer.save()
+                member_serializer = MemberSerializer(data={
+                    "user_id": user.id,
+                    "board_id": serializer.data["id"],
+                    "is_admin": True,
+                    "is_creator":True
+                })
+                if member_serializer.is_valid():
+                    member_serializer.save()
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+                else:
+                    return Response({"error": member_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
             else:
-                return Response(member_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"error": "no usage left"})
         print("invalid")
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"error":serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'DELETE '])

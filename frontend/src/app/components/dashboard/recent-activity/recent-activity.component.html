@@ -2,7 +2,7 @@
     <mat-card-header class="my-boards-header">
         <mat-card-title>Activity</mat-card-title>
     </mat-card-header>
-    <mat-card-content *ngIf="!mostRecent">
+    <mat-card-content *ngIf="mostRecent.length ===0">
         Oops either we can't find your news or you don't have any
     </mat-card-content>
     <mat-card-content *ngIf="mostRecent">

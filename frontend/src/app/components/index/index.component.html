@@ -1,18 +1,229 @@
 <header>
     <div class="container">
+        <div class="image-container">
+            <img src="https://i.ibb.co/vYtVnrD/juggler.png" alt="juggler">
+        </div>
         <div class="text-container">
             <h1>KB4Life</h1>
             <h2>Add a little agile to your life</h2>
             <p>Create and share Agile boards for all aspects of your life.</p>
             <p>Divide up the house work, Plan Large Events, Work on Group Projects</p>
-            <div class="example-button-row">
+            <div *ngIf="userService.username"class="example-button-row">
                 <a mat-raised-button routerLink="my-boards">Go To my board</a>
             </div>
-        </div>
-        <div class="image-container">
-            <img src="https://i.ibb.co/vYtVnrD/juggler.png" alt="juggler">
+            <div *ngIf="!userService.username" class="example-button-row">
+                <app-open-modal-button buttonMessage="Create Your First Board Now" modalTarget="Register" color="accent"></app-open-modal-button>
+            </div>
         </div>
     </div>
 </header>
+<section>
+    <div class="section-header"><h2>Features</h2></div>
+    <div class="card-container">
+        <mat-card class="feature-card">
+            <i class="material-icons big">
+                mail_outline
+            </i>
+            <mat-card-content>
+                <h3>
+                   Invite Friends and Family
+                </h3>
+            </mat-card-content>
+        </mat-card>
 
+        <mat-card class="feature-card">
+            <i class="material-icons big">
+                add_shopping_cart
+            </i>
+            <mat-card-content>
+                <h3>
+                    Shop Together
+                </h3>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="feature-card">
+            <i class="material-icons big">
+                list_alt
+            </i>
+            <mat-card-content>
+                <h3>
+                    Share Tasks
+                </h3>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="feature-card">
+            <i class="material-icons big">
+                videogame_asset
+            </i>
+            <mat-card-content>
+                <h3>
+                    Gamify Your Chores
+                </h3>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</section>
+
+<section class="pricing">
+    <div class="section-header">
+        <h2>Pricing</h2>
+    </div>
+    <mat-card class="price-card">
+        <mat-tab-group mat-stretch-tabs dynamicHeight>
+            <mat-tab label="Free Tier">
+                <div class="price free">
+                    <h3>
+                        £0.00
+                    </h3>
+                </div>
+                <mat-list>
+                    <mat-list-item>
+                        <div class="item-wrapper">
+                            <i class="material-icons"> check_circle_outline </i>
+                            Create a maximum of two boards
+                        </div>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <div class="item-wrapper">
+                            <i class="material-icons"> check_circle_outline </i>
+                            Join an unlimited numbers of boards
+                        </div>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <div class="item-wrapper">
+                            <i class="material-icons"> check_circle_outline </i>
+                            Only 1 admin per board
+                        </div>
+                        </mat-list-item>
+                </mat-list>
+            </mat-tab>
+            <mat-tab label="Buy an additional Board">
+                <div class="price per-board">
+                    <h3>
+                        <span> £1.00 </span> <span class="sub-price">per board</span>
+                    </h3>
+                </div>
+                <mat-list>
+                    <mat-list-item>
+                        <div class="item-wrapper">
+                            <i class="material-icons"> check_circle_outline </i>
+                            Increase your board limit by 1
+                        </div>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <div class="item-wrapper">
+                            <i class="material-icons"> check_circle_outline </i>
+                            Multiple Admins
+                        </div>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <div class="item-wrapper">
+                            <i class="material-icons"> check_circle_outline </i>
+                            Join Unlimited Boards
+                        </div>
+                    </mat-list-item>
+                </mat-list>
+            </mat-tab>
+            <mat-tab label="Subscribe">
+                <div class="price sub">
+                    <h3>
+                        <span> £9.99 </span> <span class="sub-price">per year</span>
+                    </h3>
+                </div>
+                <mat-list>
+                    <mat-list-item>
+                        <div class="item-wrapper">
+                            <i class="material-icons"> check_circle_outline </i>
+                            Create Unlimited Boards
+                        </div>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <div class="item-wrapper">
+                            <i class="material-icons"> check_circle_outline </i>
+                            Multiple admins
+                        </div>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <div class="item-wrapper">
+                            <i class="material-icons"> check_circle_outline </i>
+                            Early Access to Live Chat
+                        </div>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <div class="item-wrapper">
+                            <i class="material-icons"> check_circle_outline </i>
+                            Join Unlimited Boards
+                        </div>
+                    </mat-list-item>
+                </mat-list>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-card>
+
+</section>
+
+<section class="early-access">
+    <div class="section-header">
+        <h2>Early Access</h2>
+        <p>KB4L is very much in a state of early access, and in no way has it's full feature set implemented, in fact this iteration is very much a "bare bones" release </p>
+        <p> If you have any further feature requests do not hesitate to contact the dev team, through the github link in the footer</p>
+    </div>
+    <mat-card class="coming-soon">
+        <h3 class="card-head">Coming Soon</h3>
+    </mat-card> 
+    <div class="card-container">
+        <mat-card class="feature-card-small">
+            <i class="material-icons big">
+                add_comment
+            </i>
+            <mat-card-content>
+                <h3>
+                    Comments
+                </h3>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="feature-card-small">
+            <i class="material-icons big">
+                add_photo_alternate
+            </i>
+            <mat-card-content>
+                <h3>
+                    Images
+                </h3>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="feature-card-small">
+            <i class="material-icons big">
+                playlist_add_check
+            </i>
+            <mat-card-content>
+                <h3>
+                    Shared Shopping List
+                </h3>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="feature-card-small">
+            <i class="material-icons big">
+                chat
+            </i>
+            <mat-card-content>
+                <h3>
+                    Team Chat
+                </h3>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="feature-card-small">
+            <i class="material-icons big">
+                mail_outline
+            </i>
+            <mat-card-content>
+                <h3>
+                    Private Messaging
+                </h3>
+            </mat-card-content>
+        </mat-card>
+    </div>  
+</section>
 

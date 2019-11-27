@@ -2,7 +2,7 @@
 <nav class="nav-bar">
   <mat-toolbar color="primary">
     <mat-toolbar-row>
-      <h1><a mat-flat-button color="primary" routerLink="/">KB4L</a></h1>
+      <h1><a mat-flat-button color="primary" routerLink="/">KB4L-beta</a></h1>
       <div *ngIf="userService.isLoggedIn() else login" style="display:flex">
         <p>
           <a id="menu-button" mat-flat-button color="primary" (click)=showMenu()>
@@ -39,9 +39,15 @@
     <mat-list-item *ngIf="!boardService.boardList">
       <p> You are not yet a member of any boards</p>
     </mat-list-item>
-    <mat-list-item *ngFor="let board of boardService.boardList">{{board.name}}</mat-list-item>
+    <a mat-list-item *ngFor="let board of boardService.boardList" [routerLink]="'my-boards' + board.board_url">{{board.name}}</a>
   </mat-list>
 </aside>
-
-  
-<router-outlet></router-outlet>
+<main>
+  <router-outlet></router-outlet>
+  <footer>
+    <a mat-flat-button href="https://github.com/kev20006/KB4L" target="blank">
+      <img height="32" width="32" src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/github.svg" />
+      <p>View the project on github</p>
+    </a>
+  </footer>
+</main>

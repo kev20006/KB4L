@@ -9,11 +9,10 @@ class Board(models.Model):
     """
     Model to represent a kanban board
     """
-    new_code = get_random_string(length=8)
     name = models.CharField(max_length=100)
     description = models.TextField()
-    board_url = models.CharField(max_length=25, default="/"+ new_code +"/", unique=True)
-    joining_code = models.CharField(max_length=10, default=new_code, unique=True)
+    board_url = models.CharField(max_length=25, unique=True)
+    joining_code = models.CharField(max_length=10, unique=True)
 
 class Member(models.Model):
     """

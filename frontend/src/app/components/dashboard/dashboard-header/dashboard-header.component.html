@@ -11,23 +11,33 @@
         </mat-card-header>
     
         <mat-card-content>
-            <div *ngIf="!subscriptionInfo">
-                loading sub info....
-            </div>
             <div *ngIf="subscriptionInfo">
-                <h3>
-                    You are currently using {{ boardCount }} / {{ subscriptionInfo.max_boards }} boards
-                </h3>
-                <p *ngIf="!subscriptionInfo?.subscription && (boardCount === subscriptionInfo?.max_boards )" class="warning">
-                    this is the limit of the free account - you cannot add any more boards
-                </p>
-                <p>
-                    to view options to extend click the button below.
-                </p>
+                <div *ngIf="subscriptionInfo?.subscription">
+                    <h3>
+                        You are currently Subscribed
+                    </h3>
+                    <p>
+                        Your subscription will expire on:
+                    </p>
+                    <h4>
+                        {{ subscriptionInfo.sub_expires }}
+                    </h4>
+                </div>
+                <div *ngIf="!(subscriptionInfo?.subscription)">
+                    <h3>
+                        You are currently using {{ boardCount }} / {{ subscriptionInfo.max_boards }} boards
+                    </h3>
+                    <p *ngIf="!subscriptionInfo?.subscription && (boardCount === subscriptionInfo.max_boards )" class="warning">
+                        this is the limit of the free account - you cannot add any more boards
+                    </p>
+                    <p>
+                        to view options to extend click the button below.
+                    </p>
+                </div>
             </div>
         </mat-card-content>
         <mat-card-actions>
-            <app-open-modal-button buttonMessage="Payment Options" modalTarget="paymentOptions">
+            <app-open-modal-button *ngIf="!(subscriptionInfo?.subscription)" buttonMessage="Payment Options" modalTarget="paymentOptions">
             </app-open-modal-button>
         </mat-card-actions>
     </mat-card>
@@ -63,7 +73,8 @@
                 <mat-list-item *ngFor="let board of boardService.boardList"> 
                     <div class="score-list-item">
                         <span> {{ board.name}} </span>
-                        <mat-chip class="circle big" color="accent" selected>{{ board.score }}</mat-chip>
+                        <mat-chip *ngIf="board.score" class="circle big" color="accent" selected>{{ board.score }}</mat-chip>
+                        <mat-chip *ngIf="!board.score" class="circle big" color="accent" selected>0</mat-chip>
                     </div> 
                 </mat-list-item>
                 <mat-list-item  *ngIf="boardList" class="total-score"> 
@@ -151,7 +162,8 @@
                     <mat-list-item *ngFor="let board of boardService.boardList">
                         <div class="score-list-item">
                             <span> {{ board.name }} </span>
-                            <mat-chip class="circle big" color="accent" selected>{{ board.score }}</mat-chip>
+                            <mat-chip *ngIf="board.score" class="circle big" color="accent" selected>{{ board.score }}</mat-chip>
+                            <mat-chip *ngIf="!board.score" class="circle big" color="accent" selected>0</mat-chip>
                         </div>
                     </mat-list-item>
                     <mat-list-item *ngIf="boardService.boardList" class="total-score">
