@@ -10,7 +10,7 @@ import { UserService } from '../../../services/user.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  
+  public deeplink: boolean = true;
   public regiserUserForm: FormGroup = new FormGroup({
     username: new FormControl('', [Validators.required]),
     password: new FormControl('', [

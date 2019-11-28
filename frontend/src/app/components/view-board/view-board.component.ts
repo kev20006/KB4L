@@ -32,4 +32,8 @@ export class ViewBoardComponent implements OnInit {
     this.boardService.setBoardByUrl(this.route)
     this.boardService.currentBoard$.subscribe(data => this.board = data )
   }
+
+  delete(){
+    this.boardService.deleteBoard()
+  }
 }

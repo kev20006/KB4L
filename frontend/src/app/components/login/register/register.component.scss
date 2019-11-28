@@ -2,3 +2,16 @@
     color:#f44c3f;
     font-size:0.7em;
 }
+.deeplink{
+    margin:0 auto;
+    background-color: white;
+    width: 90%;
+    max-width:400px;
+
+    .reg-form{
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        margin-top: 80px;
+    }
+}

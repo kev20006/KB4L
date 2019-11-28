@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { UserService } from './services/user.service';
 import { BoardService } from './services/board-service.service';
+import { board } from './interfaces/interfaces';
 
 
 @Component({
@@ -38,5 +39,10 @@ export class AppComponent implements OnInit {
     else{
       this.menuOpen = false;
     }
+  }
+
+  switchBoard(board: board){
+    this.boardService.currentBoard.next(board);
+    this.menuOpen = false;
   }
 }

@@ -16,7 +16,7 @@
     <p>{{ board.description}}</p>
     <div class="button-wrapper">
         <app-open-modal-button buttonMessage="new task" modalTarget="AddNewTaskDialog"></app-open-modal-button>
-        <button *ngIf="taskService.isAdmin()" mat-raised-button color="warn" (click)="delete()">Delete Board</button>
+        <button *ngIf="taskService.isAdmin()" routerLink='/my-boards' mat-raised-button color="warn" (click)="delete()">Delete Board</button>
     </div>
     <mat-menu #menu="matMenu">
         <mat-list role="list">

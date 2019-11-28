@@ -1,5 +1,5 @@
-<div class="example-container">
-    <form [formGroup]="regiserUserForm" (ngSubmit)="onSubmit()">
+<div ngclass="example-container" [ngClass]="{'deeplink':deeplink}">
+    <form class="reg-form" [formGroup]="regiserUserForm" (ngSubmit)="onSubmit()">
         <mat-form-field>
             <input matInput placeholder="username" formControlName="username">
         </mat-form-field>

@@ -39,7 +39,7 @@
     <mat-list-item *ngIf="!boardService.boardList">
       <p> You are not yet a member of any boards</p>
     </mat-list-item>
-    <a mat-list-item *ngFor="let board of boardService.boardList" [routerLink]="'my-boards' + board.board_url">{{board.name}}</a>
+    <a mat-list-item *ngFor="let board of boardService.boardList" [routerLink]="'my-boards' + board.board_url" (click)="switchBoard(board)">{{board.name}}</a>
   </mat-list>
 </aside>
 <main>
