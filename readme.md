@@ -374,12 +374,8 @@ ALLOWED_HOSTS = [
 
 ## Credits
 
-### Content
-- The text for section Y was copied from the [Wikipedia article Z](https://en.wikipedia.org/wiki/Z)
+This app has been a real battle for me, during it's life i've lived in 3 homes in 2 countries, changed jobs, looked after a very sleep resistant toddler and a very tired pregnant wife, and despite all that i should primarily thank them for being the drive and motivation to push through and get this finished.
 
-### Media
-- The photos used in this site were obtained from ...
+As always, the CI slack has been a wonderful resource of great people, unfortunately i have been unable to make time with my amazing mentor this project, despite his best efforts, so sorry ignatius, i think the drop in quality it's evident he hasn't had a hand in this one, never would have learned so much without his patient sagelike wisdom.
 
-### Acknowledgements
-
-- I received inspiration for this project from X
+All content on the app is user created, so all content copyright belongs to them.
