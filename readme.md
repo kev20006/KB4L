@@ -1,4 +1,9 @@
+## KB4L no longer accepts new users - if you wish to login to the application to view it you can use the following details
+*username: newuser*
+*password: qwertyqwerty*
+
 # KB4L - Kanban for Life
+[Deployed Here](https://kb4l.herokuapp.com/)
 
 KB4L is a purposely simplified Kanban board application that is intend to be applied in peoples professional and personal and home lives.
 
